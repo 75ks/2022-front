@@ -3,5 +3,10 @@ import App from './App.vue'
 import router from './router'
 import { createPinia } from 'pinia'
 import './index.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-createApp(App).use(router).use(createPinia()).mount('#app')
+library.add(fas)
+
+createApp(App).use(router).use(createPinia()).component('fa', FontAwesomeIcon ).mount('#app')
