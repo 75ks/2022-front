@@ -14,23 +14,23 @@
       </thead>
       <tbody class="hover:cursor-pointer">
         <tr
-          v-for="(sale, index) in saleList" :key="index"
-          @click="showModal(sale)"
+          v-for="(reserve, index) in reserveList" :key="index"
+          @click="showModal(reserve)"
           class="hover:bg-slate-100"
         >
-          <td class="border border-gray-300 px-2 py-2">{{ sale.customerId }}</td>
-          <td class="border border-gray-300 px-2 py-2">{{ sale.customerLastName }} {{ sale.customerFirstName }}</td>
-          <td class="border border-gray-300 px-2 py-2">{{ sale.stuffLastName }} {{ sale.stuffFirstName }}</td>
-          <td class="border border-gray-300 px-2 py-2">{{ sale.rankName }}</td>
-          <td class="border border-gray-300 px-2 py-2">{{ sale.menu }}</td>
-          <td class="border border-gray-300 px-2 py-2">{{ sale.price }}</td>
-          <td class="border border-gray-300 px-2 py-2">{{ sale.salesDate }}</td>
+          <td class="border border-gray-300 px-2 py-2">{{ reserve.customerId }}</td>
+          <td class="border border-gray-300 px-2 py-2">{{ reserve.customerLastName }} {{ reserve.customerFirstName }}</td>
+          <td class="border border-gray-300 px-2 py-2">{{ reserve.stuffLastName }} {{ reserve.stuffFirstName }}</td>
+          <td class="border border-gray-300 px-2 py-2">{{ reserve.rankName }}</td>
+          <td class="border border-gray-300 px-2 py-2">{{ reserve.menu }}</td>
+          <td class="border border-gray-300 px-2 py-2">{{ reserve.price }}</td>
+          <td class="border border-gray-300 px-2 py-2">{{ reserve.reserveDate }}</td>
         </tr>
       </tbody>
     </table>
     <Modal
       :is-visible="modalVisible"
-      :modal-sale-data="modalSaleData"
+      :modal-reserve-data="modalReserveData"
       @close="closeModal"
     />
   </div>
@@ -38,17 +38,17 @@
 
 <script setup lang="ts">
 import Modal from './Modal.vue';
-import { SaleData } from '../../models/types/Sale';
+import { ReserveData } from '../../models/types/Reserve';
 import { ref } from 'vue';
 
 const props = defineProps<{
-  saleList: SaleData[] | undefined
+  reserveList: ReserveData[] | undefined
 }>();
 
-const modalSaleData = ref<SaleData>();
+const modalReserveData = ref<ReserveData>();
 const modalVisible = ref<boolean>(false);
-const showModal = (saleData: SaleData) => {
-  modalSaleData.value = saleData;
+const showModal = (reserveData: ReserveData) => {
+  modalReserveData.value = reserveData;
   modalVisible.value = true;
 }
 const closeModal = () => {

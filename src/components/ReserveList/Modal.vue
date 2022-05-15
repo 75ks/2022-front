@@ -11,23 +11,23 @@
       class="fixed top-1/2 left-1/2 bg-white flex flex-col items-center justify-center w-1/2 h-auto rounded p-5"
       id="modal-content"
     >
-      <p>顧客ID: {{ modalSaleData?.customerId }}</p>
-      <p>姓名: {{ modalSaleData?.customerLastName }} {{ modalSaleData?.customerFirstName }}</p>
-      <p>スタッフ: {{ modalSaleData?.stuffLastName }} {{ modalSaleData?.stuffFirstName }}</p>
-      <p>ランク名: {{ modalSaleData?.rankName }}</p>
-      <p>メニュー: {{ modalSaleData?.menu }}</p>
-      <p>値段: {{ modalSaleData?.price }}</p>
-      <p>来店日: {{ modalSaleData?.salesDate }}</p>
+      <p>顧客ID: {{ modalReserveData?.customerId }}</p>
+      <p>姓名: {{ modalReserveData?.customerLastName }} {{ modalReserveData?.customerFirstName }}</p>
+      <p>スタッフ: {{ modalReserveData?.stuffLastName }} {{ modalReserveData?.stuffFirstName }}</p>
+      <p>ランク名: {{ modalReserveData?.rankName }}</p>
+      <p>メニュー: {{ modalReserveData?.menu }}</p>
+      <p>値段: {{ modalReserveData?.price }}</p>
+      <p>来店日: {{ modalReserveData?.reserveDate }}</p>
     </div>
   </teleport>
 </template>
 
 <script setup lang="ts">
-import { SaleData } from '../../models/types/Sale';
+import { ReserveData } from '../../models/types/Reserve';
 
 const props = defineProps<{
   isVisible: boolean
-  modalSaleData?: SaleData
+  modalReserveData?: ReserveData
 }>();
 
 const emits = defineEmits<{

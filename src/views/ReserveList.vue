@@ -1,20 +1,20 @@
 <template>
   <div>
     <Header :header-name="'予約一覧'" />
-    <SalesSearch />
-    <SalesSearchDetail :sale-list="saleList"/>
+    <ReserveSearch />
+    <ReserveSearchDetail :reserve-list="reserveList"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import Header from '../components/ReserveList/Header.vue';
-import SalesSearch from '../components/ReserveList/SalesSearchHeader.vue';
-import SalesSearchDetail from '../components/ReserveList/SalesSearchDetail.vue';
+import ReserveSearch from '../components/ReserveList/ReserveSearchHeader.vue';
+import ReserveSearchDetail from '../components/ReserveList/ReserveSearchDetail.vue';
 import { ref } from 'vue';
-import { SaleData } from '../models/types/Sale';
+import { ReserveData } from '../models/types/Reserve';
 
 /** 予約情報 */
-const saleList = ref<SaleData[]>([
+const reserveList = ref<ReserveData[]>([
   {
     customerId: 1,
     customerLastName: '顧客',
@@ -24,7 +24,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'ゴールド',
     menu: 'カット/パーマ',
     price: 10000,
-    salesDate: '2022/04/01'
+    reserveDate: '2022/04/01'
   },
   {
     customerId: 2,
@@ -35,7 +35,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'ブロンズ',
     menu: 'カット',
     price: 5000,
-    salesDate: '2022/04/13'
+    reserveDate: '2022/04/13'
   },
   {
     customerId: 3,
@@ -46,7 +46,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'プラチナ',
     menu: 'カット/カラー',
     price: 12000,
-    salesDate: '2022/04/28'
+    reserveDate: '2022/04/28'
   },
   {
     customerId: 4,
@@ -57,7 +57,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'シルバー',
     menu: 'カット',
     price: 5000,
-    salesDate: '2022/05/03'
+    reserveDate: '2022/05/03'
   },
   {
     customerId: 1,
@@ -68,7 +68,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'ゴールド',
     menu: 'カット/パーマ',
     price: 10000,
-    salesDate: '2022/04/01'
+    reserveDate: '2022/04/01'
   },
   {
     customerId: 2,
@@ -79,7 +79,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'ブロンズ',
     menu: 'カット',
     price: 5000,
-    salesDate: '2022/04/13'
+    reserveDate: '2022/04/13'
   },
   {
     customerId: 3,
@@ -90,7 +90,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'プラチナ',
     menu: 'カット/カラー',
     price: 12000,
-    salesDate: '2022/04/28'
+    reserveDate: '2022/04/28'
   },
   {
     customerId: 4,
@@ -101,7 +101,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'シルバー',
     menu: 'カット',
     price: 5000,
-    salesDate: '2022/05/03'
+    reserveDate: '2022/05/03'
   },
   {
     customerId: 1,
@@ -112,7 +112,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'ゴールド',
     menu: 'カット/パーマ',
     price: 10000,
-    salesDate: '2022/04/01'
+    reserveDate: '2022/04/01'
   },
   {
     customerId: 2,
@@ -123,7 +123,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'ブロンズ',
     menu: 'カット',
     price: 5000,
-    salesDate: '2022/04/13'
+    reserveDate: '2022/04/13'
   },
   {
     customerId: 3,
@@ -134,7 +134,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'プラチナ',
     menu: 'カット/カラー',
     price: 12000,
-    salesDate: '2022/04/28'
+    reserveDate: '2022/04/28'
   },
   {
     customerId: 4,
@@ -145,7 +145,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'シルバー',
     menu: 'カット',
     price: 5000,
-    salesDate: '2022/05/03'
+    reserveDate: '2022/05/03'
   },
   {
     customerId: 1,
@@ -156,7 +156,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'ゴールド',
     menu: 'カット/パーマ',
     price: 10000,
-    salesDate: '2022/04/01'
+    reserveDate: '2022/04/01'
   },
   {
     customerId: 2,
@@ -167,7 +167,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'ブロンズ',
     menu: 'カット',
     price: 5000,
-    salesDate: '2022/04/13'
+    reserveDate: '2022/04/13'
   },
   {
     customerId: 3,
@@ -178,7 +178,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'プラチナ',
     menu: 'カット/カラー',
     price: 12000,
-    salesDate: '2022/04/28'
+    reserveDate: '2022/04/28'
   },
   {
     customerId: 4,
@@ -189,7 +189,7 @@ const saleList = ref<SaleData[]>([
     rankName: 'シルバー',
     menu: 'カット',
     price: 5000,
-    salesDate: '2022/05/03'
+    reserveDate: '2022/05/03'
   },
 ]);
 </script>

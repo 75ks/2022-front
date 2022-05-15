@@ -65,14 +65,14 @@
         />
       </div>
       <div>
-        <label for="salesDate" class="block">来店日</label>
+        <label for="reserveDate" class="block">来店日</label>
         <CustomInput
-          v-model="searchInput.salesDateMin"
-          :input-id="'salesDate'"
+          v-model="searchInput.reserveDateMin"
+          :input-id="'reserveDate'"
         />
         <span> - </span>
         <CustomInput
-          v-model="searchInput.salesDateMax"
+          v-model="searchInput.reserveDateMax"
         />
       </div>
     </div>
@@ -83,10 +83,10 @@
 import CustomInput from '../Common/CustomInput.vue';
 import CustomButton from '../Common/CustomButton.vue';
 import { reactive } from 'vue';
-import { SaleSearch } from '../../models/types/Sale';
+import { ReserveSearch } from '../../models/types/Reserve';
 
 /** 検索条件入力欄 */
-const searchInput = reactive<SaleSearch>({
+const searchInput = reactive<ReserveSearch>({
   customerId: null,
   customerName: '',
   stuffName: '',
@@ -94,8 +94,8 @@ const searchInput = reactive<SaleSearch>({
   menu: '',
   priceMin: null,
   priceMax: null,
-  salesDateMin: '',
-  salesDateMax: ''
+  reserveDateMin: '',
+  reserveDateMax: ''
 });
 
 /** 「クリア」クリックイベント（検索条件入力欄を初期状態にする） */
@@ -107,8 +107,8 @@ const clearInput = () => {
   searchInput.menu = '';
   searchInput.priceMin = null;
   searchInput.priceMax = null;
-  searchInput.salesDateMin = '';
-  searchInput.salesDateMax = '';
+  searchInput.reserveDateMin = '';
+  searchInput.reserveDateMax = '';
 }
 </script>
 

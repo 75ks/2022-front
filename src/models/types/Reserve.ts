@@ -1,4 +1,4 @@
-export interface SaleData {
+export interface ReserveData {
   customerId: number | null,
   customerLastName: string,
   customerFirstName: string,
@@ -7,10 +7,10 @@ export interface SaleData {
   rankName: string,
   menu: string,
   price: number | null,
-  salesDate: string
+  reserveDate: string
 }
 
-export interface SaleSearch {
+export interface ReserveSearch {
   customerId: number | null,
   customerName: string,
   stuffName: string,
@@ -18,6 +18,6 @@ export interface SaleSearch {
   menu: string,
   priceMin: number | null,
   priceMax: number | null,
-  salesDateMin: string,
-  salesDateMax: string
+  reserveDateMin: string,
+  reserveDateMax: string
 }
