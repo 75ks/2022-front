@@ -8,7 +8,7 @@
           <th class="border border-gray-300 px-2 py-2 text-gray-600">スタッフ</th>
           <th class="border border-gray-300 px-2 py-2 text-gray-600">ランク名</th>
           <th class="border border-gray-300 px-2 py-2 text-gray-600">メニュー</th>
-          <th class="border border-gray-300 px-2 py-2 text-gray-600">値段</th>
+          <th class="border border-gray-300 px-2 py-2 text-gray-600">料金</th>
           <th class="border border-gray-300 px-2 py-2 text-gray-600">来店日</th>
         </tr>
       </thead>

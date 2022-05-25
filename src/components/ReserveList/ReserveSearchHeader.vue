@@ -7,11 +7,12 @@
       </div>
       <div class="flex items-center">
         <CustomButton
+          @click="search"
           :name="'検索'"
           class="bg-blue-400 hover:bg-blue-500"
         />
         <CustomButton
-          @click="clearInput"
+          @click="clear"
           :name="'クリア'"
           class="bg-gray-400 hover:bg-gray-500 ml-2"
         />
@@ -54,7 +55,7 @@
         />
       </div>
       <div>
-        <label for="price" class="block">値段</label>
+        <label for="price" class="block">料金</label>
         <CustomInput
           v-model="searchInput.priceMin"
           :input-id="'price'"
@@ -83,7 +84,11 @@
 import CustomInput from '../Common/CustomInput.vue';
 import CustomButton from '../Common/CustomButton.vue';
 import { reactive } from 'vue';
+import { ReserveData } from '../../models/types/Reserve';
 import { ReserveSearch } from '../../models/types/Reserve';
+import { useReserveStore } from '../../store/reserve';
+
+const reserveStore = useReserveStore();
 
 /** 検索条件入力欄 */
 const searchInput = reactive<ReserveSearch>({
@@ -98,8 +103,28 @@ const searchInput = reactive<ReserveSearch>({
   reserveDateMax: ''
 });
 
-/** 「クリア」クリックイベント（検索条件入力欄を初期状態にする） */
-const clearInput = () => {
+/** 「検索」クリックイベント(検索条件でフィルターをかける) */
+const search = () => {
+  if (emptyInput()) {
+    alert("検索条件を入力してください");
+  } else {
+    reserveStore.fetchReserves();
+    let tmpReserveList: ReserveData[] = reserveStore.getReserves;
+    tmpReserveList = searchCustomerId(tmpReserveList);
+    tmpReserveList = searchCustomerName(tmpReserveList);
+    tmpReserveList = searchStuffName(tmpReserveList);
+    tmpReserveList = searchRank(tmpReserveList);
+    tmpReserveList = searchMenu(tmpReserveList);
+    tmpReserveList = searchPrice(tmpReserveList);
+    tmpReserveList = searchReserveDate(tmpReserveList);
+    reserveStore.resetReserves();
+    reserveStore.addReserves(tmpReserveList);
+  }
+}
+
+/** 「クリア」クリックイベント(検索条件入力欄を初期状態にし、データを再取得する) */
+const clear = () => {
+  reserveStore.fetchReserves();
   searchInput.customerId = null;
   searchInput.customerName = '';
   searchInput.stuffName = '';
@@ -109,6 +134,80 @@ const clearInput = () => {
   searchInput.priceMax = null;
   searchInput.reserveDateMin = '';
   searchInput.reserveDateMax = '';
+}
+
+/** 検索条件入力欄がいずれも空の場合にtrueを返す */
+const emptyInput = () => {
+  return !searchInput.customerId && !searchInput.customerName && !searchInput.stuffName && !searchInput.rankName && !searchInput.menu && !searchInput.priceMin && !searchInput.priceMax && !searchInput.reserveDateMin && !searchInput.reserveDateMax;
+}
+
+/** 顧客IDフィルター(完全一致) */
+const searchCustomerId = (tmpReserveList: ReserveData[]) => {
+  if (searchInput.customerId) {
+    tmpReserveList = tmpReserveList.filter(obj => searchInput.customerId == obj.customerId);
+  }
+  return tmpReserveList;
+}
+
+/** 姓名フィルター(部分一致) */
+const searchCustomerName = (tmpReserveList: ReserveData[]) => {
+  if (searchInput.customerName) {
+    const replaceSearchCustomerName = searchInput.customerName.replace(/\s+/g, '');
+    tmpReserveList = tmpReserveList.filter(obj => {
+      const replaceCustomerName = (obj.customerLastName + obj.customerFirstName).replace(/\s+/g, '');
+      return replaceCustomerName.indexOf(replaceSearchCustomerName) != -1
+    });
+  }
+  return tmpReserveList;
+}
+
+/** スタッフフィルター(部分一致) */
+const searchStuffName = (tmpReserveList: ReserveData[]) => {
+  if (searchInput.stuffName) {
+    const replaceSearchStuffName = searchInput.stuffName.replace(/\s+/g, '');
+    tmpReserveList = tmpReserveList.filter(obj => {
+      const replaceStuffName = (obj.stuffLastName + obj.stuffFirstName).replace(/\s+/g, '');
+      return replaceStuffName.indexOf(replaceSearchStuffName) != -1
+    });
+  }
+  return tmpReserveList;
+}
+
+/** ランクフィルター(完全一致) */
+const searchRank = (tmpReserveList: ReserveData[]) => {
+  if (searchInput.rankName) {
+    tmpReserveList = tmpReserveList.filter(obj => searchInput.rankName == obj.rankName);
+  }
+  return tmpReserveList;
+}
+
+/** メニューフィルター(完全一致) */
+const searchMenu = (tmpReserveList: ReserveData[]) => {
+  if (searchInput.menu) {
+    tmpReserveList = tmpReserveList.filter(obj => searchInput.menu == obj.menu);
+  }
+  return tmpReserveList;
+}
+
+/** 料金フィルター(期間指定) */
+const searchPrice = (tmpReserveList: ReserveData[]) => {
+  if (searchInput.priceMin && searchInput.priceMax) {
+    const NumberPriceMin = Number(searchInput.priceMin);
+    const NumberPriceMax = Number(searchInput.priceMax);
+    tmpReserveList = tmpReserveList.filter(obj => {
+      const NumberObjPrice = Number(obj.price);
+      return NumberPriceMin <= NumberObjPrice && NumberObjPrice <= NumberPriceMax;
+    });
+  }
+  return tmpReserveList;
+}
+
+/** 来店日フィルター(期間指定) */
+const searchReserveDate = (tmpReserveList: ReserveData[]) => {
+  if (searchInput.reserveDateMin && searchInput.reserveDateMax) {
+    // 後で処理を追加する
+  }
+  return tmpReserveList;
 }
 </script>
 
