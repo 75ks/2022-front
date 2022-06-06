@@ -20,10 +20,14 @@
     </div>
     <div class="my-4 flex items-center justify-between">
       <div>
-        <label for="customerId" class="block">顧客ID</label>
-        <CustomInput
-          v-model="searchInput.customerId"
-          :input-id="'customerId'"
+<!--        <label for="customerId" class="block">顧客ID</label>-->
+<!--        <CustomInput-->
+<!--          v-model="searchInput.customerId"-->
+<!--          :input-id="'customerId'"-->
+<!--        />-->
+        <TextInput
+          v-model:inputValue='searchInput.customerId'
+          label="顧客ID"
         />
       </div>
       <div>
@@ -87,6 +91,7 @@ import { reactive } from 'vue';
 import { ReserveData } from '../../models/types/Reserve';
 import { ReserveSearch } from '../../models/types/Reserve';
 import { useReserveStore } from '../../store/reserve';
+import TextInput from '../Common/TextInput.vue';
 
 const reserveStore = useReserveStore();
 
