@@ -3,9 +3,10 @@
     :class="sideBySideFlg ? 'flex justify-between items-center': ''"
   >
     <label
+      v-if="label"
       :for="uniqueId"
       class="font-medium text-gray-700"
-      :class="size"
+      :class="[`text-${size}`]"
     >
       {{ label }}<span v-if="requiredFlg" class="text-red-600">*</span>
     </label>
@@ -17,7 +18,7 @@
         :id="uniqueId"
         v-model="inputValue"
         class="w-full px-2 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline outline-blue-300"
-        :class="[size, disableFlg ? 'bg-gray-300' : requiredFlg ? 'bg-yellow-100' : '']"
+        :class="[`text-${size}`, disableFlg ? 'bg-gray-300' : requiredFlg ? 'bg-yellow-100' : '']"
         :disabled="disableFlg"
       />
     </div>
@@ -51,7 +52,7 @@ const props = withDefaults(defineProps<Props>(), {
   label: '',
   sideBySideFlg: false,
   inputWidth: 'w-3/4',
-  size: '',
+  size: 'md',
   requiredFlg: false,
   disableFlg: false
 });
