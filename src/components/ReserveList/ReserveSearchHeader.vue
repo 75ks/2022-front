@@ -20,10 +20,9 @@
     </div>
     <div class="my-4 flex items-center justify-evenly">
       <div>
-        <label for="reserveHistoryId" class="block">予約履歴ID</label>
-        <CustomInput
-          v-model="searchInput.reserveHistoryId"
-          :input-id="'reserveHistoryId'"
+        <TextInput
+          v-model:inputValue='searchInput.reserveHistoryId'
+          label="顧客ID"
         />
       </div>
       <div>
@@ -103,12 +102,13 @@ import { reactive } from 'vue';
 import { ReserveData } from '../../models/types/Reserve';
 import { ReserveSearch } from '../../models/types/Reserve';
 import { useReserveStore } from '../../store/reserve';
+import TextInput from '../Common/TextInput.vue';
 
 const reserveStore = useReserveStore();
 
 /** 検索条件入力欄 */
 const searchInput = reactive<ReserveSearch>({
-  reserveHistoryId: null,
+  reserveHistoryId: '',
   customerName: '',
   stuffName: '',
   rank: '',
@@ -142,7 +142,7 @@ const search = async () => {
 /** 「クリア」クリックイベント(検索条件入力欄を初期状態にし、データを再取得する) */
 const clear = () => {
   reserveStore.fetchReserves();
-  searchInput.reserveHistoryId = null;
+  searchInput.reserveHistoryId = '';
   searchInput.customerName = '';
   searchInput.stuffName = '';
   searchInput.rank = '';
