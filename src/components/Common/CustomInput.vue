@@ -1,17 +1,17 @@
 <template>
   <input
     type="text"
-    class="w-28 px-2 py-1 border border-gray-300 active:outline-none focus:outline-none rounded"
-    :id="inputId"
     :value="modelValue"
+    :id="inputId"
     @input="onInputValue"
+    class="w-48 px-2 py-1 border border-gray-300 active:outline-none focus:outline-none rounded"
   />
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
   inputId?: string,
-  modelValue?: string | number | null
+  modelValue: string | number | null
 }>();
 
 const emits = defineEmits<{

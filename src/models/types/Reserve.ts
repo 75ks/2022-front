@@ -1,23 +1,29 @@
 export interface ReserveData {
-  customerId: number | null,
-  customerLastName: string,
-  customerFirstName: string,
-  stuffLastName: string,
-  stuffFirstName: string,
-  rankName: string,
+  reserveHistoryId: number | null,
+  rank: string,
   menu: string,
   price: number | null,
-  reserveDate: string
+  reserveDatetime: string,
+  reserveState: number | null,
+  customerLastName: string,
+  customerFirstName: number | null,
+  customerLastNameKana: string,
+  customerFirstNameKana: string,
+  stuffLastName: string,
+  stuffFirstName: string,
+  stuffLastNameKana: string,
+  stuffFirstNameKana: string
 }
 
 export interface ReserveSearch {
-  customerId: number | null,
+  reserveHistoryId: number | null,
   customerName: string,
   stuffName: string,
-  rankName: string,
+  rank: string,
   menu: string,
   priceMin: number | null,
   priceMax: number | null,
-  reserveDateMin: string,
-  reserveDateMax: string
+  reserveDateTimeMin: string,
+  reserveDateTimeMax: string,
+  reserveState: number | null
 }
