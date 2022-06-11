@@ -26,63 +26,45 @@
         />
       </div>
       <div>
-        <label for="customerName" class="block">顧客名</label>
-        <CustomInput
-          v-model="searchInput.customerName"
-          :input-id="'customerName'"
+        <TextInput
+          v-model:inputValue='searchInput.customerName'
+          label="顧客名"
         />
       </div>
       <div>
-        <label for="stuffName" class="block">担当スタッフ</label>
-        <CustomInput
-          v-model="searchInput.stuffName"
-          :input-id="'stuffName'"
+        <TextInput
+          v-model:inputValue='searchInput.stuffName'
+          label="担当スタッフ"
         />
       </div>
-      <!-- TODO: ランクをプルダウンにする -->
       <div>
         <label for="rank" class="block">ランク</label>
-        <CustomInput
-          v-model="searchInput.rank"
-          :input-id="'rank'"
+        <Rank
+          v-model:selectValue="searchInput.rank"
+          :select-id="'rank'"
         />
       </div>
-      <!-- TODO: メニューをプルダウンにする -->
       <div>
         <label for="menu" class="block">メニュー</label>
-        <CustomInput
-          v-model="searchInput.menu"
-          :input-id="'menu'"
+        <Menu
+          v-model:selectValue="searchInput.menu"
+          :select-id="'menu'"
         />
       </div>
     </div>
     <div class="my-4 flex items-center justify-evenly">
-      <div>
-        <label for="price" class="block">料金</label>
-        <CustomInput
-          v-model="searchInput.priceMin"
-          :input-id="'price'"
+        <IntegerFromTo 
+          v-model:fromInputValue="searchInput.priceMin"
+          v-model:toInputValue="searchInput.priceMax"
+          fromLabel="料金(下限)"
+          toLabel="料金(上限)"
         />
-        <span>〜</span>
-        <CustomInput
-          v-model="searchInput.priceMax"
+        <CalendarFromTo 
+          v-model:fromInputValue="searchInput.reserveDateTimeMin"
+          v-model:toInputValue="searchInput.reserveDateTimeMax"
+          fromLabel="日時(下限)"
+          toLabel="日時(上限)"
         />
-      </div>
-      <div>
-        <label for="reserveDateTime" class="block">予約日時</label>
-        <input
-          v-model="searchInput.reserveDateTimeMin"
-          type="datetime-local"
-          class="w-48 px-2 py-1 border border-gray-300 active:outline-none focus:outline-none rounded"
-          id="reserveDateTime"
-        />
-        <span>〜</span>
-        <input
-          v-model="searchInput.reserveDateTimeMax"
-          type="datetime-local"
-          class="w-48 px-2 py-1 border border-gray-300 active:outline-none focus:outline-none rounded"
-        />
-      </div>
       <div>
         <label for="reserveState" class="block">予約状態</label>
         <ReserveState
@@ -95,14 +77,17 @@
 </template>
 
 <script setup lang="ts">
-import CustomInput from '../Common/CustomInput.vue';
 import CustomButton from '../Common/CustomButton.vue';
 import ReserveState from '../SelectOptions/ReserveState.vue';
+import Rank from '../SelectOptions/Rank.vue';
+import Menu from '../SelectOptions/Menu.vue';
 import { reactive } from 'vue';
 import { ReserveData } from '../../models/types/Reserve';
 import { ReserveSearch } from '../../models/types/Reserve';
 import { useReserveStore } from '../../store/reserve';
 import TextInput from '../Common/TextInput.vue';
+import IntegerFromTo from '../Common/IntegerFromTo.vue';
+import CalendarFromTo from '../Common/CalendarFromTo.vue';
 
 const reserveStore = useReserveStore();
 
@@ -210,23 +195,16 @@ const searchMenu = (tmpReserveList: ReserveData[]) => {
 /** 料金フィルター(範囲指定) */
 const searchPrice = (tmpReserveList: ReserveData[]) => {
   if (searchInput.priceMin && searchInput.priceMax) {
-    const numberPriceMin = Number(searchInput.priceMin);
-    const numberPriceMax = Number(searchInput.priceMax);
     tmpReserveList = tmpReserveList.filter(obj => {
-      const numberObjPrice = Number(obj.price);
-      return numberPriceMin <= numberObjPrice && numberObjPrice <= numberPriceMax;
+      return searchInput.priceMin! <= obj.price! && obj.price! <= searchInput.priceMax!;
     });
   } else if (searchInput.priceMin && !searchInput.priceMax) {
-    const numberPriceMin = Number(searchInput.priceMin);
     tmpReserveList = tmpReserveList.filter(obj => {
-      const numberObjPrice = Number(obj.price);
-      return numberPriceMin <= numberObjPrice;
+      return searchInput.priceMin! <= obj.price!;
     });
   } else if (!searchInput.priceMin && searchInput.priceMax) {
-    const numberPriceMax = Number(searchInput.priceMax);
     tmpReserveList = tmpReserveList.filter(obj => {
-      const numberObjPrice = Number(obj.price);
-      return numberObjPrice <= numberPriceMax;
+      return obj.price! <= searchInput.priceMax!;
     });
   }
   return tmpReserveList;

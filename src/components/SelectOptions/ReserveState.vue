@@ -5,7 +5,7 @@
     @change="onChangeValue"
     class="w-48 px-2 py-1 border border-gray-300 active:outline-none focus:outline-none rounded"
   >
-    <option value=null disabled>指定なし</option>
+    <option value=null disabled>予約状態</option>
     <option v-for="[key, value] of Array.from(ReserveStates)" :key="key" :value="key">
       {{ value }}
     </option>

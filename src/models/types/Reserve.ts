@@ -1,5 +1,5 @@
 export interface ReserveData {
-  reserveHistoryId: number | null,
+  reserveHistoryId: string,
   rank: string,
   menu: string,
   price: number | null,
@@ -16,7 +16,7 @@ export interface ReserveData {
 }
 
 export interface ReserveSearch {
-  reserveHistoryId: number | null,
+  reserveHistoryId: string,
   customerName: string,
   stuffName: string,
   rank: string,
