@@ -7,7 +7,6 @@ const instance = axios.create();
 // リクエスト送信前の共通処理
 instance.interceptors.request.use(
   (config) => {
-    console.log(config);
     config.baseURL = "http://localhost:3000/api";
     config.timeout = 5000;
     config.headers = {
@@ -21,7 +20,6 @@ instance.interceptors.request.use(
 // レスポンス受信後の共通処理
 instance.interceptors.response.use(
   (response) => {
-    console.log(response);
     // if (response.status === 200 && response.data.messageList) {
     // }
     return response;
