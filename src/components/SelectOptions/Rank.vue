@@ -1,8 +1,8 @@
 <template>
+  <label for="rank" class="block">ランク</label>
   <select
-    :id="selectId"
     v-model="selectValue"
-    @change="onChangeValue"
+    id="rank"
     class="w-48 px-2 py-1 border border-gray-300 active:outline-none focus:outline-none rounded"
   >
     <option v-for="option of selectOptionList" :key="option.code" :value="option.name">
@@ -14,21 +14,26 @@
 <script setup lang="ts">
 import axios from '../../plugins/axios';
 import { SelectOption } from '../../models/types/selectOption';
-import { computed, ref } from 'vue';
-
-const props = defineProps<{
-  selectId?: string,
-  selectValue: string
-}>();
-
-const emits = defineEmits<{
-  (e: 'update:selectValue', value: string): void
-}>();
-
-const onChangeValue = (e: Event) => {
-  const target = e.target as HTMLSelectElement;
-  emits('update:selectValue', target.value);
+import { computed,ref } from 'vue';
+interface Props {
+  /** 選択値 */
+  selectValue: string;
 }
+
+interface Emits {
+  (e: 'update:selectValue', text: string): string;
+}
+
+const props = defineProps<Props>();
+
+const emits = defineEmits<Emits>();
+
+const selectValue = computed({
+  get: () => props.selectValue,
+  set: (value) => {
+    emits('update:selectValue', value);
+  }
+});
 
 const selectOptionList = ref<SelectOption[]>();
 
@@ -38,7 +43,6 @@ const getSelectOption = async () => {
 }
 
 getSelectOption();
-console.log(selectOptionList);
 
 </script>
 

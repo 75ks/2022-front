@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :header-name="'予約一覧'" />
+    <Header :header-name="'予約管理'" />
     <ReserveSearchHeader />
     <ReserveSearchDetail :reserve-list="reserveList" />
   </div>
