@@ -24,8 +24,9 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
-import {computed} from 'vue';
+import { computed } from 'vue';
 
 interface Props {
   /** 入力値 */
@@ -35,17 +36,17 @@ interface Props {
   /** ラベルと入力欄横並びフラグ */
   sideBySideFlg?: boolean;
   /** 入力欄の幅 */
-  inputWidth?: string
+  inputWidth?: string;
   /** サイズ */
-  size?: string,
+  size?: string;
   /** 必須フラグ */
-  requiredFlg?: boolean
+  requiredFlg?: boolean;
   /** 無効フラグ */
-  disableFlg?: boolean
+  disableFlg?: boolean;
 }
 
-interface Emits<T = unknown> {
-  (e: 'update:inputValue', text: string): string;
+interface Emits {
+  (e: 'update:inputValue', value: string): string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -56,13 +57,13 @@ const props = withDefaults(defineProps<Props>(), {
   requiredFlg: false,
   disableFlg: false
 });
-const emit = defineEmits<Emits>();
+const emits = defineEmits<Emits>();
 
 const inputValue = computed({
   get: () => props.inputValue,
   set: (value) => {
-    emit('update:inputValue', value);
-  },
+    emits('update:inputValue', value);
+  }
 });
 
 /** ユニークID */
@@ -71,4 +72,5 @@ const uniqueId = computed(() => {
 });
 
 </script>
+
 <style></style>

@@ -26,13 +26,13 @@
           <td class="border border-gray-300 px-2 py-2">{{ reserve.menu }}</td>
           <td class="border border-gray-300 px-2 py-2">{{ reserve.price }}</td>
           <td class="border border-gray-300 px-2 py-2">{{ datetimeFormat(reserve.reserveDatetime) }}</td>
-          <td class="border border-gray-300 px-2 py-2">{{ reserve.reserveState && ReserveStates.get(reserve.reserveState) ? ReserveStates.get(reserve.reserveState) : "不明" }}</td>
+          <td class="border border-gray-300 px-2 py-2">{{ reserve.reserveState }}</td>
         </tr>
       </tbody>
     </table>
     <Modal
-      :is-visible="modalVisible"
-      :modal-reserve-data="modalReserveData"
+      :is-visible-modal="isVisibleModal"
+      :modal-reserve-data="modalReserveData!"
       @close="closeModal"
     />
   </div>
@@ -41,7 +41,6 @@
 <script setup lang="ts">
 import Modal from './Modal.vue';
 import { ReserveData } from '../../models/types/Reserve';
-import { ReserveStates } from '../../constants/ReserveStates';
 import { datetimeFormat } from '../../utils/Format';
 import { ref } from 'vue';
 
@@ -49,14 +48,18 @@ const props = defineProps<{
   reserveList: ReserveData[]
 }>();
 
+/** モーダルに渡すデータ */
 const modalReserveData = ref<ReserveData>();
-const modalVisible = ref<boolean>(false);
+/** モーダル表示フラグ */
+const isVisibleModal = ref<boolean>(false);
+/** レコードクリックイベント(モーダルを表示する) */
 const showModal = (reserveData: ReserveData) => {
   modalReserveData.value = reserveData;
-  modalVisible.value = true;
+  isVisibleModal.value = true;
 }
+/** モーダル表示時、モーダル外クリックイベント(モーダルを非表示する) */
 const closeModal = () => {
-  modalVisible.value = false;
+  isVisibleModal.value = false;
 }
 </script>
 

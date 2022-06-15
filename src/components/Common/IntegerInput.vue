@@ -16,6 +16,7 @@
     >
       <input
         type="number"
+        step="1000"
         :id="uniqueId"
         v-model="inputValue"
         class="w-full px-2 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline outline-blue-300"
@@ -25,6 +26,7 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import {computed} from 'vue';
 
@@ -36,16 +38,16 @@ interface Props {
   /** ラベルと入力欄横並びフラグ */
   sideBySideFlg?: boolean;
   /** 入力欄の幅 */
-  inputWidth?: string
+  inputWidth?: string;
   /** サイズ */
-  size?: string,
+  size?: string;
   /** 必須フラグ */
-  requiredFlg?: boolean
+  requiredFlg?: boolean;
   /** 無効フラグ */
-  disableFlg?: boolean
+  disableFlg?: boolean;
 }
 
-interface Emits<T = unknown> {
+interface Emits {
   (e: 'update:inputValue', value: number): number;
 }
 
@@ -57,12 +59,12 @@ const props = withDefaults(defineProps<Props>(), {
   requiredFlg: false,
   disableFlg: false
 });
-const emit = defineEmits<Emits>();
+const emits = defineEmits<Emits>();
 
 const inputValue = computed({
   get: () => props.inputValue,
   set: (value) => {
-    emit('update:inputValue', value!);
+    emits('update:inputValue', value!);
   },
 });
 
@@ -72,4 +74,5 @@ const uniqueId = computed(() => {
 });
 
 </script>
+
 <style></style>

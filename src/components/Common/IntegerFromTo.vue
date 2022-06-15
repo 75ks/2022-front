@@ -2,7 +2,7 @@
   <div class="flex items-end justify-center">
     <IntegerInput
       v-model:inputValue='fromInputValue'
-      :label="fromLabel"
+      :label="label"
       :sideBySideFlg="sideBySideFlg"
       :inputWidth="inputWidth"
       :size="size"
@@ -28,53 +28,48 @@ import IntegerInput from './IntegerInput.vue';
 
 interface Props {
   /** 入力値(下限) */
-  fromInputValue: number | null
+  fromInputValue: number | null;
   /** 入力値(上限) */
-  toInputValue: number | null
-  /** 任意のラベル名(下限) */
-  fromLabel?: string;
-  /** 任意のラベル名(上限) */
-  toLabel?: string;
+  toInputValue: number | null;
+  /** 任意のラベル名 */
+  label?: string;
   /** ラベルと入力欄横並びフラグ */
   sideBySideFlg?: boolean;
   /** 入力欄の幅 */
-  inputWidth?: string
+  inputWidth?: string;
   /** サイズ */
-  size?: string,
+  size?: string;
   /** 必須フラグ */
-  requiredFlg?: boolean
+  requiredFlg?: boolean;
   /** 無効フラグ */
-  disableFlg?: boolean
+  disableFlg?: boolean;
 }
 
-interface Emits<T = unknown> {
+interface Emits {
   (e: 'update:fromInputValue', number: number): number;
   (e: 'update:toInputValue', number: number): number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  fromInputValue: null,
-  toInputValue: null,
-  fromLabel: '',
-  toLabel: '',
+  label: '',
   sideBySideFlg: false,
   inputWidth: 'w-3/4',
   size: 'md',
   requiredFlg: false,
   disableFlg: false
 });
-const emit = defineEmits<Emits>();
+const emits = defineEmits<Emits>();
 
 const fromInputValue = computed({
   get: () => props.fromInputValue,
   set: (value) => {
-    emit('update:fromInputValue', value!);
+    emits('update:fromInputValue', value!);
   },
 });
 const toInputValue = computed({
   get: () => props.toInputValue,
   set: (value) => {
-    emit('update:toInputValue', value!);
+    emits('update:toInputValue', value!);
   },
 });
 

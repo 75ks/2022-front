@@ -8,68 +8,60 @@
       <div class="flex items-center">
         <CustomButton
           @click="search"
-          :name="'検索'"
-          class="bg-blue-400 hover:bg-blue-500"
+          :button-name="'検索'"
+          :button-color-number=1
         />
         <CustomButton
           @click="clear"
-          :name="'クリア'"
-          class="bg-gray-400 hover:bg-gray-500 ml-2"
+          :button-name="'クリア'"
+          class="ml-2"
         />
       </div>
     </div>
     <div class="my-4 flex items-center justify-evenly">
       <div>
         <TextInput
-          v-model:inputValue='searchInput.reserveHistoryId'
-          label="顧客ID"
+          v-model:input-value='searchInput.reserveHistoryId'
+          label="予約履歴ID"
         />
       </div>
       <div>
         <TextInput
-          v-model:inputValue='searchInput.customerName'
+          v-model:input-value='searchInput.customerName'
           label="顧客名"
         />
       </div>
       <div>
         <TextInput
-          v-model:inputValue='searchInput.stuffName'
+          v-model:input-value='searchInput.stuffName'
           label="担当スタッフ"
         />
       </div>
       <div>
-        <label for="rank" class="block">ランク</label>
         <Rank
-          v-model:selectValue="searchInput.rank"
-          :select-id="'rank'"
+          v-model:select-value="searchInput.rank"
         />
       </div>
       <div>
-        <label for="menu" class="block">メニュー</label>
         <Menu
-          v-model:selectValue="searchInput.menu"
-          :select-id="'menu'"
+          v-model:select-value="searchInput.menu"
         />
       </div>
     </div>
     <div class="my-4 flex items-center justify-evenly">
         <IntegerFromTo 
-          v-model:fromInputValue="searchInput.priceMin"
-          v-model:toInputValue="searchInput.priceMax"
-          fromLabel="料金(下限)"
-          toLabel="料金(上限)"
+          v-model:from-input-value="searchInput.priceMin"
+          v-model:to-input-value="searchInput.priceMax"
+          label="料金"
         />
         <CalendarFromTo 
-          v-model:fromInputValue="searchInput.reserveDateTimeMin"
-          v-model:toInputValue="searchInput.reserveDateTimeMax"
-          fromLabel="日時(下限)"
-          toLabel="日時(上限)"
+          v-model:from-input-value="searchInput.reserveDateTimeMin"
+          v-model:to-input-value="searchInput.reserveDateTimeMax"
+          label="日時"
         />
       <div>
-        <label for="reserveState" class="block">予約状態</label>
         <ReserveState
-          v-model="searchInput.reserveState"
-          :select-id="'reserveState'"
+          v-model:select-value="searchInput.reserveState"
         />
       </div>
     </div>
@@ -96,13 +88,13 @@ const searchInput = reactive<ReserveSearch>({
   reserveHistoryId: '',
   customerName: '',
   stuffName: '',
-  rank: '',
-  menu: '',
+  rank: '指定なし',
+  menu: '指定なし',
   priceMin: null,
   priceMax: null,
   reserveDateTimeMin: '',
   reserveDateTimeMax: '',
-  reserveState: null
+  reserveState: '指定なし'
 });
 
 /** 「検索」クリックイベント(検索条件でフィルターをかける) */
@@ -130,18 +122,18 @@ const clear = () => {
   searchInput.reserveHistoryId = '';
   searchInput.customerName = '';
   searchInput.stuffName = '';
-  searchInput.rank = '';
-  searchInput.menu = '';
+  searchInput.rank = '指定なし';
+  searchInput.menu = '指定なし';
   searchInput.priceMin = null;
   searchInput.priceMax = null;
   searchInput.reserveDateTimeMin = '';
   searchInput.reserveDateTimeMax = '';
-  searchInput.reserveState = null;
+  searchInput.reserveState = '指定なし';
 }
 
 /** 検索条件入力欄がいずれも空の場合にtrueを返す */
 const emptyInput = () => {
-  return !searchInput.reserveHistoryId && !searchInput.customerName && !searchInput.stuffName && !searchInput.rank && !searchInput.menu && !searchInput.priceMin && !searchInput.priceMax && !searchInput.reserveDateTimeMin && !searchInput.reserveDateTimeMax && !searchInput.reserveState;
+  return !searchInput.reserveHistoryId && !searchInput.customerName && !searchInput.stuffName && searchInput.rank === '指定なし' && searchInput.menu === '指定なし' && !searchInput.priceMin && !searchInput.priceMax && !searchInput.reserveDateTimeMin && !searchInput.reserveDateTimeMax && searchInput.reserveState === '指定なし';
 }
 
 /** 予約履歴IDフィルター(完全一致) */
@@ -178,7 +170,7 @@ const searchStuffName = (tmpReserveList: ReserveData[]) => {
 
 /** ランクフィルター(完全一致) */
 const searchRank = (tmpReserveList: ReserveData[]) => {
-  if (searchInput.rank) {
+  if (searchInput.rank !== '指定なし') {
     tmpReserveList = tmpReserveList.filter(obj => searchInput.rank == obj.rank);
   }
   return tmpReserveList;
@@ -186,7 +178,7 @@ const searchRank = (tmpReserveList: ReserveData[]) => {
 
 /** メニューフィルター(完全一致) */
 const searchMenu = (tmpReserveList: ReserveData[]) => {
-  if (searchInput.menu) {
+  if (searchInput.menu !== '指定なし') {
     tmpReserveList = tmpReserveList.filter(obj => searchInput.menu == obj.menu);
   }
   return tmpReserveList;
@@ -237,7 +229,7 @@ const searchReserveDateTime = (tmpReserveList: ReserveData[]) => {
 
 /** 予約状態フィルター(完全一致) */
 const searchReserveState = (tmpReserveList: ReserveData[]) => {
-  if (searchInput.reserveState) {
+  if (searchInput.reserveState !== '指定なし') {
     tmpReserveList = tmpReserveList.filter(obj => searchInput.reserveState == obj.reserveState);
   }
   return tmpReserveList;
