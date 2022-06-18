@@ -4,13 +4,13 @@
       <p class="pb-10 text-center font-bold text-2xl">ログイン</p>
       <div class="w-2/3 m-auto pb-5">
         <EmailInput
-          v-model:input-value="form.email"
+          v-model:input-value="loginForm.email"
           label="メールアドレス"
         />
       </div>
       <div class="w-2/3 m-auto pb-10">
         <PasswordInput
-          v-model:input-value="form.password"
+          v-model:input-value="loginForm.password"
           label="パスワード"
         />
       </div>
@@ -31,19 +31,19 @@ import { reactive } from 'vue';
 import EmailInput from '../components/Common/EmailInput.vue';
 import PasswordInput from '../components/Common/PasswordInput.vue';
 import CustomButton from '../components/Common/CustomButton.vue';
-import { Login } from '../models/form/Login';
+import { LoginForm } from '../models/form/LoginForm';
 import { useAuthorizationStore } from '../store/authorization';
 
 const authorizationStore = useAuthorizationStore();
 
-const form = reactive<Login>({
+const loginForm = reactive<LoginForm>({
   email: '',
   password: ''
 });
 
 /** 「ログイン」クリックイベント(ログイン処理をする) */
 const login = () => {
-  authorizationStore.fetchLogin(form);
+  authorizationStore.fetchLogin(loginForm);
 }
 </script>
 

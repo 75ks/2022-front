@@ -1,4 +1,4 @@
-export interface Login {
+export interface LoginForm {
   /** メールアドレス */
   email: string;
   /** パスワード */

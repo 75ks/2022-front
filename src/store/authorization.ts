@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { Authorization } from '../models/Authorization';
-import { Login } from '../models/form/Login';
+import { LoginForm } from '../models/form/LoginForm';
 import axios from '../plugins/axios';
 
 export const useAuthorizationStore = defineStore({
@@ -18,7 +18,7 @@ export const useAuthorizationStore = defineStore({
       const { data } = await axios.post("/signUp/", reqForm);
       this.addAuthorization(data);
     },
-    async fetchLogin(reqForm: Login): Promise<void> {
+    async fetchLogin(reqForm: LoginForm): Promise<void> {
       const { data } = await axios.post("/login/", reqForm);
       this.addAuthorization(data);
     },

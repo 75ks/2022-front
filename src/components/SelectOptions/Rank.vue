@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import axios from '../../plugins/axios';
-import { SelectOption } from '../../models/types/selectOption';
+import { SelectOption } from '../../models/selectOption';
 import { computed,ref } from 'vue';
 interface Props {
   /** 選択値 */
