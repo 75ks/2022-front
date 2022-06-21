@@ -15,11 +15,11 @@ export const useAuthorizationStore = defineStore({
   },
   actions: {
     async fetchSignUp(reqForm: string): Promise<void> {
-      const { data } = await axios.post("/signUp/", reqForm);
+      const { data } = await axios.post("/authorization/signUp/", reqForm);
       this.addAuthorization(data);
     },
     async fetchLogin(reqForm: LoginForm): Promise<void> {
-      const { data } = await axios.post("/login/", reqForm);
+      const { data } = await axios.post("/authorization/login/", reqForm);
       this.addAuthorization(data);
     },
     addAuthorization(obj: Authorization): void {
@@ -29,4 +29,7 @@ export const useAuthorizationStore = defineStore({
       Object.assign(this.authorization, new Authorization);
     }
   },
+  persist: {
+    enabled: true
+  }
 })
