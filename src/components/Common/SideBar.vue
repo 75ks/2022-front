@@ -28,18 +28,30 @@
       </div>
       <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
     </router-link>
-    <router-link to="/login" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
+    <div
+      @click="logout"
+      class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
       <div class="flex items-center">
         <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" class="w-4 h-4 pr-2 font-black" />
         <p>ログアウト</p>
       </div>
       <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
-    </router-link>
+    </div>
   </div>
   <div class="w-1/5"></div>
 </template>
 
 <script setup lang="ts">
+import { useAuthorizationStore } from '../../store/authorization';
+import { useRouter } from 'vue-router'
+
+const authorizationStore = useAuthorizationStore();
+const router = useRouter();
+
+const logout = () => {
+  authorizationStore.resetAuthorization();
+  router.push("/login");
+}
 </script>
 
 <style>

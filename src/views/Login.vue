@@ -33,8 +33,10 @@ import PasswordInput from '../components/Common/PasswordInput.vue';
 import CustomButton from '../components/Common/CustomButton.vue';
 import { LoginForm } from '../models/form/LoginForm';
 import { useAuthorizationStore } from '../store/authorization';
+import { useRouter } from 'vue-router'
 
 const authorizationStore = useAuthorizationStore();
+const router = useRouter();
 
 const loginForm = reactive<LoginForm>({
   email: '',
@@ -42,8 +44,13 @@ const loginForm = reactive<LoginForm>({
 });
 
 /** 「ログイン」クリックイベント(ログイン処理をする) */
-const login = () => {
-  authorizationStore.fetchLogin(loginForm);
+const login = async () => {
+  await authorizationStore.fetchLogin(loginForm);
+  if (authorizationStore.getAuthorization.jwt) {
+    router.push("/reserveList");
+  } else {
+    alert("メールアドレスまたはパスワードが違います");
+  }
 }
 </script>
 
