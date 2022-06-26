@@ -24,14 +24,14 @@
 </template>
 
 <script setup lang="ts">
-import { ReserveData } from '../../models/types/Reserve';
+import { Reserve } from '../../models/Reserve';
 import { datetimeFormat } from '../../utils/Format';
 
 interface Props {
   /** モーダル表示フラグ */
   isVisibleModal: boolean;
   /** モーダルが表示するデータ */
-  modalReserveData: ReserveData;
+  modalReserveData: Reserve;
 }
 
 interface Emits {

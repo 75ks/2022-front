@@ -1,9 +1,12 @@
 <template>
-  <label for="rank" class="block">ランク</label>
+  <label for="rank" class="block">
+    ランク<span v-if="requiredFlg" class="text-red-600">*</span>
+  </label>
   <select
     v-model="selectValue"
     id="rank"
     class="w-48 px-2 py-1 border border-gray-300 active:outline-none focus:outline-none rounded"
+    :class="[requiredFlg ? 'bg-yellow-100' : '']"
   >
     <option v-for="option of selectOptionList" :key="option.code" :value="option.name">
       {{ option.name }}
@@ -13,18 +16,22 @@
 
 <script setup lang="ts">
 import axios from '../../plugins/axios';
-import { SelectOption } from '../../models/types/selectOption';
+import { SelectOption } from '../../models/selectOption';
 import { computed,ref } from 'vue';
 interface Props {
   /** 選択値 */
   selectValue: string;
+  /** 必須フラグ */
+  requiredFlg?: boolean;
 }
 
 interface Emits {
   (e: 'update:selectValue', text: string): string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  requiredFlg: false
+});
 
 const emits = defineEmits<Emits>();
 

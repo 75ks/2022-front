@@ -1,14 +1,14 @@
 <template>
-  <label for="menu" class="block">
-    メニュー<span v-if="requiredFlg" class="text-red-600">*</span>
+  <label for="storeName" class="block">
+    店舗名<span v-if="requiredFlg" class="text-red-600">*</span>
   </label>
   <select
     v-model="selectValue"
-    id="menu"
+    id="storeName"
     class="w-48 px-2 py-1 border border-gray-300 active:outline-none focus:outline-none rounded"
     :class="[requiredFlg ? 'bg-yellow-100' : '']"
   >
-    <option v-for="option of selectOptionList" :key="option.code" :value="option.name">
+    <option v-for="option of selectOptionList" :key="option.code" :value="option.code">
       {{ option.name }}
     </option>
   </select>
@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import axios from '../../plugins/axios';
 import { SelectOption } from '../../models/selectOption';
-import { computed, ref } from 'vue';
+import { computed,ref } from 'vue';
 interface Props {
   /** 選択値 */
   selectValue: string;
@@ -45,7 +45,7 @@ const selectValue = computed({
 const selectOptionList = ref<SelectOption[]>();
 
 const getSelectOption = async () => {
-  const { data } = await axios.get("/selectOption/menus");
+  const { data } = await axios.get("/selectOption/storeNames");
   selectOptionList.value = data;
 }
 

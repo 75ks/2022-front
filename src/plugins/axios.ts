@@ -1,5 +1,6 @@
 import router from '../router/index';
 import { MessageStatus } from '../constants/MessageStatus';
+import { useAuthorizationStore } from '../store/authorization';
 import axios from "axios";
 
 const instance = axios.create();
@@ -8,10 +9,9 @@ const instance = axios.create();
 instance.interceptors.request.use(
   (config) => {
     config.baseURL = "http://localhost:3000/api";
-    config.timeout = 5000;
     config.headers = {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + "DUMMY_JWT_TOKEN"
+      "Authorization": "Bearer " + useAuthorizationStore().getAuthorization.jwt
     }
     return config;
   }

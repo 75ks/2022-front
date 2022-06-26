@@ -1,24 +1,23 @@
 import { defineStore } from 'pinia';
-import { ReserveData } from '../models/types/Reserve';
+import { Reserve } from '../models/Reserve';
 import axios from '../plugins/axios';
 
 export const useReserveStore = defineStore({
   id: "reserve",
   state: () => ({
-    reserves: [] as ReserveData[]
+    reserves: [] as Reserve[]
   }),
   getters: {
-    getReserves(state): ReserveData[] {
+    getReserves(state): Reserve[] {
       return state.reserves;
     },
   },
   actions: {
     async fetchReserves(): Promise<void> {
-      this.resetReserves();
       const { data } = await axios.get("/reserves/");
       this.addReserves(data);
     },
-    addReserves(array: ReserveData[]): void {
+    addReserves(array: Reserve[]): void {
       this.resetReserves();
       array.forEach(obj => {
         this.reserves.push(obj);
