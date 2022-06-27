@@ -48,7 +48,9 @@ import { useRouter } from 'vue-router'
 const authorizationStore = useAuthorizationStore();
 const router = useRouter();
 
-const logout = () => {
+/** ログアウトボタンクリックイベント */
+const logout = async () => {
+  await authorizationStore.fetchLogout();
   authorizationStore.resetAuthorization();
   router.push("/login");
 }

@@ -22,6 +22,9 @@ export const useAuthorizationStore = defineStore({
       const { data } = await axios.post("/authorization/login/", reqForm);
       this.addAuthorization(data);
     },
+    async fetchLogout(): Promise<void> {
+      await axios.get("/authorization/logout/");
+    },
     addAuthorization(obj: Authorization): void {
       Object.assign(this.authorization, obj);
     },
