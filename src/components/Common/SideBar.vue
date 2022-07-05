@@ -49,9 +49,7 @@ const authorizationStore = useAuthorizationStore();
 const router = useRouter();
 
 /** ログアウトボタンクリックイベント */
-const logout = async () => {
-  await authorizationStore.fetchLogout();
-  authorizationStore.resetAuthorization();
+const logout = () => {
   router.push("/login");
 }
 </script>

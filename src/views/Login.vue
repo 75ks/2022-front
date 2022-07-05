@@ -38,6 +38,9 @@ import { useRouter } from 'vue-router'
 const authorizationStore = useAuthorizationStore();
 const router = useRouter();
 
+authorizationStore.fetchLogout();
+authorizationStore.resetAuthorization();
+
 const loginForm = reactive<LoginForm>({
   email: '',
   password: ''

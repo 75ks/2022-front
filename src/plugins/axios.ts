@@ -1,6 +1,7 @@
 import router from '../router/index';
 import { MessageStatus } from '../constants/MessageStatus';
 import { useAuthorizationStore } from '../store/authorization';
+import { useMessageStore } from '../store/message';
 import axios from "axios";
 
 const instance = axios.create();
@@ -20,18 +21,26 @@ instance.interceptors.request.use(
 // レスポンス受信後の共通処理
 instance.interceptors.response.use(
   (response) => {
-    // if (response.status === 200 && response.data.messageList) {
-    // }
+    // レスポンスにメッセージが存在する場合、メッセージを設定する
+    if (response.data.messageList) {
+      useMessageStore().addMessageList(response.data.messageList);
+      // ステータスが200の場合、ステータスに「成功」を設定する
+      if (response.status === 200) {
+        useMessageStore().addMessageType(MessageStatus.Success);
+      }
+    }
     return response;
   },
   async (error) => {
-    // if (error.response.status === 400 && error.response.data.messageList) {
-    // } else if (error.response.status === 401) {
-    //   console.log('ユーザー認証に失敗しました。再度ログインしてください', error);
-    //   router.push('/signIn');
-    // } else {
-    //   console.log('API通信中にエラーが発生しました', error);
-    // }
+    // レスポンスにメッセージが存在する場合、メッセージと、ステータスに「失敗」を設定する
+    if (error.response.data.messageList) {
+      useMessageStore().addMessageList(error.response.data.messageList);
+      useMessageStore().addMessageType(MessageStatus.Failure);
+    } 
+    // ステータスが401の場合、ログイン画面に遷移する
+    if (error.response.status === 401) {
+      router.push('/signIn');
+    }
     return Promise.reject(error);
   }
 );
