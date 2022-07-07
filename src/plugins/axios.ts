@@ -39,7 +39,7 @@ instance.interceptors.response.use(
     } 
     // ステータスが401の場合、ログイン画面に遷移する
     if (error.response.status === 401) {
-      router.push('/signIn');
+      router.push('/login');
     }
     return Promise.reject(error);
   }
