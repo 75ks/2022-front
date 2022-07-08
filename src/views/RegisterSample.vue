@@ -1,6 +1,15 @@
 <template>
   <div class="w-full h-full">
     <p class="pb-10 text-center font-bold text-2xl">スタッフ登録サンプル</p>
+    <div
+      v-if="message.messageList.length"
+      class="pb-10 w-1/3 m-auto"
+      :class="message.messageType == MessageStatus.Failure ? 'text-red-500' : 'text-green-500'"
+    >
+      <ul v-for="(mes, index) in message.messageList" :key="index">
+        <li>※{{ mes }}</li>
+      </ul>
+    </div>
     <div class="w-1/3 m-auto">
       <StoreName
         v-model:select-value="registerForm.storeId"
@@ -46,7 +55,7 @@
       />
       <PasswordInput
         v-model:input-value="passwordConfirmation"
-        label="パスワード"
+        label="パスワード（確認用）"
         :requiredFlg=true
       />
       <CustomButton
@@ -68,8 +77,16 @@ import StoreName from '../components/SelectOptions/StoreName.vue';
 import Rank from '../components/SelectOptions/Rank.vue';
 import Gender from '../components/SelectOptions/Gender.vue';
 import { RegisterSampleForm } from '../models/form/RegisterSampleForm';
-import { reactive, ref } from 'vue';
+import { MessageStatus } from '../constants/MessageStatus';
+import { reactive, ref, computed } from 'vue';
 import axios from '../plugins/axios';
+import { useMessageStore } from '../store/message';
+
+const messageStore = useMessageStore();
+
+const message = computed(() => {
+  return messageStore.getMessage;
+});
 
 /** スタッフ登録フォーム */
 const registerForm = reactive<RegisterSampleForm>({
@@ -86,24 +103,13 @@ const registerForm = reactive<RegisterSampleForm>({
 /** パスワード確認用(リクエストに含めないため、スタッフ登録フォームと分離させている) */
 const passwordConfirmation = ref<string>('');
 
-/** スタッフ登録フォームが空がない場合にtrueを返す */
-const notEmptyForm = () => {
-  return registerForm.storeId !== '' && registerForm.storeId !== '0' && registerForm.lastName !== '' && registerForm.firstName !== '' && registerForm.lastNameKana !== '' && registerForm.firstNameKana !== ''
-    && registerForm.rank !== '' && registerForm.rank !== '指定なし' && registerForm.gender !== '' && registerForm.gender !== '指定なし'
-    && registerForm.email !== '' && registerForm.password !== '';
-}
-
 /** 登録ボタンクリックイベント */
 const register = async () => {
-  if (notEmptyForm()) {
-    if (registerForm.password === passwordConfirmation.value) {
-      // サンプルのため、Storeを作成せず直接APIを実行(本来はStuff用のStoreを作成する)
-      await axios.post("/sample/", registerForm);
-    } else {
-      alert('メールアドレスまたはパスワードが違います')
-    }
+  if (registerForm.password === passwordConfirmation.value) {
+    // サンプルのため、Storeを作成せず直接APIを実行(本来はStuff用のStoreを作成する)
+    await axios.post("/sample/", registerForm);
   } else {
-    alert('必須項目を入力してください');
+    alert('パスワードが一致しません');
   }
 }
 </script>
