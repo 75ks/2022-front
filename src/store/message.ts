@@ -23,6 +23,9 @@ export const useMessageStore = defineStore({
     },
     resetMessageList(): void {
       this.message.messageList.splice(0);
+    },
+    resetMessageType(): void {
+      this.message.messageType = '';
     }
   }
 })
