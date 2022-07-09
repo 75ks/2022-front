@@ -32,7 +32,7 @@
     </table>
     <Modal
       :is-visible-modal="isVisibleModal"
-      :modal-reserve-data="modalReserveData!"
+      :modal-reserve-data="modalReserveData"
       @close="closeModal"
     />
   </div>
@@ -40,20 +40,20 @@
 
 <script setup lang="ts">
 import Modal from './Modal.vue';
-import { ReserveData } from '../../models/types/Reserve';
-import { datetimeFormat } from '../../utils/Format';
+import { Reserve } from '../../../models/Reserve';
+import { datetimeFormat } from '../../../utils/Format';
 import { ref } from 'vue';
 
 const props = defineProps<{
-  reserveList: ReserveData[]
+  reserveList: Reserve[]
 }>();
 
 /** モーダルに渡すデータ */
-const modalReserveData = ref<ReserveData>();
+const modalReserveData = ref<Reserve>();
 /** モーダル表示フラグ */
 const isVisibleModal = ref<boolean>(false);
 /** レコードクリックイベント(モーダルを表示する) */
-const showModal = (reserveData: ReserveData) => {
+const showModal = (reserveData: Reserve) => {
   modalReserveData.value = reserveData;
   isVisibleModal.value = true;
 }

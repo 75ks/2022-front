@@ -1,13 +1,21 @@
 import * as vueRouter from "vue-router";
 import Test from '../views/Test.vue';
+import ComponentsSample from '../views/ComponentsSample.vue';
 import ReserveList from '../views/ReserveList.vue';
 import CustomerCreate from '../views/CustomerCreate.vue';
 import Todo from '../views/Todo.vue';
+import Login from '../views/Login.vue';
+import RegisterSample from '../views/RegisterSample.vue';
+import RegisterSampleRev from '../views/RegisterSampleRev.vue';
 
 const routes = [
   {
     path: "/",
     component: Test,
+  },
+  {
+    path: "/componentsSample",
+    component: ComponentsSample,
   },
   {
     path: "/reserveList",
@@ -20,6 +28,16 @@ const routes = [
   {
     path: "/todo",
     component: Todo,
+    path: "/login",
+    component: Login,
+  },
+  {
+    path: "/registerSample",
+    component: RegisterSample,
+  },
+  {
+    path: "/registerSampleRev",
+    component: RegisterSampleRev,
   },
 ];
 
