@@ -18,14 +18,14 @@ export const useMessageStore = defineStore({
         this.message.messageList.push(obj);
       });
     },
-    addMessageType(obj: string): void {
+    addMessageType(obj: number): void {
       this.message.messageType = obj;
     },
     resetMessageList(): void {
       this.message.messageList.splice(0);
     },
     resetMessageType(): void {
-      this.message.messageType = '';
+      this.message.messageType = null;
     }
   }
 })

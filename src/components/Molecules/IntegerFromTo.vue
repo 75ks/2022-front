@@ -1,7 +1,8 @@
 <template>
   <div class="flex items-end justify-center">
-    <IntegerInput
+    <CustomInputWithLabel
       v-model:inputValue='fromInputValue'
+      type="number"
       :label="label"
       :sideBySideFlg="sideBySideFlg"
       :inputWidth="inputWidth"
@@ -11,8 +12,9 @@
 
     />
     <span class="mx-2 mb-1">〜</span>
-    <IntegerInput
+    <CustomInputWithLabel
       v-model:inputValue='toInputValue'
+      type="number"
       :sideBySideFlg="sideBySideFlg"
       :inputWidth="inputWidth"
       :size="size"
@@ -24,7 +26,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import IntegerInput from './IntegerInput.vue';
+import CustomInputWithLabel from './InputWithLabel.vue';
 
 interface Props {
   /** 入力値(下限) */

@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthorizationStore } from '../../store/authorization';
+import { useAuthorizationStore } from '../../../store/authorization';
 import { useRouter } from 'vue-router'
 
 const authorizationStore = useAuthorizationStore();

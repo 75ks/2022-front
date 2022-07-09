@@ -20,48 +20,54 @@
     </div>
     <div class="my-4 flex items-center justify-evenly">
       <div>
-        <TextInput
+        <InputWithLabel
           v-model:input-value='searchForm.reserveHistoryId'
           label="予約履歴ID"
         />
       </div>
       <div>
-        <TextInput
+        <InputWithLabel
           v-model:input-value='searchForm.customerName'
           label="顧客名"
         />
       </div>
       <div>
-        <TextInput
+        <InputWithLabel
           v-model:input-value='searchForm.stuffName'
           label="担当スタッフ"
         />
       </div>
       <div>
-        <Rank
+        <SelectBoxWithLabel
           v-model:select-value="searchForm.rank"
+          targetUrl="/selectOption/ranks"
+          label="ランク"
         />
       </div>
       <div>
-        <Menu
+        <SelectBoxWithLabel
           v-model:select-value="searchForm.menu"
+          targetUrl="/selectOption/ranks"
+          label="ランク"
         />
       </div>
     </div>
     <div class="my-4 flex items-center justify-evenly">
-        <IntegerFromTo 
+        <IntegerFromTo
           v-model:from-input-value="searchForm.priceMin"
           v-model:to-input-value="searchForm.priceMax"
           label="料金"
         />
-        <CalendarFromTo 
+        <CalendarFromTo
           v-model:from-input-value="searchForm.reserveDateTimeMin"
           v-model:to-input-value="searchForm.reserveDateTimeMax"
           label="日時"
         />
       <div>
-        <ReserveState
+        <SelectBoxWithLabel
           v-model:select-value="searchForm.reserveState"
+          targetUrl="/selectOption/reserveStates"
+          label="予約状態"
         />
       </div>
     </div>
@@ -69,17 +75,15 @@
 </template>
 
 <script setup lang="ts">
-import CustomButton from '../Common/CustomButton.vue';
-import ReserveState from '../SelectOptions/ReserveState.vue';
-import Rank from '../SelectOptions/Rank.vue';
-import Menu from '../SelectOptions/Menu.vue';
+import CustomButton from '../../Atoms/Button/CustomButton.vue';
 import { reactive } from 'vue';
-import { Reserve } from '../../models/Reserve';
-import { ReserveSearchForm } from '../../models/form/ReserveSearchForm';
-import { useReserveStore } from '../../store/reserve';
-import TextInput from '../Common/TextInput.vue';
-import IntegerFromTo from '../Common/IntegerFromTo.vue';
-import CalendarFromTo from '../Common/CalendarFromTo.vue';
+import { Reserve } from '../../../models/Reserve';
+import { ReserveSearchForm } from '../../../models/form/ReserveSearchForm';
+import { useReserveStore } from '../../../store/reserve';
+import IntegerFromTo from '../../Molecules/IntegerFromTo.vue';
+import CalendarFromTo from '../../Molecules/CalendarFromTo.vue';
+import InputWithLabel from '../../Molecules/InputWithLabel.vue';
+import SelectBoxWithLabel from '../../Molecules/SelectBoxWithLabel.vue';
 
 const reserveStore = useReserveStore();
 

@@ -1,38 +1,37 @@
 <template>
-  <div
-    :class="sideBySideFlg ? 'flex justify-between items-center': ''"
-  >
-    <label
-      v-if="label"
-      :for="uniqueId"
-      class="font-medium text-gray-700"
-      :class="[`text-${size}`]"
-    >
-      {{ label }}<span v-if="requiredFlg" class="text-red-600">*</span>
-    </label>
+  <div :class="sideBySideFlg ? 'flex justify-between items-center' : ''">
+    <InputLabel
+      :label="label"
+      :size="size"
+      :requiredFlg="requiredFlg"
+      :uniqueId="uniqueId"
+    />
     <div
       class="mt-1 rounded-md shadow-sm"
       :class="sideBySideFlg ? inputWidth : 'w-full'"
     >
-      <input
-        type="number"
-        step="1000"
-        :id="uniqueId"
-        v-model="inputValue"
-        class="w-full px-2 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline outline-blue-300"
-        :class="[`text-${size}`, disableFlg ? 'bg-gray-300' : requiredFlg ? 'bg-yellow-100' : '']"
-        :disabled="disableFlg"
+      <CustomInput
+        v-model:inputValue="inputValue"
+        :type="type"
+        :size="size"
+        :requiredFlg="requiredFlg"
+        :disableFlg="disableFlg"
+        :uniqueId="uniqueId"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed} from 'vue';
+import { computed } from "vue";
+import InputLabel from '../Atoms/label/InputLabel.vue';
+import CustomInput from '../Atoms/Input/CustomInput.vue';
 
 interface Props {
   /** 入力値 */
-  inputValue: number | null;
+  inputValue: string | number | null;
+  /** type */
+  type?: string;
   /** 任意のラベル名 */
   label?: string;
   /** ラベルと入力欄横並びフラグ */
@@ -48,23 +47,24 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'update:inputValue', value: number): number;
+  (e: "update:inputValue", value: string | number | null): string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  label: '',
+  type: "text",
+  label: "",
   sideBySideFlg: false,
-  inputWidth: 'w-3/4',
-  size: 'md',
+  inputWidth: "w-3/4",
+  size: "md",
   requiredFlg: false,
-  disableFlg: false
+  disableFlg: false,
 });
 const emits = defineEmits<Emits>();
 
 const inputValue = computed({
   get: () => props.inputValue,
   set: (value) => {
-    emits('update:inputValue', value!);
+    emits("update:inputValue", value);
   },
 });
 
@@ -72,7 +72,6 @@ const inputValue = computed({
 const uniqueId = computed(() => {
   return Math.random().toString(32).substring(2);
 });
-
 </script>
 
 <style></style>

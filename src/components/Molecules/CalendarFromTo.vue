@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-end justify-center">
-    <CalenderInput
+    <CalendarInput
       v-model:inputValue='fromInputValue'
       :label="label"
       :sideBySideFlg="sideBySideFlg"
@@ -11,7 +11,7 @@
 
     />
     <span class="mx-2 mb-1">〜</span>
-    <CalenderInput
+    <CalendarInput
       v-model:inputValue='toInputValue'
       :sideBySideFlg="sideBySideFlg"
       :inputWidth="inputWidth"
@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import CalenderInput from './CalendarInput.vue';
+import CalendarInput from '../Atoms/Input/CalendarInput.vue';
 
 interface Props {
   /** 入力値(下限) */

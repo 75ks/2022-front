@@ -24,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import { Reserve } from '../../models/Reserve';
-import { datetimeFormat } from '../../utils/Format';
+import { Reserve } from '../../../models/Reserve';
+import { datetimeFormat } from '../../../utils/Format';
 
 interface Props {
   /** モーダル表示フラグ */

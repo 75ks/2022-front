@@ -5,22 +5,24 @@
       <div
         v-if="message.messageList.length"
         class="pb-10 w-2/3 m-auto"
-        :class="message.messageType == MessageStatus.Failure ? 'text-red-500' : 'text-green-500'"
+        :class="message.messageType === MessageStatus.DANGER.code ? 'text-red-500' : 'text-green-500'"
       >
         <ul v-for="(mes, index) in message.messageList" :key="index">
           <li>※{{ mes }}</li>
         </ul>
       </div>
       <div class="w-2/3 m-auto pb-5">
-        <EmailInput
+        <CustomInputWithLabel
           v-model:input-value="loginForm.email"
           label="メールアドレス"
+          type="email"
         />
       </div>
       <div class="w-2/3 m-auto pb-10">
-        <PasswordInput
+        <CustomInputWithLabel
           v-model:input-value="loginForm.password"
           label="パスワード"
+          type="password"
         />
       </div>
       <div class="w-2/3 m-auto text-center">
@@ -37,9 +39,8 @@
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue';
-import EmailInput from '../components/Common/EmailInput.vue';
-import PasswordInput from '../components/Common/PasswordInput.vue';
-import CustomButton from '../components/Common/CustomButton.vue';
+import CustomInputWithLabel from '../components/Molecules/InputWithLabel.vue';
+import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { LoginForm } from '../models/form/LoginForm';
 import { MessageStatus } from '../constants/MessageStatus';
 import { useAuthorizationStore } from '../store/authorization';
