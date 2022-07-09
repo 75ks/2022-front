@@ -4,6 +4,7 @@ import ComponentsSample from '../views/ComponentsSample.vue';
 import ReserveList from '../views/ReserveList.vue';
 import Login from '../views/Login.vue';
 import RegisterSample from '../views/RegisterSample.vue';
+import RegisterSampleRev from '../views/RegisterSampleRev.vue';
 
 const routes = [
   {
@@ -25,6 +26,10 @@ const routes = [
   {
     path: "/registerSample",
     component: RegisterSample,
+  },
+  {
+    path: "/registerSampleRev",
+    component: RegisterSampleRev,
   },
 ];
 
