@@ -1,36 +1,37 @@
 <template>
-  <div
-    :class="sideBySideFlg ? 'flex justify-between items-center': ''"
-  >
-    <label
-      v-if="label"
-      :for="uniqueId"
-      class="font-medium text-gray-700"
-      :class="[`text-${size}`]"
-    >
-      {{ label }}<span v-if="requiredFlg" class="text-red-600">*</span>
-    </label>
+  <div :class="sideBySideFlg ? 'flex justify-between items-center' : ''">
+    <InputLabel
+      :label="label"
+      :size="size"
+      :requiredFlg="requiredFlg"
+      :uniqueId="uniqueId"
+    />
     <div
       class="mt-1 rounded-md shadow-sm"
       :class="sideBySideFlg ? inputWidth : 'w-full'"
     >
-      <input
-        :id="uniqueId"
-        v-model="inputValue"
-        class="w-full px-2 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline outline-blue-300"
-        :class="[`text-${size}`, disableFlg ? 'bg-gray-300' : requiredFlg ? 'bg-yellow-100' : '']"
-        :disabled="disableFlg"
+      <SelectBox
+        v-model:inputValue="inputValue"
+        :options="options"
+        :size="size"
+        :requiredFlg="requiredFlg"
+        :disableFlg="disableFlg"
+        :uniqueId="uniqueId"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
+import InputLabel from "../Atoms/label/InputLabel.vue";
+import SelectBox, { SelectOption } from "../Atoms/Input/SelectBox.vue";
 
 interface Props {
   /** 入力値 */
-  inputValue: string;
+  inputValue: number | string | null;
+  /** 選択リスト */
+  options?: SelectOption[];
   /** 任意のラベル名 */
   label?: string;
   /** ラベルと入力欄横並びフラグ */
@@ -46,31 +47,31 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'update:inputValue', value: string): string;
+  (e: "update:inputValue", value: number | string | null): string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  label: '',
+  options: () => [],
+  label: "",
   sideBySideFlg: false,
-  inputWidth: 'w-3/4',
-  size: 'md',
+  inputWidth: "w-3/4",
+  size: "md",
   requiredFlg: false,
-  disableFlg: false
+  disableFlg: false,
 });
 const emits = defineEmits<Emits>();
 
 const inputValue = computed({
   get: () => props.inputValue,
   set: (value) => {
-    emits('update:inputValue', value);
-  }
+    emits("update:inputValue", value);
+  },
 });
 
 /** ユニークID */
 const uniqueId = computed(() => {
   return Math.random().toString(32).substring(2);
 });
-
 </script>
 
 <style></style>

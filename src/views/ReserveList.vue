@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import Header from '../components/Common/Header.vue';
+import Header from '../components/Atoms/Layout/Header.vue';
 import ReserveSearchHeader from '../components/ReserveList/ReserveSearchHeader.vue';
 import ReserveSearchDetail from '../components/ReserveList/ReserveSearchDetail.vue';
 import { computed } from 'vue';

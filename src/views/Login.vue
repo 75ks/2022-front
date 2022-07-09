@@ -3,15 +3,17 @@
     <div class="w-1/2 m-auto p-8 mt-20 bg-white">
       <p class="pb-10 text-center font-bold text-2xl">ログイン</p>
       <div class="w-2/3 m-auto pb-5">
-        <EmailInput
+        <CustomInputWithLabel
           v-model:input-value="loginForm.email"
           label="メールアドレス"
+          type="email"
         />
       </div>
       <div class="w-2/3 m-auto pb-10">
-        <PasswordInput
+        <CustomInputWithLabel
           v-model:input-value="loginForm.password"
           label="パスワード"
+          type="password"
         />
       </div>
       <div class="w-2/3 m-auto text-center">
@@ -28,9 +30,8 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import EmailInput from '../components/Common/EmailInput.vue';
-import PasswordInput from '../components/Common/PasswordInput.vue';
-import CustomButton from '../components/Common/CustomButton.vue';
+import CustomInputWithLabel from '../components/Molecules/CustomInputWithLabel.vue';
+import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { LoginForm } from '../models/form/LoginForm';
 import { useAuthorizationStore } from '../store/authorization';
 import { useRouter } from 'vue-router'

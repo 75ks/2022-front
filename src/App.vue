@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import SideBar from './components/Common/SideBar.vue';
+import SideBar from './components/Atoms/Layout/SideBar.vue';
 </script>
 
 <style>

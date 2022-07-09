@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-end justify-center">
-    <IntegerInput
+    <CalendarInput
       v-model:inputValue='fromInputValue'
       :label="label"
       :sideBySideFlg="sideBySideFlg"
@@ -11,7 +11,7 @@
 
     />
     <span class="mx-2 mb-1">〜</span>
-    <IntegerInput
+    <CalendarInput
       v-model:inputValue='toInputValue'
       :sideBySideFlg="sideBySideFlg"
       :inputWidth="inputWidth"
@@ -24,13 +24,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import IntegerInput from './IntegerInput.vue';
+import CalendarInput from '../Atoms/Input/CalendarInput.vue';
 
 interface Props {
   /** 入力値(下限) */
-  fromInputValue: number | null;
+  fromInputValue: string;
   /** 入力値(上限) */
-  toInputValue: number | null;
+  toInputValue: string;
   /** 任意のラベル名 */
   label?: string;
   /** ラベルと入力欄横並びフラグ */
@@ -46,8 +46,8 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'update:fromInputValue', number: number): number;
-  (e: 'update:toInputValue', number: number): number;
+  (e: 'update:fromInputValue', value: string): string;
+  (e: 'update:toInputValue', value: string): string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -63,13 +63,13 @@ const emits = defineEmits<Emits>();
 const fromInputValue = computed({
   get: () => props.fromInputValue,
   set: (value) => {
-    emits('update:fromInputValue', value!);
+    emits('update:fromInputValue', value);
   },
 });
 const toInputValue = computed({
   get: () => props.toInputValue,
   set: (value) => {
-    emits('update:toInputValue', value!);
+    emits('update:toInputValue', value);
   },
 });
 

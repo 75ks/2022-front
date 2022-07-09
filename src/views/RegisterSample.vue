@@ -6,22 +6,22 @@
         v-model:select-value="registerForm.storeId"
         :requiredFlg=true
       />
-      <TextInput
+      <CustomInputWithLabel
         v-model:input-value="registerForm.lastName"
         label="姓"
         :requiredFlg=true
       />
-      <TextInput
+      <CustomInputWithLabel
         v-model:input-value="registerForm.firstName"
         label="名"
         :requiredFlg=true
       />
-      <TextInput
+      <CustomInputWithLabel
         v-model:input-value="registerForm.lastNameKana"
         label="セイ"
         :requiredFlg=true
       />
-      <TextInput
+      <CustomInputWithLabel
         v-model:input-value="registerForm.firstNameKana"
         label="メイ"
         :requiredFlg=true
@@ -34,19 +34,22 @@
         v-model:select-value="registerForm.gender"
         :requiredFlg=true
       />
-      <EmailInput
+      <CustomInputWithLabel
         v-model:input-value="registerForm.email"
         label="メールアドレス"
+        type="email"
         :requiredFlg=true
       />
-      <PasswordInput
+      <CustomInputWithLabel
         v-model:input-value="registerForm.password"
         label="パスワード"
+        type="password"
         :requiredFlg=true
       />
-      <PasswordInput
+      <CustomInputWithLabel
         v-model:input-value="passwordConfirmation"
         label="パスワード"
+        type="password"
         :requiredFlg=true
       />
       <CustomButton
@@ -60,16 +63,14 @@
 </template>
 
 <script setup lang="ts">
-import CustomButton from '../components/Common/CustomButton.vue';
-import TextInput from '../components/Common/TextInput.vue';
-import EmailInput from '../components/Common/EmailInput.vue';
-import PasswordInput from '../components/Common/PasswordInput.vue';
+import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import StoreName from '../components/SelectOptions/StoreName.vue';
 import Rank from '../components/SelectOptions/Rank.vue';
 import Gender from '../components/SelectOptions/Gender.vue';
 import { RegisterSampleForm } from '../models/form/RegisterSampleForm';
 import { reactive, ref } from 'vue';
 import axios from '../plugins/axios';
+import CustomInputWithLabel from '../components/Molecules/CustomInputWithLabel.vue';
 
 /** スタッフ登録フォーム */
 const registerForm = reactive<RegisterSampleForm>({
