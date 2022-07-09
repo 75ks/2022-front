@@ -44,7 +44,7 @@
         />
         <SelectBoxWithLabel
           label="サイズ"
-          v-model:selectValue="state.textInputWithLabelObj.size"
+          v-model:select-value="state.textInputWithLabelObj.size"
           :options="state.sizeOptions"
           :sideBySideFlg="true"
           inputWidth="w-2/3"
