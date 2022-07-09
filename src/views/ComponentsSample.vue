@@ -44,7 +44,7 @@
         />
         <SelectBoxWithLabel
           label="サイズ"
-          v-model:inputValue="state.textInputWithLabelObj.size"
+          v-model:selectValue="state.textInputWithLabelObj.size"
           :options="state.sizeOptions"
           :sideBySideFlg="true"
           inputWidth="w-2/3"
@@ -57,8 +57,8 @@
 </template>
 
 <script setup lang="ts">
-import TextInputWithLabel from "../components/Molecules/CustomInputWithLabel.vue";
 import { reactive } from "vue";
+import TextInputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import CheckBoxWithLabel from "../components/Molecules/CheckBoxWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import { SelectOption } from "../components/Atoms/Input/SelectBox.vue";

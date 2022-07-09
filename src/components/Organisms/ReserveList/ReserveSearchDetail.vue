@@ -32,7 +32,7 @@
     </table>
     <Modal
       :is-visible-modal="isVisibleModal"
-      :modal-reserve-data="modalReserveData!"
+      :modal-reserve-data="modalReserveData"
       @close="closeModal"
     />
   </div>
@@ -40,8 +40,8 @@
 
 <script setup lang="ts">
 import Modal from './Modal.vue';
-import { Reserve } from '../../models/Reserve';
-import { datetimeFormat } from '../../utils/Format';
+import { Reserve } from '../../../models/Reserve';
+import { datetimeFormat } from '../../../utils/Format';
 import { ref } from 'vue';
 
 const props = defineProps<{

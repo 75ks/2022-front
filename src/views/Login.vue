@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import CustomInputWithLabel from '../components/Molecules/CustomInputWithLabel.vue';
+import CustomInputWithLabel from '../components/Molecules/InputWithLabel.vue';
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { LoginForm } from '../models/form/LoginForm';
 import { useAuthorizationStore } from '../store/authorization';

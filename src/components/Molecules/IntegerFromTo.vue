@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import CustomInputWithLabel from './CustomInputWithLabel.vue';
+import CustomInputWithLabel from './InputWithLabel.vue';
 
 interface Props {
   /** 入力値(下限) */
