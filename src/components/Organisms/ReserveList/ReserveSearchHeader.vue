@@ -47,8 +47,8 @@
       <div>
         <SelectBoxWithLabel
           v-model:select-value="searchForm.menu"
-          targetUrl="/selectOption/ranks"
-          label="ランク"
+          targetUrl="/selectOption/menus"
+          label="メニュー"
         />
       </div>
     </div>
@@ -92,13 +92,13 @@ const searchForm = reactive<ReserveSearchForm>({
   reserveHistoryId: '',
   customerName: '',
   stuffName: '',
-  rank: '指定なし',
-  menu: '指定なし',
+  rank: '0',
+  menu: '0',
   priceMin: null,
   priceMax: null,
   reserveDateTimeMin: '',
   reserveDateTimeMax: '',
-  reserveState: '指定なし'
+  reserveState: '0'
 });
 
 /** 「検索」クリックイベント(検索条件でフィルターをかける) */
@@ -126,18 +126,18 @@ const clear = () => {
   searchForm.reserveHistoryId = '';
   searchForm.customerName = '';
   searchForm.stuffName = '';
-  searchForm.rank = '指定なし';
-  searchForm.menu = '指定なし';
+  searchForm.rank = '0';
+  searchForm.menu = '0';
   searchForm.priceMin = null;
   searchForm.priceMax = null;
   searchForm.reserveDateTimeMin = '';
   searchForm.reserveDateTimeMax = '';
-  searchForm.reserveState = '指定なし';
+  searchForm.reserveState = '0';
 }
 
 /** 検索条件入力欄がいずれも空の場合にtrueを返す */
 const emptyInput = () => {
-  return !searchForm.reserveHistoryId && !searchForm.customerName && !searchForm.stuffName && searchForm.rank === '指定なし' && searchForm.menu === '指定なし' && !searchForm.priceMin && !searchForm.priceMax && !searchForm.reserveDateTimeMin && !searchForm.reserveDateTimeMax && searchForm.reserveState === '指定なし';
+  return !searchForm.reserveHistoryId && !searchForm.customerName && !searchForm.stuffName && searchForm.rank === '0' && searchForm.menu === '0' && !searchForm.priceMin && !searchForm.priceMax && !searchForm.reserveDateTimeMin && !searchForm.reserveDateTimeMax && searchForm.reserveState === '0';
 }
 
 /** 予約履歴IDフィルター(完全一致) */
@@ -174,7 +174,7 @@ const searchStuffName = (tmpReserveList: Reserve[]) => {
 
 /** ランクフィルター(完全一致) */
 const searchRank = (tmpReserveList: Reserve[]) => {
-  if (searchForm.rank !== '指定なし') {
+  if (searchForm.rank !== '0') {
     tmpReserveList = tmpReserveList.filter(obj => searchForm.rank == obj.rank);
   }
   return tmpReserveList;
@@ -182,7 +182,7 @@ const searchRank = (tmpReserveList: Reserve[]) => {
 
 /** メニューフィルター(完全一致) */
 const searchMenu = (tmpReserveList: Reserve[]) => {
-  if (searchForm.menu !== '指定なし') {
+  if (searchForm.menu !== '0') {
     tmpReserveList = tmpReserveList.filter(obj => searchForm.menu == obj.menu);
   }
   return tmpReserveList;
@@ -233,7 +233,7 @@ const searchReserveDateTime = (tmpReserveList: Reserve[]) => {
 
 /** 予約状態フィルター(完全一致) */
 const searchReserveState = (tmpReserveList: Reserve[]) => {
-  if (searchForm.reserveState !== '指定なし') {
+  if (searchForm.reserveState !== '0') {
     tmpReserveList = tmpReserveList.filter(obj => searchForm.reserveState == obj.reserveState);
   }
   return tmpReserveList;
