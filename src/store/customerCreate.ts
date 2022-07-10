@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { CustomerCreateData } from '../models/types/CustomerCreate';
+import { CustomerCreateData } from '../models/CustomerCreate';
 import axios from '../plugins/axios';
 
 export const useCustomerCreateStore = defineStore({

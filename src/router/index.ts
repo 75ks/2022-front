@@ -3,7 +3,6 @@ import Test from '../views/Test.vue';
 import ComponentsSample from '../views/ComponentsSample.vue';
 import ReserveList from '../views/ReserveList.vue';
 import CustomerCreate from '../views/CustomerCreate.vue';
-import Todo from '../views/Todo.vue';
 import Login from '../views/Login.vue';
 import RegisterSample from '../views/RegisterSample.vue';
 import RegisterSampleRev from '../views/RegisterSampleRev.vue';
@@ -26,8 +25,6 @@ const routes = [
     component: CustomerCreate,
   },
   {
-    path: "/todo",
-    component: Todo,
     path: "/login",
     component: Login,
   },
