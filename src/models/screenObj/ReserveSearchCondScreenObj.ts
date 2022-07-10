@@ -1,4 +1,4 @@
-export class ReserveSearchForm {
+export class ReserveSearchCondScreenObj {
   /** 予約履歴ID */
   reserveHistoryId: string = "";
   /** 顧客名 */
