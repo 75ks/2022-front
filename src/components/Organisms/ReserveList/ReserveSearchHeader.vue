@@ -12,7 +12,7 @@
           :button-color-number=1
         />
         <CustomButton
-          @click="clear"
+          @click="clearSearchCond"
           :button-name="'クリア'"
           class="ml-2"
         />
@@ -39,7 +39,7 @@
       </div>
       <div>
         <SelectBoxWithLabel
-          v-model:select-value="searchForm.rank"
+          v-model:select-value="searchForm.rankName"
           targetUrl="/selectOption/ranks"
           label="ランク"
         />
@@ -76,9 +76,7 @@
 
 <script setup lang="ts">
 import CustomButton from '../../Atoms/Button/CustomButton.vue';
-import { reactive } from 'vue';
-import { Reserve } from '../../../models/Reserve';
-import { ReserveSearchForm } from '../../../models/form/ReserveSearchForm';
+import { computed } from 'vue';
 import { useReserveStore } from '../../../store/reserve';
 import IntegerFromTo from '../../Molecules/IntegerFromTo.vue';
 import CalendarFromTo from '../../Molecules/CalendarFromTo.vue';
@@ -88,156 +86,20 @@ import SelectBoxWithLabel from '../../Molecules/SelectBoxWithLabel.vue';
 const reserveStore = useReserveStore();
 
 /** 検索条件入力欄 */
-const searchForm = reactive<ReserveSearchForm>({
-  reserveHistoryId: '',
-  customerName: '',
-  stuffName: '',
-  rank: '0',
-  menu: '0',
-  priceMin: null,
-  priceMax: null,
-  reserveDateTimeMin: '',
-  reserveDateTimeMax: '',
-  reserveState: '0'
-});
+const searchForm = computed(() => {
+  return reserveStore.getSearchCond;
+})
 
 /** 「検索」クリックイベント(検索条件でフィルターをかける) */
 const search = async () => {
-  if (emptyInput()) {
-    alert("検索条件を入力してください");
-  } else {
-    await reserveStore.fetchReserves();
-    let tmpReserveList: Reserve[] = reserveStore.getReserves;
-    tmpReserveList = searchReserveHistoryId(tmpReserveList);
-    tmpReserveList = searchCustomerName(tmpReserveList);
-    tmpReserveList = searchStuffName(tmpReserveList);
-    tmpReserveList = searchRank(tmpReserveList);
-    tmpReserveList = searchMenu(tmpReserveList);
-    tmpReserveList = searchPrice(tmpReserveList);
-    tmpReserveList = searchReserveDateTime(tmpReserveList);
-    tmpReserveList = searchReserveState(tmpReserveList);
-    reserveStore.addReserves(tmpReserveList);
-  }
+  await reserveStore.search(searchForm.value);
 }
 
 /** 「クリア」クリックイベント(検索条件入力欄を初期状態にし、データを再取得する) */
-const clear = () => {
-  reserveStore.fetchReserves();
-  searchForm.reserveHistoryId = '';
-  searchForm.customerName = '';
-  searchForm.stuffName = '';
-  searchForm.rank = '0';
-  searchForm.menu = '0';
-  searchForm.priceMin = null;
-  searchForm.priceMax = null;
-  searchForm.reserveDateTimeMin = '';
-  searchForm.reserveDateTimeMax = '';
-  searchForm.reserveState = '0';
+const clearSearchCond = () => {
+  reserveStore.clearSearchCond();
 }
 
-/** 検索条件入力欄がいずれも空の場合にtrueを返す */
-const emptyInput = () => {
-  return !searchForm.reserveHistoryId && !searchForm.customerName && !searchForm.stuffName && searchForm.rank === '0' && searchForm.menu === '0' && !searchForm.priceMin && !searchForm.priceMax && !searchForm.reserveDateTimeMin && !searchForm.reserveDateTimeMax && searchForm.reserveState === '0';
-}
-
-/** 予約履歴IDフィルター(完全一致) */
-const searchReserveHistoryId = (tmpReserveList: Reserve[]) => {
-  if (searchForm.reserveHistoryId) {
-    tmpReserveList = tmpReserveList.filter(obj => searchForm.reserveHistoryId == obj.reserveHistoryId);
-  }
-  return tmpReserveList;
-}
-
-/** 顧客名フィルター(部分一致) */
-const searchCustomerName = (tmpReserveList: Reserve[]) => {
-  if (searchForm.customerName) {
-    const replaceSearchCustomerName = searchForm.customerName.replace(/\s+/g, '');
-    tmpReserveList = tmpReserveList.filter(obj => {
-      const replaceCustomerName = (obj.customerLastName + obj.customerFirstName).replace(/\s+/g, '');
-      return replaceCustomerName.indexOf(replaceSearchCustomerName) != -1
-    });
-  }
-  return tmpReserveList;
-}
-
-/** 担当スタッフフィルター(部分一致) */
-const searchStuffName = (tmpReserveList: Reserve[]) => {
-  if (searchForm.stuffName) {
-    const replaceSearchStuffName = searchForm.stuffName.replace(/\s+/g, '');
-    tmpReserveList = tmpReserveList.filter(obj => {
-      const replaceStuffName = (obj.stuffLastName + obj.stuffFirstName).replace(/\s+/g, '');
-      return replaceStuffName.indexOf(replaceSearchStuffName) != -1
-    });
-  }
-  return tmpReserveList;
-}
-
-/** ランクフィルター(完全一致) */
-const searchRank = (tmpReserveList: Reserve[]) => {
-  if (searchForm.rank !== '0') {
-    tmpReserveList = tmpReserveList.filter(obj => searchForm.rank == obj.rank);
-  }
-  return tmpReserveList;
-}
-
-/** メニューフィルター(完全一致) */
-const searchMenu = (tmpReserveList: Reserve[]) => {
-  if (searchForm.menu !== '0') {
-    tmpReserveList = tmpReserveList.filter(obj => searchForm.menu == obj.menu);
-  }
-  return tmpReserveList;
-}
-
-/** 料金フィルター(範囲指定) */
-const searchPrice = (tmpReserveList: Reserve[]) => {
-  if (searchForm.priceMin && searchForm.priceMax) {
-    tmpReserveList = tmpReserveList.filter(obj => {
-      return searchForm.priceMin! <= obj.price! && obj.price! <= searchForm.priceMax!;
-    });
-  } else if (searchForm.priceMin && !searchForm.priceMax) {
-    tmpReserveList = tmpReserveList.filter(obj => {
-      return searchForm.priceMin! <= obj.price!;
-    });
-  } else if (!searchForm.priceMin && searchForm.priceMax) {
-    tmpReserveList = tmpReserveList.filter(obj => {
-      return obj.price! <= searchForm.priceMax!;
-    });
-  }
-  return tmpReserveList;
-}
-
-/** 予約日時フィルター(範囲指定) */
-const searchReserveDateTime = (tmpReserveList: Reserve[]) => {
-  if (searchForm.reserveDateTimeMin && searchForm.reserveDateTimeMax) {
-    const datetimeMin = new Date(searchForm.reserveDateTimeMin);
-    const datetimeMax = new Date(searchForm.reserveDateTimeMax);
-    tmpReserveList = tmpReserveList.filter(obj => {
-      const dateObjReserveDatetime = new Date(obj.reserveDatetime);
-      return datetimeMin <= dateObjReserveDatetime && dateObjReserveDatetime <= datetimeMax;
-    });
-  } else if (searchForm.reserveDateTimeMin && !searchForm.reserveDateTimeMax) {
-    const datetimeMin = new Date(searchForm.reserveDateTimeMin);
-    tmpReserveList = tmpReserveList.filter(obj => {
-      const dateObjReserveDatetime = new Date(obj.reserveDatetime);
-      return datetimeMin <= dateObjReserveDatetime;
-    });
-  } else if (!searchForm.reserveDateTimeMin && searchForm.reserveDateTimeMax) {
-    const datetimeMax = new Date(searchForm.reserveDateTimeMax);
-    tmpReserveList = tmpReserveList.filter(obj => {
-      const dateObjReserveDatetime = new Date(obj.reserveDatetime);
-      return dateObjReserveDatetime <= datetimeMax;
-    });
-  }
-  return tmpReserveList;
-}
-
-/** 予約状態フィルター(完全一致) */
-const searchReserveState = (tmpReserveList: Reserve[]) => {
-  if (searchForm.reserveState !== '0') {
-    tmpReserveList = tmpReserveList.filter(obj => searchForm.reserveState == obj.reserveState);
-  }
-  return tmpReserveList;
-}
 </script>
 
 <style>
