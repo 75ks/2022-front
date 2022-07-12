@@ -21,7 +21,10 @@ export const useReserveStore = defineStore({
   },
   actions: {
     async fetchReserves(): Promise<void> {
-      const { data } = await axios.get("/reserves/");
+      const reqForm: ReserveSearchForm = new ReserveSearchForm();
+      const { data } = await axios.get("/reserves/", {
+        params: reqForm
+      });
       this.addReserves(data);
     },
     async search(searchCond: ReserveSearchCondScreenObj): Promise<void> {
