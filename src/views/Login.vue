@@ -53,6 +53,8 @@ const router = useRouter();
 
 authorizationStore.fetchLogout();
 authorizationStore.resetAuthorization();
+messageStore.resetMessageList();
+messageStore.resetMessageType();
 
 const message = computed(() => {
   return messageStore.getMessage;
