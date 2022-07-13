@@ -1,6 +1,15 @@
 <template>
   <div class="w-full h-full">
     <p class="pb-10 text-center font-bold text-2xl">スタッフ登録サンプル</p>
+    <div 
+      v-if="message.messageList.length"
+      class="pb-10 w-1/3 m-auto"
+      :class="message.messageType === MessageStatus.DANGER.code ? 'text-red-500' : 'text-green-500'"
+    >
+      <ul v-for="(mes, index) in message.messageList" :key="index">
+        <li>※{{ mes }}</li>
+      </ul>
+    </div>
     <div class="w-1/3 m-auto">
       <SelectBoxWithLabel
         v-model:select-value="state.screenObj.storeId"
@@ -70,13 +79,21 @@
 
 <script setup lang="ts">
 import CustomButton from "../components/Atoms/Button/CustomButton.vue";
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import axios from "../plugins/axios";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import { GenderList } from "../constants/Gender";
+import { MessageStatus } from '../constants/MessageStatus'
 import { RegisterSampleScreenObj } from "../models/screenObj/RegisterSampleScreenObj";
 import { RegisterSampleRequest } from "../models/form/RegisterSampleRequest";
+import { useMessageStore } from '../store/message'
+
+const messageStore = useMessageStore();
+
+const message = computed(() => {
+  return messageStore.getMessage;
+});
 
 interface State {
   screenObj: RegisterSampleScreenObj;

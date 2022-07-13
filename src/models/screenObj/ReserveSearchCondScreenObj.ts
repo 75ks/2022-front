@@ -1,4 +1,4 @@
-export class ReserveSearchForm {
+export class ReserveSearchCondScreenObj {
   /** 予約履歴ID */
   reserveHistoryId: string = "";
   /** 顧客名 */
@@ -6,9 +6,9 @@ export class ReserveSearchForm {
   /** 担当スタッフ */
   stuffName: string = "";
   /** ランク */
-  rankName: string = "";
+  rankName: string = "指定なし";
   /** メニュー */
-  menu: string = "";
+  menu: string = "指定なし";
   /** 料金(下限) */
   priceMin: number | null = null;
   /** 料金(上限) */
@@ -18,5 +18,5 @@ export class ReserveSearchForm {
   /** 日時(上限) */
   reserveDateTimeMax: string = "";
   /** 予約状態 */
-  reserveState: string = "";
+  reserveState: string = "指定なし";
 }

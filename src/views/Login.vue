@@ -13,14 +13,14 @@
       </div>
       <div class="w-2/3 m-auto pb-5">
         <CustomInputWithLabel
-          v-model:input-value="loginForm.email"
+          v-model:input-value="state.screenObj.email"
           label="メールアドレス"
           type="email"
         />
       </div>
       <div class="w-2/3 m-auto pb-10">
         <CustomInputWithLabel
-          v-model:input-value="loginForm.password"
+          v-model:input-value="state.screenObj.password"
           label="パスワード"
           type="password"
         />
@@ -42,6 +42,7 @@ import { reactive, computed } from 'vue';
 import CustomInputWithLabel from '../components/Molecules/InputWithLabel.vue';
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { LoginForm } from '../models/form/LoginForm';
+import { LoginScreenObj } from '../models/screenObj/LoginScreenObj';
 import { MessageStatus } from '../constants/MessageStatus';
 import { useAuthorizationStore } from '../store/authorization';
 import { useMessageStore } from '../store/message';
@@ -58,17 +59,20 @@ const message = computed(() => {
   return messageStore.getMessage;
 });
 
-const loginForm = reactive<LoginForm>({
-  email: '',
-  password: ''
+interface State {
+  screenObj: LoginScreenObj;
+}
+
+const state = reactive<State>({
+  screenObj: new LoginScreenObj()
 });
 
 /** 「ログイン」クリックイベント(ログイン処理をする) */
 const login = async () => {
-  await authorizationStore.fetchLogin(loginForm);
+  const reqForm: LoginForm = new LoginForm();
+  Object.assign(reqForm, state.screenObj);
+  await authorizationStore.fetchLogin(reqForm);
   if (authorizationStore.getAuthorization.jwt) {
-    messageStore.resetMessageList();
-    messageStore.resetMessageType();
     router.push("/reserveList");
   } else {
     alert("メールアドレスまたはパスワードが違います");
