@@ -1,30 +1,30 @@
-export interface Reserve {
+export class Reserve {
   /** 予約履歴ID */
-  reserveHistoryId: string;
+  reserveHistoryId: string = "";
   /** ランク */
-  rank: string;
+  rank: string = "";
   /** メニュー */
-  menu: string;
+  menu: string = "";
   /** 料金 */
-  price: number | null;
+  price: number | null = null;
   /** 予約日時 */
-  reserveDatetime: string;
+  reserveDatetime: string = "";
   /** 予約状態 */
-  reserveState: string;
+  reserveState: string = "";
   /** スタッフ(姓) */
-  customerLastName: string;
+  customerLastName: string = "";
   /** スタッフ(名) */
-  customerFirstName: number | null;
+  customerFirstName: number | null = null;
   /** スタッフ(セイ) */
-  customerLastNameKana: string;
+  customerLastNameKana: string = "";
   /** スタッフ(メイ) */
-  customerFirstNameKana: string;
+  customerFirstNameKana: string = "";
   /** 顧客(姓) */
-  stuffLastName: string;
+  stuffLastName: string = "";
   /** 顧客(名) */
-  stuffFirstName: string;
+  stuffFirstName: string = "";
   /** 顧客(セイ) */
-  stuffLastNameKana: string;
+  stuffLastNameKana: string = "";
   /** 顧客(メイ) */
-  stuffFirstNameKana: string;
+  stuffFirstNameKana: string = "";
 }

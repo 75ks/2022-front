@@ -35,10 +35,12 @@ export const useReserveStore = defineStore({
       });
       this.addReserves(data);
     },
-    addReserves(array: Reserve[]): void {
+    addReserves(array: Object[]): void {
       this.resetReserves();
       array.forEach(obj => {
-        this.reserves.push(obj);
+        const reserve: Reserve = new Reserve();
+        _.assign(reserve, _.pick(obj, _.keys(reserve)));
+        this.reserves.push(reserve);
       });
     },
     resetReserves(): void {
