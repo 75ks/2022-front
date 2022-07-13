@@ -43,6 +43,8 @@ const router = vueRouter.createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.path === "/login") {
+    useMessageStore().resetMessageList();
+    useMessageStore().resetMessageType();
     next();
   } else {
     if (useAuthorizationStore().getAuthorization.jwt) {
@@ -50,8 +52,6 @@ router.beforeEach((to, from, next) => {
       useMessageStore().resetMessageType();
       next();
     } else {
-      useMessageStore().addMessageList(["再度ログインしてください"]);
-      useMessageStore().addMessageType(MessageStatus.DANGER.code!);
       next("/login");
     }
   }
