@@ -21,7 +21,10 @@ export const useReserveStore = defineStore({
   },
   actions: {
     async fetchReserves(): Promise<void> {
-      const { data } = await axios.get("/reserves/");
+      const reqForm: ReserveSearchForm = new ReserveSearchForm();
+      const { data } = await axios.get("/reserves/", {
+        params: reqForm
+      });
       this.addReserves(data);
     },
     async search(searchCond: ReserveSearchCondScreenObj): Promise<void> {
@@ -32,10 +35,12 @@ export const useReserveStore = defineStore({
       });
       this.addReserves(data);
     },
-    addReserves(array: Reserve[]): void {
+    addReserves(array: Object[]): void {
       this.resetReserves();
       array.forEach(obj => {
-        this.reserves.push(obj);
+        const reserve: Reserve = new Reserve();
+        _.assign(reserve, _.pick(obj, _.keys(reserve)));
+        this.reserves.push(reserve);
       });
     },
     resetReserves(): void {

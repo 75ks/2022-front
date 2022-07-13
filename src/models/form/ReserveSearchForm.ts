@@ -18,5 +18,5 @@ export class ReserveSearchForm {
   /** 日時(上限) */
   reserveDateTimeMax: string = "";
   /** 予約状態 */
-  reserveState: number | null = null;
+  reserveState: string = "";
 }

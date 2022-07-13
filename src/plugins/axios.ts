@@ -26,7 +26,7 @@ instance.interceptors.response.use(
       useMessageStore().addMessageList(response.data.messageList);
       // ステータスが200の場合、ステータスに「成功」を設定する
       if (response.status === 200) {
-        useMessageStore().addMessageType(MessageStatus.Success);
+        useMessageStore().addMessageType(MessageStatus.SUCCESS.code!);
       }
     }
     return response;
@@ -35,7 +35,7 @@ instance.interceptors.response.use(
     // レスポンスにメッセージが存在する場合、メッセージと、ステータスに「失敗」を設定する
     if (error.response.data.messageList) {
       useMessageStore().addMessageList(error.response.data.messageList);
-      useMessageStore().addMessageType(MessageStatus.Failure);
+      useMessageStore().addMessageType(MessageStatus.DANGER.code!);
     } 
     // ステータスが401の場合、ログイン画面に遷移する
     if (error.response.status === 401) {
