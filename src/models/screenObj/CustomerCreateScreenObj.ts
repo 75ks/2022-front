@@ -1,4 +1,4 @@
-export class CustomerCreateRegisterScreenObj {
+export class CustomerCreateScreenObj {
   /** 店舗ID */
   storeId: string = "";
   /** 姓 */

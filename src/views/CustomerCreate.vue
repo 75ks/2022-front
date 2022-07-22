@@ -112,22 +112,22 @@ import axios from "../plugins/axios";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import { GenderList } from "../constants/Gender";
-import { CustomerCreateRegisterScreenObj } from "../models/screenObj/CustomerCreateRegisterScreenObj";
-import { RegisterSampleRequest } from "../models/form/RegisterSampleRequest";
+import { CustomerCreateScreenObj } from "../models/screenObj/CustomerCreateScreenObj";
+import { CustomerCreateRequest } from "../models/form/CustomerCreateRequest";
 
 interface State {
-  screenObj: CustomerCreateRegisterScreenObj;
+  screenObj: CustomerCreateScreenObj;
   passwordConfirmation: string;
 }
 
 const state = reactive<State>({
-  screenObj: new CustomerCreateRegisterScreenObj(),
+  screenObj: new CustomerCreateScreenObj(),
   passwordConfirmation: "",
 });
 
 /** 登録ボタンクリックイベント */
 const register = async () => {
-  const reqForm: RegisterSampleRequest = new RegisterSampleRequest();
+  const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
   Object.assign(reqForm, state.screenObj);
   await axios
     .post("/sample/", reqForm)
