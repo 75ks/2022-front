@@ -5,7 +5,6 @@ import ReserveList from '../views/ReserveList.vue';
 import Login from '../views/Login.vue';
 import RegisterSample from '../views/RegisterSample.vue';
 import RegisterSampleRev from '../views/RegisterSampleRev.vue';
-import { MessageStatus } from "../constants/MessageStatus";
 import { useAuthorizationStore } from '../store/authorization';
 import { useMessageStore } from "../store/message";
 
@@ -13,14 +12,17 @@ const routes = [
   {
     path: "/",
     component: Test,
+    meta: { requiredAuth: true }
   },
   {
     path: "/componentsSample",
     component: ComponentsSample,
+    meta: { requiredAuth: true }
   },
   {
     path: "/reserveList",
     component: ReserveList,
+    meta: { requiredAuth: true }
   },
   {
     path: "/login",
@@ -29,10 +31,12 @@ const routes = [
   {
     path: "/registerSample",
     component: RegisterSample,
+    meta: { requiredAuth: true }
   },
   {
     path: "/registerSampleRev",
     component: RegisterSampleRev,
+    meta: { requiredAuth: true }
   },
 ];
 
@@ -42,19 +46,12 @@ const router = vueRouter.createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === "/login") {
-    useMessageStore().resetMessageList();
-    useMessageStore().resetMessageType();
-    next();
-  } else {
-    if (useAuthorizationStore().getAuthorization.jwt) {
-      useMessageStore().resetMessageList();
-      useMessageStore().resetMessageType();
-      next();
-    } else {
-      next("/login");
-    }
+  useMessageStore().resetMessageList();
+  useMessageStore().resetMessageType();
+  if (to.matched.some(record => record.meta.requiredAuth)) {
+    useAuthorizationStore().getAuthorization.jwt ? next() : next("/login");
   }
+  next();
 });
 
 export default router;
