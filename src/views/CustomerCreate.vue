@@ -1,6 +1,15 @@
 <template>
   <div class="w-full h-full">
     <p class="pb-10 text-center font-bold text-2xl">顧客登録</p>
+    <div 
+      v-if="message.messageList.length"
+      class="pb-10 w-1/3 m-auto"
+      :class="message.messageType === MessageStatus.DANGER.code ? 'text-red-500' : 'text-green-500'"
+    >
+      <ul v-for="(mes, index) in message.messageList" :key="index">
+        <li>※{{ mes }}</li>
+      </ul>
+    </div>
 
     <form>
       <div class="grid gap-6 mb-6 grid-cols-2">
@@ -107,13 +116,21 @@
 
 <script setup lang="ts">
 import CustomButton from "../components/Atoms/Button/CustomButton.vue";
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import axios from "../plugins/axios";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import { GenderList } from "../constants/Gender";
 import { CustomerCreateScreenObj } from "../models/screenObj/CustomerCreateScreenObj";
 import { CustomerCreateRequest } from "../models/form/CustomerCreateRequest";
+import { MessageStatus } from '../constants/MessageStatus'
+import { useMessageStore } from '../store/message'
+
+const messageStore = useMessageStore();
+
+const message = computed(() => {
+  return messageStore.getMessage;
+});
 
 interface State {
   screenObj: CustomerCreateScreenObj;
