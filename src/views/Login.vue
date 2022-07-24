@@ -5,7 +5,7 @@
       <div
         v-if="message.messageList.length"
         class="pb-10 w-2/3 m-auto"
-        :class="message.messageType === MessageStatus.DANGER.code ? 'text-red-500' : 'text-green-500'"
+        :class="message.messageType === MessageStatus.DANGER.code || MessageStatus.WARNING.code ? 'text-red-500' : 'text-green-500'"
       >
         <ul v-for="(mes, index) in message.messageList" :key="index">
           <li>※{{ mes }}</li>
@@ -51,6 +51,11 @@ import { useRouter } from 'vue-router'
 const authorizationStore = useAuthorizationStore();
 const messageStore = useMessageStore();
 const router = useRouter();
+
+if (messageStore.getMessage.messageType !== MessageStatus.WARNING.code) {
+  messageStore.resetMessageList();
+  messageStore.resetMessageType();
+}
 
 authorizationStore.fetchLogout();
 authorizationStore.resetAuthorization();
