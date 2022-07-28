@@ -1,6 +1,6 @@
 export class Authorization {
-  /** スタッフID */
-  stuffId: number | null = null;
+  /** ID */
+  id: number | null = null;
   /** JWT */
   jwt: string = '';
 }
