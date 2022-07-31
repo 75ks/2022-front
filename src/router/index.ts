@@ -5,6 +5,7 @@ import ReserveList from '../views/ReserveList.vue';
 import Login from '../views/Login.vue';
 import RegisterSample from '../views/RegisterSample.vue';
 import RegisterSampleRev from '../views/RegisterSampleRev.vue';
+import CustomerLogin from '../views/CustomerLogin.vue';
 import { useAuthorizationStore } from '../store/authorization';
 import { useMessageStore } from "../store/message";
 import { MessageStatus } from "../constants/MessageStatus";
@@ -13,7 +14,6 @@ const routes = [
   {
     path: "/",
     component: Test,
-    meta: { requiredAuth: true }
   },
   {
     path: "/componentsSample",
@@ -28,6 +28,10 @@ const routes = [
   {
     path: "/login",
     component: Login,
+  },
+  {
+    path: "/customerLogin",
+    component: CustomerLogin,
   },
   {
     path: "/registerSample",
