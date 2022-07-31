@@ -2,6 +2,7 @@ import * as vueRouter from "vue-router";
 import Test from '../views/Test.vue';
 import ComponentsSample from '../views/ComponentsSample.vue';
 import ReserveList from '../views/ReserveList.vue';
+import ReserveListCalender from '../views/ReserveListCalendar.vue';
 import Login from '../views/Login.vue';
 import RegisterSample from '../views/RegisterSample.vue';
 import RegisterSampleRev from '../views/RegisterSampleRev.vue';
@@ -23,6 +24,11 @@ const routes = [
   {
     path: "/reserveList",
     component: ReserveList,
+    meta: { requiredAuth: true }
+  },
+  {
+    path: "/reserveListCalendar",
+    component: ReserveListCalender,
     meta: { requiredAuth: true }
   },
   {
