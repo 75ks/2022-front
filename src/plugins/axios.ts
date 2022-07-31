@@ -1,6 +1,7 @@
 import router from '../router/index';
 import { MessageStatus } from '../constants/MessageStatus';
 import { useAuthorizationStore } from '../store/authorization';
+import { useCustomerAuthorizationStore } from '../store/customerAuthorization';
 import { useMessageStore } from '../store/message';
 import axios from "axios";
 
@@ -12,7 +13,8 @@ instance.interceptors.request.use(
     config.baseURL = "http://localhost:3000/api";
     config.headers = {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + useAuthorizationStore().getAuthorization.jwt
+      "Authorization": "Bearer " + useAuthorizationStore().getAuthorization.jwt,
+      "CustomerAuthorization": "Bearer " + useCustomerAuthorizationStore().getAuthorization.jwt
     }
     return config;
   }
@@ -40,7 +42,11 @@ instance.interceptors.response.use(
     // ステータスが401の場合、ログイン画面に遷移する
     if (error.response.status === 401) {
       useMessageStore().addMessageType(MessageStatus.WARNING.code!);
-      router.push('/login');
+      if (error.request.responseURL.match(/customerAuthorization/)) {
+        router.push('/customerLogin');
+      } else {
+        router.push('/login');
+      }
     }
     return Promise.reject(error);
   }
