@@ -104,7 +104,7 @@ const nextMonth = (): void => {
 }
 
 /** 曜日取得 */
-const youbi = (index: number) => {
+const youbi = (index: number): string => {
   const week = ["日", "月", "火", "水", "木", "金", "土"];
   return week[index];
 }
