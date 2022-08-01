@@ -16,6 +16,14 @@
       </button>
     </div>
     <div class="w-2/3 my-2 m-auto border-t border-gray-300">
+      <div class="flex border-l border-gray-300">
+        <div
+          v-for="n in 7" :key="n"
+          class="w-28 text-center border-r border-b border-gray-300"
+        >
+          {{ youbi(n-1) }}
+        </div>
+      </div>
       <div
         v-for="(week, index) in calendars" :key="index"
         class="flex border-l border-gray-300"
@@ -93,6 +101,12 @@ const prevMonth = (): void => {
 /** +1(月) */
 const nextMonth = (): void => {
   currentDate.value = moment(currentDate.value).add(1, "month");
+}
+
+/** 曜日取得 */
+const youbi = (index: number) => {
+  const week = ["日", "月", "火", "水", "木", "金", "土"];
+  return week[index];
 }
 </script>
 
