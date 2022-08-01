@@ -46,9 +46,7 @@ const calendars = computed<Calender[][]>(() => {
 /** 現在日時を取得 */
 const currentDate = ref<moment.Moment>(moment());
 const currentDateFormat = computed(() => {
-  const yyyy = currentDate.value.format('YYYY');
-  const mm = currentDate.value.format('MM');
-  return yyyy + '年' + mm + '月';
+  return currentDate.value.format('YYYY[年]MM[月]');
 });
 
 /** カレンダーの最初の日付を取得 */
