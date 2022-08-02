@@ -32,7 +32,12 @@
           v-for="(day, index) in week" :key="index"
           class="w-28 h-36 border-r border-b border-gray-300"
         >
-          {{ day.date }}
+          <p class="ml-1">
+            {{ day.date }}
+          </p>
+          <p class="text-white" :class="day.dayReserves.length > 0 ? 'bg-red-500' : 'bg-gray-500'">
+            {{ day.dayReserves.length }}件
+          </p>
         </div>
       </div>
     </div>
@@ -41,10 +46,16 @@
 
 <script setup lang="ts">
 import moment from 'moment';
+import { Reserve } from '../../../models/Reserve';
 import { computed, ref } from 'vue';
 
+const props = defineProps<{
+  reserveList: Reserve[]
+}>();
+
 interface Calender {
-  date: number
+  date: number,
+  dayReserves: Reserve[]
 }
 
 const calendars = computed<Calender[][]>(() => {
@@ -73,6 +84,19 @@ const getEndDate = (): moment.Moment => {
   return date.add(6 - youbiNum, "days");
 }
 
+/** 予約情報取得 */
+const getDayReserves = (date: moment.Moment): Reserve[] => {
+  let dayReserves: Reserve[] = [];
+  props.reserveList.forEach(reserve => {
+    let reserveDate: string = moment(reserve.reserveDatetime).format('YYYY-MM-DD');
+    let targetDate: string = date.format('YYYY-MM-DD');
+    if (reserveDate === targetDate) {
+      dayReserves.push(reserve);
+    }
+  });
+  return dayReserves;
+}
+
 /** カレンダーの日付を取得 */
 const getCalender = (): Calender[][] => {
   let startDate: moment.Moment = getStartDate();
@@ -83,8 +107,10 @@ const getCalender = (): Calender[][] => {
   for (let week = 0; week < weekNumber; week++) {
     let weekRow: Calender[] = [];
     for (let day = 0; day < 7; day++) {
+      let dayReserves: Reserve[] = getDayReserves(startDate);
       weekRow.push({
-        date: startDate.get("date")
+        date: startDate.get("date"),
+        dayReserves
       });
       startDate.add(1, "days");
     }

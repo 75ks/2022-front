@@ -1,13 +1,13 @@
 <template>
   <div>
     <Header :header-name="'予約カレンダー'" />
-    <ReserveListCalendarDetailVue />
+    <ReserveListCalendarDetail :reserve-list="reserveList" />
   </div>
 </template>
 
 <script setup lang="ts">
 import Header from '../components/Atoms/Layout/Header.vue';
-import ReserveListCalendarDetailVue from '../components/Organisms/ReserveListCalendar/ReserveListCalendarDetail.vue';
+import ReserveListCalendarDetail from '../components/Organisms/ReserveListCalendar/ReserveListCalendarDetail.vue';
 import { computed } from 'vue';
 import { useReserveStore } from '../store/reserve';
 
