@@ -35,7 +35,7 @@
           <p class="ml-1">
             {{ day.date }}
           </p>
-          <p class="text-white" :class="day.dayReserves.length > 0 ? 'bg-red-500' : 'bg-gray-500'">
+          <p class="text-white pl-1" :class="day.dayReserves.length > 0 ? 'bg-red-500' : 'bg-gray-500'">
             {{ day.dayReserves.length }}件
           </p>
         </div>
