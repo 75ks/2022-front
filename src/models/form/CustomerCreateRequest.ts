@@ -10,7 +10,7 @@ export class CustomerCreateRequest {
   /** メイ */
   firstNameKana: string = "";
   /** 生年月日 ※後でDate型に修正※ */
-  birhday: string = "";
+  birthday: string = "";
   /** 年齢 */
   age: string = "";
   /** 性別 */
