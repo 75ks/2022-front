@@ -40,12 +40,12 @@
       <InputWithLabel
         v-model:input-value="state.screenObj.birhday"
         label="生年月日"
-        :requiredFlg="true"
+        :requiredFlg="false"
       />
       <InputWithLabel
         v-model:input-value="state.screenObj.age"
         label="年齢"
-        :requiredFlg="true"
+        :requiredFlg="false"
       />
       <SelectBoxWithLabel
         v-model:select-value="state.screenObj.gender"
@@ -56,37 +56,43 @@
       <InputWithLabel
         v-model:input-value="state.screenObj.postal_code"
         label="郵便番号"
-        :requiredFlg="true"
+        :requiredFlg="false"
       />
       <InputWithLabel
         v-model:input-value="state.screenObj.prefecture"
         label="都道府県"
-        :requiredFlg="true"
+        :requiredFlg="false"
       />
       <InputWithLabel
         v-model:input-value="state.screenObj.address1"
         label="市区町村"
-        :requiredFlg="true"
+        :requiredFlg="false"
       />
       <InputWithLabel
         v-model:input-value="state.screenObj.address2"
         label="市区町村以下"
-        :requiredFlg="true"
+        :requiredFlg="false"
       />
       <InputWithLabel
         v-model:input-value="state.screenObj.address3"
         label="建物、部屋番号"
-        :requiredFlg="true"
+        :requiredFlg="false"
       />
       <InputWithLabel
         v-model:input-value="state.screenObj.phone_number"
         label="電話番号"
-        :requiredFlg="true"
+        :requiredFlg="false"
       />
       <InputWithLabel
         v-model:input-value="state.screenObj.email"
         label="メールアドレス"
         type="email"
+        :requiredFlg="true"
+      />
+      <InputWithLabel
+        v-model:input-value="state.screenObj.password"
+        label="パスワード"
+        type="password"
         :requiredFlg="true"
       />
       <CustomButton
