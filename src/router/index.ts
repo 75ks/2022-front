@@ -2,11 +2,8 @@ import * as vueRouter from "vue-router";
 import Test from '../views/Test.vue';
 import ComponentsSample from '../views/ComponentsSample.vue';
 import ReserveList from '../views/ReserveList.vue';
-<<<<<<< HEAD
 import CustomerCreate from '../views/CustomerCreate.vue';
-=======
 import ReserveListCalender from '../views/ReserveListCalendar.vue';
->>>>>>> 88103be8a30b3f5f135f8cd6b557578c14934b71
 import Login from '../views/Login.vue';
 import RegisterSample from '../views/RegisterSample.vue';
 import RegisterSampleRev from '../views/RegisterSampleRev.vue';
@@ -31,14 +28,13 @@ const routes = [
     meta: { requiredAuth: true }
   },
   {
-<<<<<<< HEAD
     path: "/customerCreate",
     component: CustomerCreate,
-=======
+  },
+  {
     path: "/reserveListCalendar",
     component: ReserveListCalender,
     meta: { requiredAuth: true }
->>>>>>> 88103be8a30b3f5f135f8cd6b557578c14934b71
   },
   {
     path: "/login",
