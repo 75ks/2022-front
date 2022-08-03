@@ -38,7 +38,7 @@
         :requiredFlg="true"
       />
       <InputWithLabel
-        v-model:input-value="state.screenObj.birhday"
+        v-model:input-value="state.screenObj.birthday"
         label="生年月日"
         :requiredFlg="false"
       />
