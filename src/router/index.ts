@@ -2,8 +2,8 @@ import * as vueRouter from "vue-router";
 import Test from '../views/Test.vue';
 import ComponentsSample from '../views/ComponentsSample.vue';
 import ReserveList from '../views/ReserveList.vue';
-import CustomerCreate from '../views/CustomerCreate.vue';
 import ReserveListCalender from '../views/ReserveListCalendar.vue';
+import CustomerCreate from '../views/CustomerCreate.vue';
 import Login from '../views/Login.vue';
 import RegisterSample from '../views/RegisterSample.vue';
 import RegisterSampleRev from '../views/RegisterSampleRev.vue';
@@ -25,6 +25,11 @@ const routes = [
   {
     path: "/reserveList",
     component: ReserveList,
+    meta: { requiredAuth: true }
+  },
+  {
+    path: "/reserveListCalendar",
+    component: ReserveListCalender,
     meta: { requiredAuth: true }
   },
   {
@@ -71,7 +76,7 @@ router.beforeEach((to, from, next) => {
       useMessageStore().addMessageList(["認証に失敗しました。再度ログインしてください。"]);
       useMessageStore().addMessageType(MessageStatus.WARNING.code!);
       next("/login");
-    } 
+    }
   } else {
     next();
   }
