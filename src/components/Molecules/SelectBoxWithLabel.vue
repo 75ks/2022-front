@@ -60,7 +60,7 @@ interface Emits {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type: "text",
+  options: () => [],
   targetUrl: "",
   label: "",
   sideBySideFlg: false,

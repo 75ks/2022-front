@@ -2,7 +2,7 @@
   <select
     :id="uniqueId"
     v-model="selectValue"
-    class="w-full px-2 py-1 text-sm text-gray-700 border border-gray-300 rounded-md focus:outline outline-blue-300"
+    class="w-full px-2 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline outline-blue-300"
     :class="[
       `text-${size}`,
       disableFlg ? 'bg-gray-300' : requiredFlg ? 'bg-yellow-100' : '',

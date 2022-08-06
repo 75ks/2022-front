@@ -1,11 +1,11 @@
 <template>
   <div class="p-2 mt-2 bg-white">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center">
+    <div class="flex justify-between">
+      <div class="flex">
         <font-awesome-icon :icon="['fas', 'search']" class="w-4 h-4 font-black" />
         <p class="px-3 test-center">検索条件</p>
       </div>
-      <div class="flex items-center">
+      <div class="flex">
         <CustomButton
           @click="search"
           :button-name="'検索'"
@@ -18,7 +18,7 @@
         />
       </div>
     </div>
-    <div class="my-4 flex items-center justify-evenly">
+    <div class="my-4 grid grid-cols-6 gap-4">
       <div>
         <InputWithLabel
           v-model:input-value='searchForm.reserveHistoryId'
@@ -38,39 +38,41 @@
         />
       </div>
       <div>
-        <SelectBoxWithLabel
-          v-model:select-value="searchForm.rankName"
+        <SuggestInputWithLabel
+          v-model:input-value="searchForm.rankName"
           targetUrl="/selectOption/ranks"
           label="ランク"
-          :emptyOptionFlg="false"
         />
       </div>
       <div>
-        <SelectBoxWithLabel
-          v-model:select-value="searchForm.menu"
+        <SuggestInputWithLabel
+          v-model:input-value="searchForm.menu"
           targetUrl="/selectOption/menus"
           label="メニュー"
-          :emptyOptionFlg="false"
         />
       </div>
-    </div>
-    <div class="my-4 flex items-center justify-evenly">
-        <IntegerFromTo
-          v-model:from-input-value="searchForm.priceMin"
-          v-model:to-input-value="searchForm.priceMax"
-          label="料金"
-        />
-        <CalendarFromTo
-          v-model:from-input-value="searchForm.reserveDateTimeMin"
-          v-model:to-input-value="searchForm.reserveDateTimeMax"
-          label="日時"
-        />
       <div>
         <SelectBoxWithLabel
           v-model:select-value="searchForm.reserveState"
           targetUrl="/selectOption/reserveStates"
           label="予約状態"
           :emptyOptionFlg="false"
+        />
+      </div>
+    </div>
+    <div class="my-4 grid grid-cols-6 gap-4">
+      <div class="col-span-2 justify-self-start">
+        <IntegerFromTo
+          v-model:from-input-value="searchForm.priceMin"
+          v-model:to-input-value="searchForm.priceMax"
+          label="料金"
+        />
+      </div>
+      <div class="col-span-2 justify-self-start">
+        <CalendarFromTo
+          v-model:from-input-value="searchForm.reserveDateTimeMin"
+          v-model:to-input-value="searchForm.reserveDateTimeMax"
+          label="日時"
         />
       </div>
     </div>
@@ -85,6 +87,7 @@ import IntegerFromTo from '../../Molecules/IntegerFromTo.vue';
 import CalendarFromTo from '../../Molecules/CalendarFromTo.vue';
 import InputWithLabel from '../../Molecules/InputWithLabel.vue';
 import SelectBoxWithLabel from '../../Molecules/SelectBoxWithLabel.vue';
+import SuggestInputWithLabel from '../../Molecules/SuggestInputWithLabel.vue';
 
 const reserveStore = useReserveStore();
 
