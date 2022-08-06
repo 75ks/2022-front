@@ -1,33 +1,34 @@
 <template>
-  <select
+  <input
     :id="uniqueId"
-    v-model="selectValue"
+    :list="`${uniqueId}-list`"
+    :type="type"
+    v-model="inputValue"
     class="w-full px-2 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline outline-blue-300"
     :class="[
       `text-${size}`,
       disableFlg ? 'bg-gray-300' : requiredFlg ? 'bg-yellow-100' : '',
     ]"
     :disabled="disableFlg"
-  >
-    <option v-for="(option, index) of options" :value="option.code" :key="index">
+  />
+  <datalist :id="`${uniqueId}-list`" >
+    <option v-for="option in options" :key="option.code">
       {{ option.name }}
     </option>
-  </select>
+  </datalist>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
-
-export interface SelectOption {
-  code: number | string | null
-  name: string
-}
+import {SelectOption} from './SelectBox.vue';
 
 interface Props {
   /** 入力値 */
-  selectValue: number | string | null;
+  inputValue: string | number | null;
   /** 選択リスト */
   options?: SelectOption[];
+  /** type */
+  type?: string;
   /** サイズ */
   size?: string;
   /** 必須フラグ */
@@ -39,23 +40,28 @@ interface Props {
 }
 
 interface Emits {
-  (e: "update:selectValue", value: number | string | null): string;
+  (e: "update:inputValue", value: string | number | null): string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   options: () => [],
+  type: "text",
   size: "md",
   requiredFlg: false,
   disableFlg: false,
 });
 const emits = defineEmits<Emits>();
 
-const selectValue = computed({
-  get: () => props.selectValue,
+const inputValue = computed({
+  get: () => props.inputValue,
   set: (value) => {
-    emits("update:selectValue", value);
+    emits("update:inputValue", value);
   },
 });
+
+
+
+
 </script>
 
 <style></style>

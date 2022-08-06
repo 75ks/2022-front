@@ -10,9 +10,10 @@
       class="mt-1 rounded-md shadow-sm"
       :class="sideBySideFlg ? inputWidth : 'w-full'"
     >
-      <SelectBox
-        v-model:selectValue="selectValue"
+      <SuggestInput
+        v-model:inputValue="inputValue"
         :options="state.selectOptions"
+        :type="type"
         :size="size"
         :requiredFlg="requiredFlg"
         :disableFlg="disableFlg"
@@ -23,22 +24,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, reactive, watch } from "vue";
-import InputLabel from "../Atoms/label/InputLabel.vue";
-import SelectBox, { SelectOption } from "../Atoms/Input/SelectBox.vue";
-import axios from "../../plugins/axios";
-
-interface State {
-  selectOptions: SelectOption[];
-}
+import {computed, onBeforeMount, reactive, watch} from "vue";
+import InputLabel from '../Atoms/label/InputLabel.vue';
+import axios from '../../plugins/axios';
+import {SelectOption} from '../Atoms/Input/SelectBox.vue';
+import SuggestInput from '../Atoms/Input/SuggestInput.vue';
 
 interface Props {
   /** 入力値 */
-  selectValue: string | number | null;
+  inputValue: string | number | null;
   /** 選択リスト */
   options?: SelectOption[];
   /** ターゲットURL */
   targetUrl?: string;
+  /** type */
+  type?: string;
   /** 任意のラベル名 */
   label?: string;
   /** ラベルと入力欄横並びフラグ */
@@ -51,41 +51,43 @@ interface Props {
   requiredFlg?: boolean;
   /** 無効フラグ */
   disableFlg?: boolean;
-  /** 空選択肢有りフラグ */
-  emptyOptionFlg?: boolean;
 }
 
 interface Emits {
-  (e: "update:selectValue", value: string | number | null): string;
+  (e: "update:inputValue", value: string | number | null): string;
+}
+
+interface State {
+  selectOptions: SelectOption[];
 }
 
 const props = withDefaults(defineProps<Props>(), {
   options: () => [],
   targetUrl: "",
+  type: "text",
   label: "",
   sideBySideFlg: false,
   inputWidth: "w-3/4",
   size: "md",
   requiredFlg: false,
   disableFlg: false,
-  emptyOptionFlg: true,
 });
 const emits = defineEmits<Emits>();
 
-const selectValue = computed({
-  get: () => props.selectValue,
+const state = reactive<State>({
+  selectOptions: [],
+});
+
+const inputValue = computed({
+  get: () => props.inputValue,
   set: (value) => {
-    emits("update:selectValue", value);
+    emits("update:inputValue", value);
   },
 });
 
 /** ユニークID */
 const uniqueId = computed(() => {
   return Math.random().toString(32).substring(2);
-});
-
-const state = reactive<State>({
-  selectOptions: [],
 });
 
 onBeforeMount(async () => {
@@ -99,23 +101,15 @@ watch(
   () => props.options,
   () => {
     if (props.options?.length) {
-      // 空選択肢有りフラグがONの場合
-      if (props.emptyOptionFlg) {
-        state.selectOptions = [{ code: null, name: "" }, ...props.options];
-      } else {
-        state.selectOptions = [...props.options];
-      }
+      state.selectOptions = [...props.options];
     }
   },
   { immediate: true }
 );
 
+/** 選択肢取得 */
 const getSelectOption = (targetUrl: string) => {
   axios.get<SelectOption[]>(targetUrl).then(({ data }) => {
-    // 空選択肢有りフラグがONの場合
-    if (props.emptyOptionFlg) {
-      state.selectOptions.push({ code: null, name: "" });
-    }
     state.selectOptions.push(...data);
   });
 };

@@ -3,17 +3,19 @@ import Test from '../views/Test.vue';
 import ComponentsSample from '../views/ComponentsSample.vue';
 import ReserveList from '../views/ReserveList.vue';
 import CustomerCreate from '../views/CustomerCreate.vue';
+import ReserveListCalender from '../views/ReserveListCalendar.vue';
 import Login from '../views/Login.vue';
 import RegisterSample from '../views/RegisterSample.vue';
 import RegisterSampleRev from '../views/RegisterSampleRev.vue';
+import CustomerLogin from '../views/CustomerLogin.vue';
 import { useAuthorizationStore } from '../store/authorization';
 import { useMessageStore } from "../store/message";
+import { MessageStatus } from "../constants/MessageStatus";
 
 const routes = [
   {
     path: "/",
     component: Test,
-    meta: { requiredAuth: true }
   },
   {
     path: "/componentsSample",
@@ -30,8 +32,17 @@ const routes = [
     component: CustomerCreate,
   },
   {
+    path: "/reserveListCalendar",
+    component: ReserveListCalender,
+    meta: { requiredAuth: true }
+  },
+  {
     path: "/login",
     component: Login,
+  },
+  {
+    path: "/customerLogin",
+    component: CustomerLogin,
   },
   {
     path: "/registerSample",
@@ -51,12 +62,19 @@ const router = vueRouter.createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  useMessageStore().resetMessageList();
-  useMessageStore().resetMessageType();
   if (to.matched.some(record => record.meta.requiredAuth)) {
-    useAuthorizationStore().getAuthorization.jwt ? next() : next("/login");
+    useMessageStore().resetMessageList();
+    useMessageStore().resetMessageType();
+    if (useAuthorizationStore().getAuthorization.jwt) {
+      next();
+    } else {
+      useMessageStore().addMessageList(["認証に失敗しました。再度ログインしてください。"]);
+      useMessageStore().addMessageType(MessageStatus.WARNING.code!);
+      next("/login");
+    } 
+  } else {
+    next();
   }
-  next();
 });
 
 export default router;

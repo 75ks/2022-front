@@ -26,7 +26,7 @@
           <td class="border border-gray-300 px-2 py-2">{{ reserve.menu }}</td>
           <td class="border border-gray-300 px-2 py-2">{{ reserve.price }}</td>
           <td class="border border-gray-300 px-2 py-2">{{ datetimeFormat(reserve.reserveDatetime) }}</td>
-          <td class="border border-gray-300 px-2 py-2">{{ reserve.reserveState }}</td>
+          <td class="border border-gray-300 px-2 py-2">{{ reserve.reserveStateName }}</td>
         </tr>
       </tbody>
     </table>
