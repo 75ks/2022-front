@@ -10,7 +10,9 @@ export class Reserve {
   /** 予約日時 */
   reserveDatetime: string = "";
   /** 予約状態 */
-  reserveState: string = "";
+  reserveState: number | null = null;
+  /** 予約状態名称 */
+  reserveStateName: string = "";
   /** スタッフ(姓) */
   customerLastName: string = "";
   /** スタッフ(名) */
