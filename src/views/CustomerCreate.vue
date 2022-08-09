@@ -58,8 +58,9 @@
         label="郵便番号"
         :requiredFlg="false"
       />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.prefecture"
+      <SelectBoxWithLabel
+        v-model:select-value="state.screenObj.prefectureId"
+        :options="PrefectureIdList"
         label="都道府県"
         :requiredFlg="false"
       />
@@ -112,6 +113,7 @@ import axios from "../plugins/axios";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import { GenderList } from "../constants/Gender";
+import { PrefectureIdList } from "../constants/PrefectureId";
 import { CustomerCreateScreenObj } from "../models/screenObj/CustomerCreateScreenObj";
 import { CustomerCreateRequest } from "../models/form/CustomerCreateRequest";
 import { MessageStatus } from '../constants/MessageStatus'

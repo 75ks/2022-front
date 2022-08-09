@@ -18,7 +18,7 @@ export class CustomerCreateScreenObj {
   /** 郵便番号 */
   postal_code: string = "";
   /** 都道府県 */
-  prefecture: string = "";
+  prefectureId: string = "";
   /** 市区町村 */
   address1: string = "";
   /** 市区町村以下 */
