@@ -1,14 +1,14 @@
 <template>
   <div class="w-full py-2 flex justify-between font-bold text-2xl bg-white sticky top-0 z-50">
     <button
-      @click="prevMonth"
+      @click="$emit('prevWeek', currentDate)"
       class="text-black hover:text-gray-500"
     >
       ◀︎
     </button>
     <p>{{ currentDateFormat }}</p>
     <button
-      @click="nextMonth"
+      @click="$emit('prevWeek', currentDate)"
       class="text-black hover:text-gray-500"
     >
       ▶︎
@@ -77,39 +77,54 @@
 <script setup lang="ts">
 import moment from 'moment';
 import { Reserve } from '../../../models/Reserve';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
-const props = defineProps<{
-  reserveList: Reserve[]
-}>();
+interface Props {
+  /** 予約情報一覧 */
+  reserveList: Reserve[],
+  /** 現在日時 */
+  currentDate: moment.Moment
+}
+
+interface Emits {
+  /** -1(週) */
+  (e: "prevWeek", value: moment.Moment): void;
+  /** +1(週) */
+  (e: "nextWeek", value: moment.Moment): void;
+}
 
 interface Calender {
+  /** 日付 */
   date: number,
+  /** 予約情報 */
   dayReserves: Reserve[]
 }
 
+const props = defineProps<Props>();
+
+const emits = defineEmits<Emits>();
+
 const week = computed<Calender[]>(() => {
-  return getWeek();
+  return getCalenderWeek();
 });
 
-/** 現在日時を取得 */
-const currentDate = ref<moment.Moment>(moment());
-const currentDateFormat = computed(() => {
-  return currentDate.value.format('YYYY[年]MM[月]');
+/** 現在日時をフォーマット */
+const currentDateFormat = computed<string>(() => {
+  return props.currentDate.format('YYYY[年]MM[月]');
 });
 
 /** 週の最初の日付を取得 */
 const getStartDate = (): moment.Moment => {
-  let date: moment.Moment = moment(currentDate.value);
+  const date: moment.Moment = moment(props.currentDate);
   return date.startOf("week");
 }
 
 /** 予約情報取得 */
 const getDayReserves = (date: moment.Moment): Reserve[] => {
-  let dayReserves: Reserve[] = [];
+  const dayReserves: Reserve[] = [];
   props.reserveList.forEach(reserve => {
-    let reserveDate: string = moment(reserve.reserveDatetime).format('YYYY-MM-DD');
-    let targetDate: string = date.format('YYYY-MM-DD');
+    const reserveDate: string = moment(reserve.reserveDatetime).format('YYYY-MM-DD');
+    const targetDate: string = date.format('YYYY-MM-DD');
     if (reserveDate === targetDate) {
       dayReserves.push(reserve);
     }
@@ -117,12 +132,12 @@ const getDayReserves = (date: moment.Moment): Reserve[] => {
   return dayReserves;
 }
 
-/** 週の日付を取得 */
-const getWeek = (): Calender[] => {
-  let startDate: moment.Moment = getStartDate();
-  let week: Calender[] = [];
+/** カレンダー(週)を取得 */
+const getCalenderWeek = (): Calender[] => {
+  const startDate: moment.Moment = getStartDate();
+  const week: Calender[] = [];
   for (let day = 0; day < 7; day++) {
-    let dayReserves: Reserve[] = getDayReserves(startDate);
+    const dayReserves: Reserve[] = getDayReserves(startDate);
     week.push({
       date: startDate.get("date"),
       dayReserves
@@ -130,16 +145,6 @@ const getWeek = (): Calender[] => {
     startDate.add(1, "days");
   }
   return week;
-}
-
-/** -1(週) */
-const prevMonth = (): void => {
-  currentDate.value = moment(currentDate.value).subtract(1, "week");
-}
-
-/** +1(週) */
-const nextMonth = (): void => {
-  currentDate.value = moment(currentDate.value).add(1, "week");
 }
 
 /** 曜日取得 */
