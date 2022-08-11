@@ -8,7 +8,7 @@
     </button>
     <p>{{ currentDateFormat }}</p>
     <button
-      @click="$emit('prevWeek', currentDate)"
+      @click="$emit('nextWeek', currentDate)"
       class="text-black hover:text-gray-500"
     >
       ▶︎
@@ -22,12 +22,12 @@
           v-for="(day, index) in week" :key="index"
           class="w-full text-center border-r border-gray-300"
         >
-        <p>
-          {{ dateWeek[index] }}
-        </p>
-        <p class="border-b border-gray-300">
-          {{ day.date }}
-        </p>
+          <p>
+            {{ dayOfWeek[index] }}
+          </p>
+          <p class="border-b border-gray-300">
+            {{ day.date }}
+          </p>
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@ interface Props {
   /** 現在日時フォーマット(YYYY年MM月) */
   currentDateFormat: string,
   /** 曜日 */
-  dateWeek: string[]
+  dayOfWeek: string[]
 }
 
 interface Emits {
