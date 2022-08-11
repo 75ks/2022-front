@@ -1,14 +1,14 @@
 <template>
   <div class="w-full py-2 flex justify-between font-bold text-2xl bg-white sticky top-0 z-50">
     <button
-      @click="$emit('prevWeek', currentDate)"
+      @click="$emit('prevDay', currentDate)"
       class="text-black hover:text-gray-500"
     >
       ◀︎
     </button>
     <p>{{ currentDateFormat }}</p>
     <button
-      @click="$emit('nextWeek', currentDate)"
+      @click="$emit('nextDay', currentDate)"
       class="text-black hover:text-gray-500"
     >
       ▶︎
@@ -18,12 +18,9 @@
     <div class="w-full flex bg-white sticky top-12 z-50">
       <div class="w-16"></div>
       <div class="w-full flex border-l border-gray-300">
-        <div
-          v-for="(day, index) in week" :key="index"
-          class="w-full text-center border-r border-gray-300"
-        >
+        <div class="w-full text-center border-r border-gray-300">
           <p>
-            {{ dayOfWeek[index] }}
+            {{ getDayofWeek() }}
           </p>
           <p class="border-b border-gray-300">
             {{ day.date }}
@@ -51,10 +48,7 @@
         </div>
       </div>
       <div class="w-full flex border-l border-gray-300">
-        <div
-          v-for="(day, index) in week" :key="index"
-          class="w-full border-r border-gray-300"
-        >
+        <div class="w-full border-r border-gray-300">
           <div
             v-for="(n, index) in 24" :key="index"
             class="w-full h-12 boder-r border-b border-gray-300"
@@ -92,24 +86,24 @@ interface Props {
 }
 
 interface Emits {
-  /** -1(週) */
-  (e: "prevWeek", value: moment.Moment): void;
-  /** +1(週) */
-  (e: "nextWeek", value: moment.Moment): void;
+  /** -1(日) */
+  (e: "prevDay", value: moment.Moment): void;
+  /** +1(日) */
+  (e: "nextDay", value: moment.Moment): void;
 }
 
 const props = defineProps<Props>();
 
 const emits = defineEmits<Emits>();
 
-const week = computed<Calender[]>(() => {
-  return getCalenderWeek();
+const day = computed<Calender>(() => {
+  return getCalenderDay();
 });
 
-/** 週の最初の日付を取得 */
-const getStartDate = (): moment.Moment => {
+/** 現在日時の曜日を取得 */
+const getDayofWeek = (): string => {
   const date: moment.Moment = moment(props.currentDate);
-  return date.startOf("week");
+  return props.dayOfWeek[date.day()];
 }
 
 /** 予約情報取得 */
@@ -125,19 +119,13 @@ const getDayReserves = (date: moment.Moment): Reserve[] => {
   return dayReserves;
 }
 
-/** カレンダー(週)を取得 */
-const getCalenderWeek = (): Calender[] => {
-  const startDate: moment.Moment = getStartDate();
-  const week: Calender[] = [];
-  for (let day = 0; day < 7; day++) {
-    const dayReserves: Reserve[] = getDayReserves(startDate);
-    week.push({
-      date: startDate.get("date"),
-      dayReserves
-    });
-    startDate.add(1, "days");
+/** カレンダー(日)を取得 */
+const getCalenderDay = (): Calender => {
+  const day: Calender = {
+    date: props.currentDate.get("date"),
+    dayReserves: getDayReserves(props.currentDate)
   }
-  return week;
+  return day;
 }
 </script>
 

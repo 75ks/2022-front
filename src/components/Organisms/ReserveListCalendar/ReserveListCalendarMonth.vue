@@ -19,7 +19,7 @@
       v-for="n in 7" :key="n"
       class="w-full text-center border-r border-b border-gray-300"
     >
-      {{ dateWeek[n-1] }}
+      {{ dayOfWeek[n-1] }}
     </div>
   </div>
   <div class="w-full pb-4 custom-height border-gray-300">
@@ -59,7 +59,7 @@ interface Props {
   /** 現在日時フォーマット(YYYY年MM月) */
   currentDateFormat: string,
   /** 曜日 */
-  dateWeek: string[]
+  dayOfWeek: string[]
 }
 
 interface Emits {
