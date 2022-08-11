@@ -23,7 +23,7 @@
           class="w-full text-center border-r border-gray-300"
         >
         <p>
-          {{ youbi(index) }}
+          {{ dateWeek[index] }}
         </p>
         <p class="border-b border-gray-300">
           {{ day.date }}
@@ -77,13 +77,18 @@
 <script setup lang="ts">
 import moment from 'moment';
 import { Reserve } from '../../../models/Reserve';
+import { Calender } from '../../../models/Calender';
 import { computed } from 'vue';
 
 interface Props {
   /** 予約情報一覧 */
   reserveList: Reserve[],
   /** 現在日時 */
-  currentDate: moment.Moment
+  currentDate: moment.Moment,
+  /** 現在日時フォーマット(YYYY年MM月) */
+  currentDateFormat: string,
+  /** 曜日 */
+  dateWeek: string[]
 }
 
 interface Emits {
@@ -93,24 +98,12 @@ interface Emits {
   (e: "nextWeek", value: moment.Moment): void;
 }
 
-interface Calender {
-  /** 日付 */
-  date: number,
-  /** 予約情報 */
-  dayReserves: Reserve[]
-}
-
 const props = defineProps<Props>();
 
 const emits = defineEmits<Emits>();
 
 const week = computed<Calender[]>(() => {
   return getCalenderWeek();
-});
-
-/** 現在日時をフォーマット */
-const currentDateFormat = computed<string>(() => {
-  return props.currentDate.format('YYYY[年]MM[月]');
 });
 
 /** 週の最初の日付を取得 */
@@ -145,12 +138,6 @@ const getCalenderWeek = (): Calender[] => {
     startDate.add(1, "days");
   }
   return week;
-}
-
-/** 曜日取得 */
-const youbi = (index: number): string => {
-  const week = ["日", "月", "火", "水", "木", "金", "土"];
-  return week[index];
 }
 </script>
 

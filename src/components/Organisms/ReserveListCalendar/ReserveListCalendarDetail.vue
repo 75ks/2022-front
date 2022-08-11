@@ -11,6 +11,8 @@
       <ReserveListCalendarWeek
         :reserve-list="reserveList"
         :current-date="currentDate"
+        :current-date-format="currentDateFormat"
+        :date-week="dateWeek"
         @prev-week="prevWeek"
         @next-week="nextWeek"
       />
@@ -19,6 +21,8 @@
       <ReserveListCalendarMonth
         :reserve-list="reserveList"
         :current-date="currentDate"
+        :current-date-format="currentDateFormat"
+        :date-week="dateWeek"
         @prev-month="prevMonth"
         @next-month="nextMonth"
       />
@@ -31,7 +35,7 @@ import moment from 'moment';
 import { Reserve } from '../../../models/Reserve';
 import ReserveListCalendarMonth from './ReserveListCalendarMonth.vue';
 import ReserveListCalendarWeek from './ReserveListCalendarWeek.vue'
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 interface Props {
   /** 予約情報一覧 */
@@ -45,6 +49,14 @@ const calendarSelectValue = ref<string>("2");
 
 /** 現在日時を取得 */
 const currentDate = ref<moment.Moment>(moment());
+
+/** 現在日時をフォーマット */
+const currentDateFormat = computed<string>(() => {
+  return currentDate.value.format('YYYY[年]MM[月]');
+});
+
+/** 曜日 */
+const dateWeek: string[] = ["日", "月", "火", "水", "木", "金", "土"];
 
 /** -1(週) */
 const prevWeek = (value: moment.Moment): void => {
