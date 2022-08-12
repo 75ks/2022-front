@@ -7,6 +7,7 @@ import Login from '../views/Login.vue';
 import RegisterSample from '../views/RegisterSample.vue';
 import RegisterSampleRev from '../views/RegisterSampleRev.vue';
 import CustomerLogin from '../views/CustomerLogin.vue';
+import Learn1 from '../views/Learn1.vue';
 import { useAuthorizationStore } from '../store/authorization';
 import { useMessageStore } from "../store/message";
 import { MessageStatus } from "../constants/MessageStatus";
@@ -49,6 +50,10 @@ const routes = [
     component: RegisterSampleRev,
     meta: { requiredAuth: true }
   },
+  {
+    path: "/learn1",
+    component: Learn1,
+  },
 ];
 
 const router = vueRouter.createRouter({
@@ -66,7 +71,7 @@ router.beforeEach((to, from, next) => {
       useMessageStore().addMessageList(["認証に失敗しました。再度ログインしてください。"]);
       useMessageStore().addMessageType(MessageStatus.WARNING.code!);
       next("/login");
-    } 
+    }
   } else {
     next();
   }
