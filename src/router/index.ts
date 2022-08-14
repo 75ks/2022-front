@@ -10,7 +10,7 @@ import CustomerLogin from '../views/CustomerLogin.vue';
 import { useAuthorizationStore } from '../store/authorization';
 import { useMessageStore } from "../store/message";
 import { MessageStatus } from "../constants/MessageStatus";
-import AdministratorReserve from "../views/AdministratorReserve.vue";
+import MenuManagement from "../views/MenuManagement.vue";
 
 const routes = [
   {
@@ -51,8 +51,8 @@ const routes = [
     meta: { requiredAuth: true }
   },
   {
-    path: "/AdministratorReserve",
-    component: AdministratorReserve,
+    path: "/menuManagement",
+    component: MenuManagement,
     meta: { requiredAuth: true }
   },
 ];
@@ -72,7 +72,7 @@ router.beforeEach((to, from, next) => {
       useMessageStore().addMessageList(["認証に失敗しました。再度ログインしてください。"]);
       useMessageStore().addMessageType(MessageStatus.WARNING.code!);
       next("/login");
-    } 
+    }
   } else {
     next();
   }
