@@ -35,6 +35,7 @@
       :modal-reserve-data="modalReserveData"
       @close="closeModal"
     />
+    {{reserveList}}
   </div>
 </template>
 

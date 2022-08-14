@@ -10,6 +10,7 @@ import CustomerLogin from '../views/CustomerLogin.vue';
 import { useAuthorizationStore } from '../store/authorization';
 import { useMessageStore } from "../store/message";
 import { MessageStatus } from "../constants/MessageStatus";
+import AdministratorReserve from "../views/AdministratorReserve.vue";
 
 const routes = [
   {
@@ -47,6 +48,11 @@ const routes = [
   {
     path: "/registerSampleRev",
     component: RegisterSampleRev,
+    meta: { requiredAuth: true }
+  },
+  {
+    path: "/AdministratorReserve",
+    component: AdministratorReserve,
     meta: { requiredAuth: true }
   },
 ];
