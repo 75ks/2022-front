@@ -9,9 +9,16 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 const pinia = createPinia()
 pinia.use(piniaPersist)
 library.add(fas, far, fab)
 
-createApp(App).use(router).use(pinia).component('font-awesome-icon', FontAwesomeIcon ).mount('#app')
+createApp(App)
+  .use(router)
+  .use(pinia)
+  .component('font-awesome-icon', FontAwesomeIcon )
+  .component('Datepicker', Datepicker)
+  .mount('#app')
