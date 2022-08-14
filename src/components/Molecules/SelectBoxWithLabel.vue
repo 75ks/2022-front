@@ -25,8 +25,9 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, reactive, watch } from "vue";
 import InputLabel from "../Atoms/label/InputLabel.vue";
-import SelectBox, { SelectOption } from "../Atoms/Input/SelectBox.vue";
+import SelectBox from "../Atoms/Input/SelectBox.vue";
 import axios from "../../plugins/axios";
+import { SelectOption } from "../../models/SelectOption";
 
 interface State {
   selectOptions: SelectOption[];

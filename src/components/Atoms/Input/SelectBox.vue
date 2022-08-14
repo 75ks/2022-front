@@ -9,7 +9,11 @@
     ]"
     :disabled="disableFlg"
   >
-    <option v-for="(option, index) of options" :value="option.code" :key="index">
+    <option
+      v-for="(option, index) of options"
+      :value="option.code"
+      :key="index"
+    >
       {{ option.name }}
     </option>
   </select>
@@ -17,11 +21,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-
-export interface SelectOption {
-  code: number | string | null
-  name: string
-}
+import { SelectOption } from "../../../models/SelectOption";
 
 interface Props {
   /** 入力値 */

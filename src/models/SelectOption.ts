@@ -1,4 +1,4 @@
 export interface SelectOption {
-  code: string,
+  code: number | string | null
   name: string
 }
