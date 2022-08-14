@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="w-1/2 m-auto p-8 mt-20 bg-white">
-      <p class="pb-10 text-center font-bold text-2xl">ログイン ここを変える</p>
+      <p class="pb-10 text-center font-bold text-2xl">ログイン</p>
       <div
         v-if="message.messageList.length"
         class="pb-10 w-2/3 m-auto"
