@@ -7,6 +7,8 @@
     :enableTimePicker="true"
     :inputClassName="inputClass"
     :disabled="disableFlg"
+    locale="ja"
+    selectText="OK"
   />
 </template>
 
