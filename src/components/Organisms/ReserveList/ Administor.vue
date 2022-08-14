@@ -39,7 +39,6 @@
       </table>
     </div>
   </div>
-  {{reserveList}}
 </template>
 
 <script setup lang="ts">
