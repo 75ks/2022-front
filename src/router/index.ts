@@ -7,6 +7,7 @@ import Login from '../views/Login.vue';
 import RegisterSample from '../views/RegisterSample.vue';
 import RegisterSampleRev from '../views/RegisterSampleRev.vue';
 import CustomerLogin from '../views/CustomerLogin.vue';
+import Learn1 from '../views/Learn1.vue';
 import { useAuthorizationStore } from '../store/authorization';
 import { useMessageStore } from "../store/message";
 import { MessageStatus } from "../constants/MessageStatus";
@@ -48,6 +49,10 @@ const routes = [
     path: "/registerSampleRev",
     component: RegisterSampleRev,
     meta: { requiredAuth: true }
+  },
+  {
+    path:"/learn1",
+    component: Learn1,
   },
 ];
 
