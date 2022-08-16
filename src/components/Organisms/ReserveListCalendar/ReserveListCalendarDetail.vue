@@ -8,14 +8,19 @@
       <option value="2">週</option>
       <option value="3">月</option>
     </select>
-    <div class="w-full h-12 py-2 flex justify-between font-bold text-2xl bg-white sticky top-0 z-50">
+    <div class="w-full h-12 py-2 flex justify-between font-bold text-2xl bg-white sticky top-0 z-40">
       <button
         @click="prevCalendar(currentDate)"
         class="text-black hover:text-gray-500"
       >
         ◀︎
       </button>
-      <p>{{ currentDateFormat }}</p>
+      <p 
+        @click="showModal()"
+        class="cursor-pointer"
+      >
+        {{ currentDateFormat }}
+      </p>
       <button
         @click="nextCalendar(currentDate)"
         class="text-black hover:text-gray-500"
@@ -54,6 +59,12 @@
       />
     </div>
   </div>
+  <Modal
+      :is-visible-modal="isVisibleModal"
+      :current-date="currentDate"
+      @updateCurrentDate="updateCurrentDate"
+      @closeModal="closeModal"
+  />
 </template>
 
 <script setup lang="ts">
@@ -61,7 +72,8 @@ import moment from 'moment';
 import { Reserve } from '../../../models/Reserve';
 import ReserveListCalendarDay from './ReserveListCalendarDay.vue';
 import ReserveListCalendarMonth from './ReserveListCalendarMonth.vue';
-import ReserveListCalendarWeek from './ReserveListCalendarWeek.vue'
+import ReserveListCalendarWeek from './ReserveListCalendarWeek.vue';
+import Modal from './Modal.vue';
 import { ref, computed } from 'vue';
 
 interface Props {
@@ -70,6 +82,25 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+/** モーダル表示フラグ */
+const isVisibleModal = ref<boolean>(false);
+
+/** 現在日時クリックイベント(モーダルを表示する) */
+const showModal = () => {
+  isVisibleModal.value = true;
+}
+
+/** モーダル決定ボタンクリックイベント(モーダルで設定した値を現在日時に設定し、モーダルを非表示にする) */
+const updateCurrentDate = (value: moment.Moment) => {
+  currentDate.value = value;
+  closeModal();
+}
+
+/** モーダル表示時、モーダル外クリックイベント、モーダル✖︎ボタンクリックイベント(モーダルを非表示する) */
+const closeModal = () => {
+  isVisibleModal.value = false;
+}
 
 /** 初期画面をカレンダー(月)に設定 */
 const calendarSelectValue = ref<string>("3");
