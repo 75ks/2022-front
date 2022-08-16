@@ -1,5 +1,5 @@
 <template>
-  <div class="p-2 bg-white flex items-center">
+  <div class="h-10 p-2 bg-white flex items-center">
     <p class="test-center font-bold">{{ headerName }}</p>
   </div>
 </template>
