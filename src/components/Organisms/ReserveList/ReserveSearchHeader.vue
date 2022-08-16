@@ -69,10 +69,10 @@
         />
       </div>
       <div class="col-span-2 justify-self-start">
-        <CalendarFromTo
+        <DateTimePickerFromTo
           v-model:from-input-value="searchForm.reserveDateTimeMin"
           v-model:to-input-value="searchForm.reserveDateTimeMax"
-          label="日時"
+          label="予約日時"
         />
       </div>
     </div>
@@ -84,10 +84,10 @@ import CustomButton from '../../Atoms/Button/CustomButton.vue';
 import { computed } from 'vue';
 import { useReserveStore } from '../../../store/reserve';
 import IntegerFromTo from '../../Molecules/IntegerFromTo.vue';
-import CalendarFromTo from '../../Molecules/CalendarFromTo.vue';
 import InputWithLabel from '../../Molecules/InputWithLabel.vue';
 import SelectBoxWithLabel from '../../Molecules/SelectBoxWithLabel.vue';
 import SuggestInputWithLabel from '../../Molecules/SuggestInputWithLabel.vue';
+import DateTimePickerFromTo from '../../Molecules/DateTimePickerFromTo.vue';
 
 const reserveStore = useReserveStore();
 
