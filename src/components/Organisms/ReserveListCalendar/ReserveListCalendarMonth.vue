@@ -1,20 +1,5 @@
 <template>
-  <div class="w-full py-2 flex justify-between font-bold text-2xl">
-    <button
-      @click="$emit('prevMonth', currentDate)"
-      class="text-black hover:text-gray-500"
-    >
-      ◀︎
-    </button>
-    <p>{{ currentDateFormat }}</p>
-    <button
-      @click="$emit('nextMonth', currentDate)"
-      class="text-black hover:text-gray-500"
-    >
-      ▶︎
-    </button>
-  </div>
-  <div class="flex border-l border-t  border-gray-300">
+  <div class="h-7 flex border-l border-t  border-gray-300">
     <div
       v-for="n in 7" :key="n"
       class="w-full text-center border-r border-b border-gray-300"
@@ -22,7 +7,7 @@
       {{ dayOfWeek[n-1] }}
     </div>
   </div>
-  <div class="w-full pb-4 custom-height border-gray-300">
+  <div class="w-full custom-height-3 border-gray-300">
     <div
       v-for="(week, index) in calendars" :key="index"
       class="flex border-l border-gray-300"
@@ -130,8 +115,8 @@ const getCalenderMonth = (): Calender[][] => {
 </script>
 
 <style>
-  .custom-height {
-    /** カレンダー高さ微調整(ヘッダー:48px - border:1px) */
-    height: calc(100% - 47px);
+  .custom-height-3 {
+    /** カレンダー高さ微調整(曜日: 28px) */
+    height: calc(100% - 28px);
   }
 </style>
