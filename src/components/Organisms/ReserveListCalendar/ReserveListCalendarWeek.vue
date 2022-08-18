@@ -44,13 +44,22 @@
             v-for="(n, index) in 24" :key="index"
             class="w-full h-12 boder-r border-b border-gray-300"
           >
-            <div v-if="day.dayReserves.length > 0">
-              <div v-for="(reserve, index) in day.dayReserves" :key=index>
-                <div v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))">
-                  <p class="w-full text-white pl-1 text-xs bg-red-500">{{ reserve.menu }}</p>
-                  <p class="w-full text-white pl-1 text-xs bg-red-500">{{ moment(reserve.reserveDatetime).format('HH:mm[〜]') }}</p>
-                </div>
-              </div>
+            <div
+              v-if="day.dayReserves.length > 0"
+              v-for="(reserve, index) in day.dayReserves" :key=index
+            >
+              <p
+                v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))"
+                class="w-full text-white pl-1 text-xs bg-red-500"
+              >
+                {{ reserve.menu }}
+              </p>
+              <p
+                v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))"
+                class="w-full text-white pl-1 text-xs bg-red-500"
+              >
+                {{ moment(reserve.reserveDatetime).format('HH:mm[〜]') }}
+              </p>
             </div>
           </div>
         </div>
