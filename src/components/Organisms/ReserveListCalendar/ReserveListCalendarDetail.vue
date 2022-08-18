@@ -34,8 +34,6 @@
         :current-date="currentDate"
         :current-date-format="currentDateFormat"
         :day-of-week="dayOfWeek"
-        @prev-day="prevDay"
-        @next-day="nextDay"
       />
     </div>
     <div v-if="calendarSelectValue === '2'">
@@ -44,8 +42,6 @@
         :current-date="currentDate"
         :current-date-format="currentDateFormat"
         :day-of-week="dayOfWeek"
-        @prev-week="prevWeek"
-        @next-week="nextWeek"
       />
     </div>
     <div class="custom-height-2" v-if="calendarSelectValue === '3'">
@@ -54,8 +50,6 @@
         :current-date="currentDate"
         :current-date-format="currentDateFormat"
         :day-of-week="dayOfWeek"
-        @prev-month="prevMonth"
-        @next-month="nextMonth"
       />
     </div>
   </div>

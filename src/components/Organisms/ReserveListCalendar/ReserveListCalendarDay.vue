@@ -70,16 +70,7 @@ interface Props {
   dayOfWeek: string[]
 }
 
-interface Emits {
-  /** -1(日) */
-  (e: "prevDay", value: moment.Moment): void;
-  /** +1(日) */
-  (e: "nextDay", value: moment.Moment): void;
-}
-
 const props = defineProps<Props>();
-
-const emits = defineEmits<Emits>();
 
 const day = computed<Calender>(() => {
   return getCalenderDay();
