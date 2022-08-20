@@ -2,10 +2,11 @@
   <div class="container p-5">
     <div class="flex justify-center">
       <table class="w-2/3">
+      <button type="button" @click="deleteRow(index)">delete</button>
         <thead>
           <tr>
-            <th class="border border-gray-300 bg-white w-2/5">メニュー</th>
-            <th class="border border-gray-300 bg-white w-2/5">ランク</th>
+            <th class="border border-gray-300 bg-white w-2/5">メニュー <button type="button" @click="add">＋</button></th>
+            <th class="border border-gray-300 bg-white w-2/5">ランク　<button type="button" @click="addRow">＋</button></th>
             <th class="border border-gray-300 bg-white w-1/5">料金</th>
           </tr>
         </thead>
@@ -45,8 +46,10 @@
 <script setup lang="ts">
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import InputWithLabel from '../components/Molecules/InputWithLabel.vue';
+import { ref } from 'vue';
+import { values } from "lodash";
 
-const testData = [
+const testData = ref([
   {
     menuId: 1,
     detail: [
@@ -71,7 +74,33 @@ const testData = [
       { rankId: 3, price: 8500 },
     ],
   },
-];
+]);
+
+
+
+
+const addRow = (): void => {
+testData.value.push({
+menuId: 0,
+detail: [{ rankId: 0, price: 0 }]
+});
+};
+
+const add = (): void => {
+  testData.value[1].detail.push([]);
+}
+
+
+// const deleteRows = (index, 1) => {
+//   testData.value[0].detail.splice(index, 1);
+// }
+
+
+
+const deleteRow = (index:number) => {
+  testData.value.splice(index, 1)
+};
+
 </script>
 
 <style></style>
