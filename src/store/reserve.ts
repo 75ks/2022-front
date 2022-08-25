@@ -4,6 +4,8 @@ import axios from '../plugins/axios';
 import {ReserveSearchForm} from '../models/form/ReserveSearchForm';
 import {ReserveSearchCondScreenObj} from '../models/screenObj/ReserveSearchCondScreenObj';
 import _ from 'lodash';
+import { EditCalendarModalScreenObj } from '../models/screenObj/EditCalendarModalScreenObj';
+import { RegisterReserveForm } from '../models/form/RegisterReserveForm';
 
 export const useReserveStore = defineStore({
   id: "reserve",
@@ -34,6 +36,11 @@ export const useReserveStore = defineStore({
         params: reqForm
       });
       this.addReserves(data);
+    },
+    async register(screenObj: EditCalendarModalScreenObj): Promise<void> {
+      const reqForm: RegisterReserveForm = new RegisterReserveForm();
+      _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
+      await axios.post("/reserves/register", reqForm);
     },
     addReserves(array: Object[]): void {
       this.resetReserves();
