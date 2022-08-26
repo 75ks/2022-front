@@ -11,98 +11,113 @@
       </ul>
     </div>
     <div class="grid gap-6 mb-6 grid-cols-2">
-      <SelectBoxWithLabel
-        v-model:select-value="state.screenObj.storeId"
-        targetUrl="/selectOption/storeNames"
-        label="店舗名"
-        :requiredFlg="true"
-      /><br>
-      <InputWithLabel
-        v-model:input-value="state.screenObj.lastName"
-        label="姓"
-        :requiredFlg="true"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.firstName"
-        label="名"
-        :requiredFlg="true"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.lastNameKana"
-        label="セイ"
-        :requiredFlg="true"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.firstNameKana"
-        label="メイ"
-        :requiredFlg="true"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.birthday"
-        label="生年月日"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.age"
-        label="年齢"
-        :requiredFlg="false"
-      />
-      <SelectBoxWithLabel
-        v-model:select-value="state.screenObj.gender"
-        :options="GenderList"
-        label="性別"
-        :requiredFlg="true"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.postal_code"
-        label="郵便番号"
-        :requiredFlg="false"
-      />
-      <SelectBoxWithLabel
-        v-model:select-value="state.screenObj.prefectureId"
-        :options="PrefectureIdList"
-        label="都道府県"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.address1"
-        label="市区町村"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.address2"
-        label="市区町村以下"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.address3"
-        label="建物、部屋番号"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.phone_number"
-        label="電話番号"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.email"
-        label="メールアドレス"
-        type="email"
-        :requiredFlg="true"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.password"
-        label="パスワード"
-        type="password"
-        :requiredFlg="true"
-      />
-      <CustomButton
-        class="w-full mt-16"
-        :button-name="'登録'"
-        :button-color-number="1"
-        @click="register"
-      />
+      <!-- InputWithLabel -->
+        <!-- <SelectBoxWithLabel
+          v-model:select-value="state.screenObj.storeId"
+          targetUrl="/selectOption/storeNames"
+          label="店舗名"
+          :requiredFlg="true"
+        /><br> -->
+        <InputWithLabel
+          v-model:input-value="state.screenObj.lastName"
+          label="姓"
+          :requiredFlg="true"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.firstName"
+          label="名"
+          :requiredFlg="true"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.lastNameKana"
+          label="セイ"
+          :requiredFlg="true"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.firstNameKana"
+          label="メイ"
+          :requiredFlg="true"
+        />
+
+      <!-- DatePickerWithLabel -->
+        <DatePickerWithLabel
+            v-model:inputValue="state1.datePickerObj.inputValue"
+            label="生年月日"
+            :sideBySideFlg="state1.datePickerObj.sideBySideFlg"
+            :size="state1.datePickerObj.size"
+            :requiredFlg="false"
+            :disableFlg="state1.datePickerObj.disableFlg"
+        />
+        <!-- <InputWithLabel
+          v-model:input-value="state.screenObj.birthday"
+          label="生年月日"
+          :requiredFlg="false"
+        /> -->
+
+      <!-- InputWithLabel -->
+        <InputWithLabel
+          v-model:input-value="state.screenObj.age"
+          label="年齢"
+          :requiredFlg="false"
+        />
+        <SelectBoxWithLabel
+          v-model:select-value="state.screenObj.gender"
+          :options="GenderList"
+          label="性別"
+          :requiredFlg="true"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.postal_code"
+          label="郵便番号"
+          :requiredFlg="false"
+        />
+        <SelectBoxWithLabel
+          v-model:select-value="state.screenObj.prefectureId"
+          :options="PrefectureIdList"
+          label="都道府県"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.address1"
+          label="市区町村"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.address2"
+          label="市区町村以下"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.address3"
+          label="建物、部屋番号"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.phone_number"
+          label="電話番号"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.email"
+          label="メールアドレス"
+          type="email"
+          :requiredFlg="true"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.password"
+          label="パスワード"
+          type="password"
+          :requiredFlg="true"
+        />
+        <CustomButton
+          class="w-full mt-16"
+          :button-name="'登録'"
+          :button-color-number="1"
+          @click="register"
+        />
+
     </div>
+
   </div>
 </template>
 
@@ -118,6 +133,7 @@ import { CustomerCreateScreenObj } from "../models/screenObj/CustomerCreateScree
 import { CustomerCreateRequest } from "../models/form/CustomerCreateRequest";
 import { MessageStatus } from '../constants/MessageStatus'
 import { useMessageStore } from '../store/message'
+import DatePickerWithLabel from '../components/Molecules/DatePickerWithLabel.vue';
 
 const messageStore = useMessageStore();
 
@@ -133,6 +149,44 @@ interface State {
 const state = reactive<State>({
   screenObj: new CustomerCreateScreenObj(),
   passwordConfirmation: "",
+});
+
+// 生年月日 DatePickerWithLabel 部品を使用
+class TestProps {
+  inputValue;
+  label;
+  sideBySideFlg;
+  inputWidth;
+  size;
+  requiredFlg;
+  disableFlg;
+
+  constructor(inputValue: string, label: string, sideBySideFlg: boolean, inputWidth: string, size: string, requiredFlg: boolean, disableFlg: boolean) {
+    this.inputValue = inputValue;
+    this.label = label;
+    this.sideBySideFlg = sideBySideFlg;
+    this.inputWidth = inputWidth;
+    this.size = size;
+    this.requiredFlg = requiredFlg;
+    this.disableFlg = disableFlg;
+  }
+}
+
+const state1 = reactive({
+  // textInputWithLabelObj: new TestProps(
+  //   '', 'InputWithLabel', false, '', '', true, false
+  // ),
+  datePickerObj:  new TestProps(
+    '', 'DatePickerWithLabel', false, '', '', true, false
+  )
+  // dateTimePickerObj:  new TestProps(
+  //   '', 'DateTimePickerWithLabel', false, '', '', true, false
+  // ),
+  // sizeOptions: [
+  //   { code: "sm", name: "sm" },
+  //   { code: "md", name: "md" },
+  //   { code: "lg", name: "lg" },
+  // ],
 });
 
 /** 登録ボタンクリックイベント */
