@@ -5,7 +5,7 @@
       <button type="button" @click="deleteRow(index)">delete</button>
         <thead>
           <tr>
-            <th class="border border-gray-300 bg-white w-2/5">メニュー <button type="button" @click="add">＋</button></th>
+            <th class="border border-gray-300 bg-white w-2/5">メニュー</th>
             <th class="border border-gray-300 bg-white w-2/5">ランク　<button type="button" @click="addRow">＋</button></th>
             <th class="border border-gray-300 bg-white w-1/5">料金</th>
           </tr>
@@ -29,12 +29,14 @@
                   targetUrl="/selectOption/ranks"
                 />
               </td>
-              <td class="border border-gray-300 bg-white p-2">
+              <td class="border border-gray-300 bg-white p-2" >
                 <InputWithLabel
                   v-model:input-value="detail.price"
                   type="number"
                 />
               </td>
+              <button class="text-center" type="button" @click="add(index1)" v-if="index2 === data.detail.length - 1">＋</button>
+              <button type="button" @click="deleteRows(index1)" v-if="index2 === data.detail.length - 1">delet</button>
             </tr>
           </template>
         </tbody>
@@ -86,14 +88,14 @@ detail: [{ rankId: 0, price: 0 }]
 });
 };
 
-const add = (): void => {
-  testData.value[1].detail.push([]);
+const add = (index: number): void => {
+  testData.value[index].detail.push([]);
 }
 
 
-// const deleteRows = (index, 1) => {
-//   testData.value[0].detail.splice(index, 1);
-// }
+const deleteRows = (index: number) => {
+  testData.value[index].detail.splice(index, 1);
+}
 
 
 
