@@ -1,140 +1,189 @@
 <template>
-  <div class="p-2 mt-2 bg-white">
-    <div class="w-2/3 m-auto flex justify-between font-bold text-2xl">
+  <div class="custom-height p-2 mt-2 bg-white">
+    <select
+      v-model="calendarSelectValue"
+      class="h-10 p-2 text-sm text-gray-700 border border-gray-300 rounded-md focus:outline outline-blue-300"
+    >
+      <option value="1">日</option>
+      <option value="2">週</option>
+      <option value="3">月</option>
+    </select>
+    <div class="w-full h-12 py-2 flex justify-between font-bold text-2xl bg-white sticky top-0 z-40">
       <button
-        @click="prevMonth"
+        @click="prevCalendar(currentDate)"
         class="text-black hover:text-gray-500"
       >
         ◀︎
       </button>
-      <p>{{ currentDateFormat }}</p>
+      <p 
+        @click="showModal()"
+        class="cursor-pointer"
+      >
+        {{ currentDateFormat }}
+      </p>
       <button
-        @click="nextMonth"
+        @click="nextCalendar(currentDate)"
         class="text-black hover:text-gray-500"
       >
         ▶︎
       </button>
     </div>
-    <div class="w-2/3 my-2 m-auto border-t border-gray-300">
-      <div class="flex border-l border-gray-300">
-        <div
-          v-for="n in 7" :key="n"
-          class="w-28 text-center border-r border-b border-gray-300"
-        >
-          {{ youbi(n-1) }}
-        </div>
-      </div>
-      <div
-        v-for="(week, index) in calendars" :key="index"
-        class="flex border-l border-gray-300"
-      >
-        <div
-          v-for="(day, index) in week" :key="index"
-          class="w-28 h-36 border-r border-b border-gray-300"
-        >
-          <p class="ml-1">
-            {{ day.date }}
-          </p>
-          <p class="text-white" :class="day.dayReserves.length > 0 ? 'bg-red-500' : 'bg-gray-500'">
-            {{ day.dayReserves.length }}件
-          </p>
-        </div>
-      </div>
+    <div v-if="calendarSelectValue === '1'">
+      <ReserveListCalendarDay
+        :reserve-list="reserveList"
+        :current-date="currentDate"
+        :current-date-format="currentDateFormat"
+        :day-of-week="dayOfWeek"
+        @prev-day="prevDay"
+        @next-day="nextDay"
+      />
+    </div>
+    <div v-if="calendarSelectValue === '2'">
+      <ReserveListCalendarWeek
+        :reserve-list="reserveList"
+        :current-date="currentDate"
+        :current-date-format="currentDateFormat"
+        :day-of-week="dayOfWeek"
+        @prev-week="prevWeek"
+        @next-week="nextWeek"
+      />
+    </div>
+    <div class="custom-height-2" v-if="calendarSelectValue === '3'">
+      <ReserveListCalendarMonth
+        :reserve-list="reserveList"
+        :current-date="currentDate"
+        :current-date-format="currentDateFormat"
+        :day-of-week="dayOfWeek"
+        @prev-month="prevMonth"
+        @next-month="nextMonth"
+      />
     </div>
   </div>
+  <Modal
+      :is-visible-modal="isVisibleModal"
+      :current-date="currentDate"
+      @updateCurrentDate="updateCurrentDate"
+      @closeModal="closeModal"
+  />
 </template>
 
 <script setup lang="ts">
 import moment from 'moment';
 import { Reserve } from '../../../models/Reserve';
-import { computed, ref } from 'vue';
+import ReserveListCalendarDay from './ReserveListCalendarDay.vue';
+import ReserveListCalendarMonth from './ReserveListCalendarMonth.vue';
+import ReserveListCalendarWeek from './ReserveListCalendarWeek.vue';
+import Modal from './Modal.vue';
+import { ref, computed } from 'vue';
 
-const props = defineProps<{
+interface Props {
+  /** 予約情報一覧 */
   reserveList: Reserve[]
-}>();
-
-interface Calender {
-  date: number,
-  dayReserves: Reserve[]
 }
 
-const calendars = computed<Calender[][]>(() => {
-  return getCalender();
-});
+const props = defineProps<Props>();
+
+/** モーダル表示フラグ */
+const isVisibleModal = ref<boolean>(false);
+
+/** 現在日時クリックイベント(モーダルを表示する) */
+const showModal = () => {
+  isVisibleModal.value = true;
+}
+
+/** モーダル決定ボタンクリックイベント(モーダルで設定した値を現在日時に設定し、モーダルを非表示にする) */
+const updateCurrentDate = (value: moment.Moment) => {
+  currentDate.value = value;
+  closeModal();
+}
+
+/** モーダル表示時、モーダル外クリックイベント、モーダル✖︎ボタンクリックイベント(モーダルを非表示する) */
+const closeModal = () => {
+  isVisibleModal.value = false;
+}
+
+/** 初期画面をカレンダー(月)に設定 */
+const calendarSelectValue = ref<string>("3");
 
 /** 現在日時を取得 */
 const currentDate = ref<moment.Moment>(moment());
-const currentDateFormat = computed(() => {
+
+/** 現在日時をフォーマット */
+const currentDateFormat = computed<string>(() => {
   return currentDate.value.format('YYYY[年]MM[月]');
 });
 
-/** カレンダーの最初の日付を取得 */
-const getStartDate = (): moment.Moment => {
-  let date: moment.Moment = moment(currentDate.value);
-  date.startOf("month");
-  const youbiNum: number = date.day();
-  return date.subtract(youbiNum, "days");
-}
+/** 曜日 */
+const dayOfWeek: string[] = ["日", "月", "火", "水", "木", "金", "土"];
 
-/** カレンダーの最後の日付を取得 */
-const getEndDate = (): moment.Moment => {
-  let date: moment.Moment = moment(currentDate.value);
-  date.endOf("month");
-  const youbiNum: number = date.day();
-  return date.add(6 - youbiNum, "days");
-}
-
-/** 予約情報取得 */
-const getDayReserves = (date: moment.Moment): Reserve[] => {
-  let dayReserves: Reserve[] = [];
-  props.reserveList.forEach(reserve => {
-    let reserveDate: string = moment(reserve.reserveDatetime).format('YYYY-MM-DD');
-    let targetDate: string = date.format('YYYY-MM-DD');
-    if (reserveDate === targetDate) {
-      dayReserves.push(reserve);
-    }
-  });
-  return dayReserves;
-}
-
-/** カレンダーの日付を取得 */
-const getCalender = (): Calender[][] => {
-  let startDate: moment.Moment = getStartDate();
-  let endDate: moment.Moment = getEndDate();
-  // カレンダーに表示する週数を取得
-  const weekNumber: number = Math.ceil(endDate.diff(startDate, "days") / 7);
-  let calendars: Calender[][] = [];
-  for (let week = 0; week < weekNumber; week++) {
-    let weekRow: Calender[] = [];
-    for (let day = 0; day < 7; day++) {
-      let dayReserves: Reserve[] = getDayReserves(startDate);
-      weekRow.push({
-        date: startDate.get("date"),
-        dayReserves
-      });
-      startDate.add(1, "days");
-    }
-    calendars.push(weekRow);
+/** ◀ボタンクリックイベント */
+const prevCalendar = (value: moment.Moment): void => {
+  switch (calendarSelectValue.value) {
+    case "1":
+      prevDay(value);
+      break;
+    case "2":
+      prevWeek(value);
+      break;
+    case "3":
+      prevMonth(value);
+      break;
   }
-  return calendars;
+}
+
+/** ▶︎ボタンクリックイベント */
+const nextCalendar = (value: moment.Moment): void => {
+  switch (calendarSelectValue.value) {
+    case "1":
+      nextDay(value);
+      break;
+    case "2":
+      nextWeek(value);
+      break;
+    case "3":
+      nextMonth(value);
+      break;
+  }
+}
+
+/** -1(日) */
+const prevDay = (value: moment.Moment): void => {
+  currentDate.value = moment(value).subtract(1, "day");
+}
+
+/** +1(日) */
+const nextDay = (value: moment.Moment): void => {
+  currentDate.value = moment(value).add(1, "day");
+}
+
+/** -1(週) */
+const prevWeek = (value: moment.Moment): void => {
+  currentDate.value = moment(value).subtract(1, "week");
+}
+
+/** +1(週) */
+const nextWeek = (value: moment.Moment): void => {
+  currentDate.value = moment(value).add(1, "week");
 }
 
 /** -1(月) */
-const prevMonth = (): void => {
-  currentDate.value = moment(currentDate.value).subtract(1, "month");
+const prevMonth = (value: moment.Moment): void => {
+  currentDate.value = moment(value).subtract(1, "month");
 }
 
 /** +1(月) */
-const nextMonth = (): void => {
-  currentDate.value = moment(currentDate.value).add(1, "month");
-}
-
-/** 曜日取得 */
-const youbi = (index: number): string => {
-  const week = ["日", "月", "火", "水", "木", "金", "土"];
-  return week[index];
+const nextMonth = (value: moment.Moment): void => {
+  currentDate.value = moment(value).add(1, "month");
 }
 </script>
 
 <style>
+  .custom-height {
+    /** カレンダー高さ微調整(ヘッダー:48px - border:1px) */
+    height: calc(100% - 48px - 1px);
+  }
+  .custom-height-2 {
+    /** カレンダー高さ微調整(カレンダー表示形式プルダウン:38px - 現在日時:48px - border:1px) */
+    height: calc(100% - 38px - 48px - 1px);
+  }
 </style>
