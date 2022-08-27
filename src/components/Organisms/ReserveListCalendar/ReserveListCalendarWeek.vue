@@ -1,19 +1,4 @@
 <template>
-  <div class="w-full py-2 flex justify-between font-bold text-2xl bg-white sticky top-0 z-50">
-    <button
-      @click="$emit('prevWeek', currentDate)"
-      class="text-black hover:text-gray-500"
-    >
-      ◀︎
-    </button>
-    <p>{{ currentDateFormat }}</p>
-    <button
-      @click="$emit('nextWeek', currentDate)"
-      class="text-black hover:text-gray-500"
-    >
-      ▶︎
-    </button>
-  </div>
   <div class="w-full">
     <div class="w-full flex bg-white sticky top-12 z-50">
       <div class="w-16"></div>
