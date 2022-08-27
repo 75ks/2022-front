@@ -1,6 +1,6 @@
 // import { defineStore } from 'pinia';
-// import { MenuHeader} from '../models/MenuHeader'
-// import { MenuDetail } from '../models/MenuDetail';
+// import { MenuManagement} from '../models/MenuManagement'
+// import { MenuManagementDetail } from '../models/MenuManagementDetail';
 // import axios from '../plugins/axios';
 // import _ from 'lodash';
 
@@ -23,7 +23,7 @@
 //     addReserves(array: Object[]): void {
 //       this.resetReserves();
 //       array.forEach(obj => {
-//         const reserve: MenuHeader = new MenuHeader();
+//         const reserve: MenuManagement = new MenuManagement();
 //         _.assign(reserve, _.pick(obj, _.keys(reserve)));
 //         this.reserves.push(reserve);
 //       });
