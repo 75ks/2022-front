@@ -42,28 +42,47 @@
         >
           <div
             v-for="(n, index) in 24" :key="index"
-            class="w-full h-12 boder-r border-b border-gray-300"
+            @click="showModal(day.datetime, n-1)"
+            class="w-full h-12 boder-r border-b border-gray-300 hover:bg-gray-100 cursor-pointer overflow-scroll"
           >
-            <div v-if="day.dayReserves.length > 0">
-              <div v-for="(reserve, index) in day.dayReserves" :key=index>
-                <div v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))">
-                  <p class="w-full text-white pl-1 text-xs bg-red-500">{{ reserve.menu }}</p>
-                  <p class="w-full text-white pl-1 text-xs bg-red-500">{{ moment(reserve.reserveDatetime).format('HH:mm[〜]') }}</p>
-                </div>
-              </div>
+            <div
+              v-if="day.dayReserves.length > 0"
+              v-for="(reserve, index) in day.dayReserves" :key=index
+            >
+              <p
+                v-if="n-1 === Number(moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH'))"
+                class="w-full text-white pl-1 text-xs bg-red-500"
+              >
+                {{ reserve.menu }}
+              </p>
+              <p
+                v-if="n-1 === Number(moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH'))"
+                class="w-full text-white pl-1 text-xs bg-red-500"
+              >
+                {{ moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH:mm[〜]') }}
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <EditCalendarModal
+    :is-visible-modal="isVisibleModal"
+    :select-date-time="selectDateTime"
+    @closeModal="closeModal"
+  />
 </template>
 
 <script setup lang="ts">
 import moment from 'moment';
 import { Reserve } from '../../../models/Reserve';
 import { Calender } from '../../../models/Calender';
-import { computed } from 'vue';
+import EditCalendarModal from './EditCalendarModal.vue';
+import { useMessageStore } from '../../../store/message';
+import { computed, ref } from 'vue';
+
+const messageStore = useMessageStore();
 
 interface Props {
   /** 予約情報一覧 */
@@ -76,16 +95,27 @@ interface Props {
   dayOfWeek: string[]
 }
 
-interface Emits {
-  /** -1(週) */
-  (e: "prevWeek", value: moment.Moment): void;
-  /** +1(週) */
-  (e: "nextWeek", value: moment.Moment): void;
-}
-
 const props = defineProps<Props>();
 
-const emits = defineEmits<Emits>();
+/** モーダル表示フラグ */
+const isVisibleModal = ref<boolean>(false);
+
+/** 選択予約日時 */
+const selectDateTime = ref<string>("");
+
+/** 現在日時クリックイベント(モーダルに選択日時を渡して表示する) */
+const showModal = (datetime: string, hours: number) => {
+  selectDateTime.value = moment(datetime).add(hours, "hours").format("YYYY-MM-DD HH:mm");
+  isVisibleModal.value = true;
+}
+
+/** モーダル表示時、モーダル外クリックイベント、モーダル✖︎ボタンクリックイベント(モーダルを非表示する) */
+const closeModal = () => {
+  selectDateTime.value = "";
+  messageStore.resetMessageList();
+  messageStore.resetMessageType();
+  isVisibleModal.value = false;
+}
 
 const week = computed<Calender[]>(() => {
   return getCalenderWeek();
@@ -101,7 +131,8 @@ const getStartDate = (): moment.Moment => {
 const getDayReserves = (date: moment.Moment): Reserve[] => {
   const dayReserves: Reserve[] = [];
   props.reserveList.forEach(reserve => {
-    const reserveDate: string = moment(reserve.reserveDatetime).format('YYYY-MM-DD');
+    // 日本時間で計算するため、9時間マイナスする
+    const reserveDate: string = moment(reserve.reserveDatetime).subtract(9, 'hours').format('YYYY-MM-DD');
     const targetDate: string = date.format('YYYY-MM-DD');
     if (reserveDate === targetDate) {
       dayReserves.push(reserve);
@@ -118,6 +149,7 @@ const getCalenderWeek = (): Calender[] => {
     const dayReserves: Reserve[] = getDayReserves(startDate);
     week.push({
       date: startDate.get("date"),
+      datetime: startDate.format("YYYY-MM-DD HH:mm"),
       dayReserves
     });
     startDate.add(1, "days");
