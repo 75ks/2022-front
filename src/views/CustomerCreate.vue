@@ -11,13 +11,6 @@
       </ul>
     </div>
     <div class="grid gap-6 mb-6 grid-cols-2">
-      <!-- InputWithLabel -->
-        <!-- <SelectBoxWithLabel
-          v-model:select-value="state.screenObj.storeId"
-          targetUrl="/selectOption/storeNames"
-          label="店舗名"
-          :requiredFlg="true"
-        /><br> -->
         <InputWithLabel
           v-model:input-value="state.screenObj.lastName"
           label="姓"
@@ -41,18 +34,10 @@
 
       <!-- DatePickerWithLabel -->
         <DatePickerWithLabel
-            v-model:inputValue="state1.datePickerObj.inputValue"
+            v-model:inputValue="state.screenObj.birthday"
             label="生年月日"
-            :sideBySideFlg="state1.datePickerObj.sideBySideFlg"
-            :size="state1.datePickerObj.size"
             :requiredFlg="false"
-            :disableFlg="state1.datePickerObj.disableFlg"
         />
-        <!-- <InputWithLabel
-          v-model:input-value="state.screenObj.birthday"
-          label="生年月日"
-          :requiredFlg="false"
-        /> -->
 
       <!-- InputWithLabel -->
         <InputWithLabel
@@ -149,44 +134,6 @@ interface State {
 const state = reactive<State>({
   screenObj: new CustomerCreateScreenObj(),
   passwordConfirmation: "",
-});
-
-// 生年月日 DatePickerWithLabel 部品を使用
-class TestProps {
-  inputValue;
-  label;
-  sideBySideFlg;
-  inputWidth;
-  size;
-  requiredFlg;
-  disableFlg;
-
-  constructor(inputValue: string, label: string, sideBySideFlg: boolean, inputWidth: string, size: string, requiredFlg: boolean, disableFlg: boolean) {
-    this.inputValue = inputValue;
-    this.label = label;
-    this.sideBySideFlg = sideBySideFlg;
-    this.inputWidth = inputWidth;
-    this.size = size;
-    this.requiredFlg = requiredFlg;
-    this.disableFlg = disableFlg;
-  }
-}
-
-const state1 = reactive({
-  // textInputWithLabelObj: new TestProps(
-  //   '', 'InputWithLabel', false, '', '', true, false
-  // ),
-  datePickerObj:  new TestProps(
-    '', 'DatePickerWithLabel', false, '', '', true, false
-  )
-  // dateTimePickerObj:  new TestProps(
-  //   '', 'DateTimePickerWithLabel', false, '', '', true, false
-  // ),
-  // sizeOptions: [
-  //   { code: "sm", name: "sm" },
-  //   { code: "md", name: "md" },
-  //   { code: "lg", name: "lg" },
-  // ],
 });
 
 /** 登録ボタンクリックイベント */
