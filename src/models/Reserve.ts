@@ -3,6 +3,8 @@ export class Reserve {
   reserveHistoryId: number | null =  null;
   /** ランク */
   rank: string = "";
+  /** メニューID */
+  menuId: number | null = null;
   /** メニュー */
   menu: string = "";
   /** 料金 */
