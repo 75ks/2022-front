@@ -1,6 +1,6 @@
 export class Reserve {
   /** 予約履歴ID */
-  reserveHistoryId: string = "";
+  reserveHistoryId: number | null =  null;
   /** ランク */
   rank: string = "";
   /** メニュー */
