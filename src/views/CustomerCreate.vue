@@ -52,7 +52,7 @@
           :requiredFlg="true"
         />
         <InputWithLabel
-          v-model:input-value="state.screenObj.postal_code"
+          v-model:input-value="state.screenObj.postalCode"
           label="郵便番号"
           :requiredFlg="false"
         />
@@ -78,7 +78,7 @@
           :requiredFlg="false"
         />
         <InputWithLabel
-          v-model:input-value="state.screenObj.phone_number"
+          v-model:input-value="state.screenObj.phoneNumber"
           label="電話番号"
           :requiredFlg="false"
         />
@@ -86,12 +86,6 @@
           v-model:input-value="state.screenObj.email"
           label="メールアドレス"
           type="email"
-          :requiredFlg="true"
-        />
-        <InputWithLabel
-          v-model:input-value="state.screenObj.password"
-          label="パスワード"
-          type="password"
           :requiredFlg="true"
         />
         <CustomButton

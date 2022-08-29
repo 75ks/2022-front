@@ -1,6 +1,4 @@
 export class CustomerCreateRequest {
-  /** 店舗ID */
-  storeId: string = "";
   /** 姓 */
   lastName: string = "";
   /** 名 */
@@ -12,13 +10,13 @@ export class CustomerCreateRequest {
   /** 生年月日 ※後でDate型に修正※ */
   birthday: string = "";
   /** 年齢 */
-  age: string = "";
+  age: number | null = null;
   /** 性別 */
-  gender: string = "";
+  gender: number | null = null;
   /** 郵便番号 */
-  postal_code: string = "";
+  postalCode: number | null = null;
   /** 都道府県 */
-  prefectureId: string = "";
+  prefectureId: number | null = null;
   /** 市区町村 */
   address1: string = "";
   /** 市区町村以下 */
@@ -26,9 +24,7 @@ export class CustomerCreateRequest {
   /** 建物、部屋番号 */
   address3: string = "";
   /** 電話番号 */
-  phone_number: string = "";
+  phoneNumber: string = "";
   /** メールアドレス */
   email: string = "";
-  /** パスワード,パスワード再入力 */
-  password: string = "";
 }
