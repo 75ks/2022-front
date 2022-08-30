@@ -122,12 +122,10 @@ const message = computed(() => {
 
 interface State {
   screenObj: CustomerCreateScreenObj;
-  passwordConfirmation: string;
 }
 
 const state = reactive<State>({
   screenObj: new CustomerCreateScreenObj(),
-  passwordConfirmation: "",
 });
 
 /** 登録ボタンクリックイベント */
