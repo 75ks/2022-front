@@ -59,7 +59,7 @@
         <CustomButton
           button-name="登録"
           :button-color-number="1"
-          @click="register()"
+          @click="registerReserve()"
         />
       </div>
     </div>
@@ -67,9 +67,10 @@
 </template>
 
 <script setup lang="ts">
+import _ from 'lodash';
 import CustomButton from '../../Atoms/Button/CustomButton.vue';
-import { reactive, computed, toRefs, watch } from 'vue';
-import { EditCalendarModalScreenObj } from '../../../models/screenObj/EditCalendarModalScreenObj';
+import { reactive, computed, toRefs, watchEffect } from 'vue';
+import { RegisterModalScreenObj } from '../../../models/screenObj/RegisterModalScreenObj';
 import DateTimePickerWithLabel from '../../Molecules/DateTimePickerWithLabel.vue';
 import SelectBoxWithLabel from '../../Molecules/SelectBoxWithLabel.vue';
 import { MessageStatus } from '../../../constants/MessageStatus';
@@ -87,7 +88,7 @@ interface Props {
   /** モーダル表示フラグ */
   isVisibleModal: boolean;
   /** 選択予約日時 */
-  selectDateTime: string | null;
+  selectDateTime: string;
 }
 
 interface Emits {
@@ -95,7 +96,7 @@ interface Emits {
 }
 
 interface State {
-  screenObj: EditCalendarModalScreenObj;
+  screenObj: RegisterModalScreenObj;
 }
 
 const props = defineProps<Props>();
@@ -103,29 +104,30 @@ const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 
 const state = reactive<State>({
-  screenObj: new EditCalendarModalScreenObj()
+  screenObj: new RegisterModalScreenObj()
 });
 
 const { selectDateTime } = toRefs(props);
 
-watch(selectDateTime, (after, before) => {
-  if (after) {
-    state.screenObj.reserveDateTime = after;
+watchEffect(() => {
+  if (selectDateTime.value) {
+    // モーダル項目にコピー
+    state.screenObj.reserveDateTime = selectDateTime.value;
   }
-})
+});
 
 /** 登録ボタンクリックイベント */
-const register = async (): Promise<void> => {
+const registerReserve = async (): Promise<void> => {
   await reserveStore.register(state.screenObj);
   reserveStore.fetchReserves();
   messageStore.resetMessageList();
   messageStore.resetMessageType();
-  Object.assign(state.screenObj, new EditCalendarModalScreenObj());
-  emits("closeModal");
+  closeModal();
 }
 
-/** モーダル表示時、モーダル外クリックイベント、モーダル✖︎ボタンクリックイベント(モーダルを非表示する) */
+/** モーダル✖︎ボタンクリックイベント */
 const closeModal = (): void => {
+  Object.assign(state.screenObj, new RegisterModalScreenObj());
   emits("closeModal");
 }
 </script>

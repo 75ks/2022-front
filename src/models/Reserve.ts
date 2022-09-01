@@ -3,6 +3,8 @@ export class Reserve {
   reserveHistoryId: number | null =  null;
   /** ランク */
   rank: string = "";
+  /** メニューID */
+  menuId: number | null = null;
   /** メニュー */
   menu: string = "";
   /** 料金 */
@@ -13,6 +15,8 @@ export class Reserve {
   reserveState: number | null = null;
   /** 予約状態名称 */
   reserveStateName: string = "";
+  /** 顧客ID */
+  customerId: number | null = null;
   /** スタッフ(姓) */
   customerLastName: string = "";
   /** スタッフ(名) */
@@ -21,6 +25,8 @@ export class Reserve {
   customerLastNameKana: string = "";
   /** スタッフ(メイ) */
   customerFirstNameKana: string = "";
+  /** スタッフID */
+  stuffId: number | null = null;
   /** 顧客(姓) */
   stuffLastName: string = "";
   /** 顧客(名) */

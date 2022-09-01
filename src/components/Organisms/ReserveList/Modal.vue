@@ -18,7 +18,7 @@
       <p>メニュー: {{ modalReserveData?.menu }}</p>
       <p>料金: {{ modalReserveData?.price }}</p>
       <p>予約日時: {{ modalReserveData ? datetimeFormat(modalReserveData.reserveDatetime) : "" }}</p>
-      <p>予約状態: {{ modalReserveData?.reserveState }}</p>
+      <p>予約状態: {{ modalReserveData?.reserveStateName }}</p>
     </div>
   </teleport>
 </template>

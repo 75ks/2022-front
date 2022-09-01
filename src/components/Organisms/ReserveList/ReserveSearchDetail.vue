@@ -49,7 +49,7 @@ const props = defineProps<{
 }>();
 
 /** モーダルに渡すデータ */
-const modalReserveData = ref<Reserve>();
+const modalReserveData = ref<Reserve>(new Reserve());
 /** モーダル表示フラグ */
 const isVisibleModal = ref<boolean>(false);
 /** レコードクリックイベント(モーダルを表示する) */
