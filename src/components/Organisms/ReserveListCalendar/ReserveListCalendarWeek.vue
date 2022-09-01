@@ -42,12 +42,13 @@
         >
           <div
             v-for="(n, index) in 24" :key="index"
-            @click="showModal(day.datetime, n-1)"
+            @click="showRegisterModal(day.datetime, n-1)"
             class="w-full h-12 boder-r border-b border-gray-300 hover:bg-gray-100 cursor-pointer overflow-scroll"
           >
             <div
               v-if="day.dayReserves.length > 0"
               v-for="(reserve, index) in day.dayReserves" :key=index
+              @click.stop="showEditModal(reserve)"
             >
               <p
                 v-if="n-1 === Number(moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH'))"
@@ -67,10 +68,15 @@
       </div>
     </div>
   </div>
-  <EditCalendarModal
-    :is-visible-modal="isVisibleModal"
+  <RegisterModal
+    :is-visible-modal="isVisibleRegisterModal"
     :select-date-time="selectDateTime"
-    @closeModal="closeModal"
+    @closeModal="closeRegisterModal"
+  />
+  <EditModal
+    :is-visible-modal="isVisibleEditModal"
+    :select-reserve="selectReserve"
+    @closeModal="closeEditModal"
   />
 </template>
 
@@ -78,7 +84,8 @@
 import moment from 'moment';
 import { Reserve } from '../../../models/Reserve';
 import { Calender } from '../../../models/Calender';
-import EditCalendarModal from './EditCalendarModal.vue';
+import RegisterModal from './RegisterModal.vue';
+import EditModal from './EditModal.vue';
 import { useMessageStore } from '../../../store/message';
 import { computed, ref } from 'vue';
 
@@ -97,24 +104,42 @@ interface Props {
 
 const props = defineProps<Props>();
 
-/** モーダル表示フラグ */
-const isVisibleModal = ref<boolean>(false);
+/** 登録モーダル表示フラグ */
+const isVisibleRegisterModal = ref<boolean>(false);
+/** 編集モーダル表示フラグ */
+const isVisibleEditModal = ref<boolean>(false);
 
 /** 選択予約日時 */
 const selectDateTime = ref<string>("");
+/** 予約情報 */
+const selectReserve = ref<Reserve>(new Reserve());
 
-/** 現在日時クリックイベント(モーダルに選択日時を渡して表示する) */
-const showModal = (datetime: string, hours: number) => {
+/** 予約日時クリックイベント */
+const showRegisterModal = (datetime: string, hours: number) => {
   selectDateTime.value = moment(datetime).add(hours, "hours").format("YYYY-MM-DD HH:mm");
-  isVisibleModal.value = true;
+  isVisibleRegisterModal.value = true;
 }
 
-/** モーダル表示時、モーダル外クリックイベント、モーダル✖︎ボタンクリックイベント(モーダルを非表示する) */
-const closeModal = () => {
+/** 予約情報クリックイベント */
+const showEditModal = (reserve: Reserve) => {
+  selectReserve.value = reserve;
+  isVisibleEditModal.value = true;
+}
+
+/** 登録モーダル✖︎ボタンクリックイベント */
+const closeRegisterModal = () => {
   selectDateTime.value = "";
   messageStore.resetMessageList();
   messageStore.resetMessageType();
-  isVisibleModal.value = false;
+  isVisibleRegisterModal.value = false;
+}
+
+/** 編集モーダル✖︎ボタンクリックイベント */
+const closeEditModal = () => {
+  selectReserve.value = new Reserve();
+  messageStore.resetMessageList();
+  messageStore.resetMessageType();
+  isVisibleEditModal.value = false;
 }
 
 const week = computed<Calender[]>(() => {
@@ -131,7 +156,7 @@ const getStartDate = (): moment.Moment => {
 const getDayReserves = (date: moment.Moment): Reserve[] => {
   const dayReserves: Reserve[] = [];
   props.reserveList.forEach(reserve => {
-    // 日本時間で計算するため、9時間マイナスする
+    // 日本時間にするためマイナス9時間で設定
     const reserveDate: string = moment(reserve.reserveDatetime).subtract(9, 'hours').format('YYYY-MM-DD');
     const targetDate: string = date.format('YYYY-MM-DD');
     if (reserveDate === targetDate) {
