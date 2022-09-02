@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full">
     <p class="pb-10 text-center font-bold text-2xl">顧客登録</p>
-    <div 
+    <div
       v-if="message.messageList.length"
       class="pb-10 w-1/3 m-auto"
       :class="message.messageType === MessageStatus.DANGER.code ? 'text-red-500' : 'text-green-500'"
@@ -135,7 +135,8 @@ const register = async () => {
   await axios
     .post("/customerCreate", reqForm)
     .then(() => {
-      // 正常終了時の処理
+      // 入力項目を初期化する
+      state.screenObj = new CustomerCreateScreenObj();
     })
     .catch((error) => {
       // エラー発生時の処理
