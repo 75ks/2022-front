@@ -1,7 +1,11 @@
 <template>
   <button
     class="text-white font-bold py-1 px-3 active:outline-none focus:outline-none rounded"
-    :class="buttonColor(buttonColorNumber)"
+    :class="[
+      buttonColor(buttonColorNumber),
+      disableFlg ? 'bg-gray-300 hover:bg-gray-300' : '',
+    ]"
+    :disable="disableFlg"
   >
     {{ buttonName }}
   </button>
@@ -13,9 +17,13 @@ interface Props {
   buttonName: string;
   /** ボタンの色(1:青、2:赤、3:緑)*/
   buttonColorNumber?: number;
+  /** 無効フラグ */
+  disableFlg?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  disableFlg: false
+});
 
 /** ボタンの色を設定する */
 const buttonColor = (buttonColorNumber: number | undefined): string => {
