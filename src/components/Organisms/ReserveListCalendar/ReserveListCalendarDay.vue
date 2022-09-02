@@ -110,6 +110,7 @@ const getDayReserves = (date: moment.Moment): Reserve[] => {
 const getCalenderDay = (): Calender => {
   const day: Calender = {
     date: props.currentDate.get("date"),
+    datetime: props.currentDate.format("YYYY-MM-DD HH:mm"),
     dayReserves: getDayReserves(props.currentDate)
   }
   return day;
