@@ -52,13 +52,15 @@
             >
               <p
                 v-if="n-1 === Number(moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH'))"
-                class="w-full text-white pl-1 text-xs bg-red-500"
+                class="w-full text-white pl-1 text-xs"
+                :class="reserve.salesHistoryId !== null ? 'bg-gray-500' : 'bg-red-500'"
               >
                 {{ reserve.menu }}
               </p>
               <p
                 v-if="n-1 === Number(moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH'))"
-                class="w-full text-white pl-1 text-xs bg-red-500"
+                class="w-full text-white pl-1 text-xs"
+                :class="reserve.salesHistoryId !== null ? 'bg-gray-500' : 'bg-red-500'"
               >
                 {{ moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH:mm[〜]') }}
               </p>
