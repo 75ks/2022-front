@@ -49,7 +49,7 @@
               v-for="(reserve, index) in timeReserves(n, day.dayReserves)" :key=index
               @click.stop="showEditModal(reserve)"
               class="h-9"
-              :class="`w-1/${timeReserves(n, day.dayReserves).length}`"
+              :class="timeReserves(n, day.dayReserves).length !== 1 ? `w-1/${timeReserves(n, day.dayReserves).length}` : 'w-full'"
             >
               <p
                 class="w-full text-white border pl-1 text-xs whitespace-nowrap overflow-scroll"
