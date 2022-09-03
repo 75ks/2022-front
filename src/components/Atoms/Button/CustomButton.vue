@@ -3,7 +3,6 @@
     class="text-white font-bold py-1 px-3 active:outline-none focus:outline-none rounded"
     :class="[
       buttonColor(buttonColorNumber),
-      disableFlg ? 'bg-gray-300 hover:bg-gray-300' : '',
     ]"
     :disable="disableFlg"
   >
@@ -28,6 +27,8 @@ const props = withDefaults(defineProps<Props>(), {
 /** ボタンの色を設定する */
 const buttonColor = (buttonColorNumber: number | undefined): string => {
   switch(buttonColorNumber) {
+    case 0:
+      return "bg-gray-400";
     case 1:
       return "bg-blue-400 hover:bg-blue-500";
     case 2:

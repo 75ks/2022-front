@@ -71,7 +71,7 @@
         <div class="mt-4">
           <CustomButton
             button-name="更新"
-            :button-color-number="1"
+            :button-color-number="isVisited ? 0 : 1"
             :disable-flg="isVisited"
             @click="updateReserve()"
           />
@@ -79,7 +79,7 @@
         <div class="mt-4">
           <CustomButton
             button-name="削除"
-            :button-color-number="2"
+            :button-color-number="isVisited ? 0 : 1"
             :disable-flg="isVisited"
             @click="deleteReserve()"
           />
