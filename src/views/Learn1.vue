@@ -59,7 +59,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="todo in state.todos" :key="todo.id">
+                                <tr v-for="(todo,index) in state.todos" :key="index">
                                     <td class="border border-gray-300 bg-white">{{todo.id}}</td>
                                     <td class="border border-gray-300 bg-white">{{todo.title}}</td>
                                     <td class="border border-gray-300 bg-white text-center">
@@ -84,19 +84,21 @@ class Todo{
     userId: number | null = null;
     id: number | null = null;
     title: string = "";
-    compelted: boolean = false;
+    completed: boolean = false;
 }
 
 interface State{
     todos: Todo[];
+    flag: boolean;
 }
 
-const flag = ref<boolean>(false);
+//const flag = ref<boolean>(false);
 const state = reactive<State>({
     todos: [],
+    flag: false,
 });
 const onClickButton = () =>{
-    flag.value = !flag.value;
+    state.flag = !state.flag;
 };
 const fetchData = () => {
     axios
