@@ -110,8 +110,8 @@ import { reactive } from "vue";
   import { reactive, computed } from "vue";
   //axios階層変化
   import axios from "../../plugins/axios";
-  import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
-  import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
+  import InputWithLabel from "../../components/Molecules/InputWithLabel.vue";
+  import SelectBoxWithLabel from "../../components/Molecules/SelectBoxWithLabel.vue";
   //axios階層変化×6
   import { GenderList } from "../../constants/Gender";
   import { PrefectureIdList } from "../../constants/PrefectureId";
@@ -119,7 +119,7 @@ import { reactive } from "vue";
   import { CustomerCreateRequest } from "../../models/form/CustomerCreateRequest";
   import { MessageStatus } from '../../constants/MessageStatus'
   import { useMessageStore } from '../../store/message'
-  import DatePickerWithLabel from '../components/Molecules/DatePickerWithLabel.vue';
+  import DatePickerWithLabel from '../../components/Molecules/DatePickerWithLabel.vue';
   
   const messageStore = useMessageStore();
   
