@@ -106,7 +106,7 @@ import { reactive } from "vue";
 
 </script> -->
 <script setup lang="ts">
-  import CustomButton from "../components/Atoms/Button/CustomButton.vue";
+  import CustomButton from "../../components/Atoms/Button/CustomButton.vue";
   import { reactive, computed } from "vue";
   //axios階層変化
   import axios from "../../plugins/axios";
