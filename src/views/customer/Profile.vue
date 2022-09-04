@@ -100,11 +100,10 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { reactive } from "vue";
-
-</script>
 <!-- <script setup lang="ts">
+import { reactive } from "vue";
+</script> -->
+<script setup lang="ts">
   import CustomButton from "../../components/Atoms/Button/CustomButton.vue";
   import { reactive, computed } from "vue";
   import axios from "../../plugins/axios";
@@ -149,6 +148,6 @@ import { reactive } from "vue";
         // 正常終了・エラー問わず必ず行う処理
       });
   };
-  </script> -->
+  </script>
 
 <style></style>
