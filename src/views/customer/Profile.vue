@@ -10,7 +10,7 @@
         <li>※{{ mes }}</li>
       </ul>
     </div>
-    <div class="grid gap-6 mb-6 mx-20 grid-cols-1">
+    <div class="grid gap-6 mb-6 mr-20 grid-cols-1">
         <InputWithLabel
           v-model:input-value="state.screenObj.lastName"
           label="姓"
