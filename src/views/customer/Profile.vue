@@ -92,7 +92,7 @@
           class="w-full mt-16"
           :button-name="'編集'"
           :button-color-number="1"
-          @click="register"
+          
         />
 
     </div>
@@ -100,10 +100,10 @@
   </div>
 </template>
 
-<!-- <script setup lang="ts">
-import { reactive } from "vue";
-</script> -->
 <script setup lang="ts">
+import { reactive } from "vue";
+</script>
+<!-- <script setup lang="ts">
   import CustomButton from "../../components/Atoms/Button/CustomButton.vue";
   import { reactive, computed } from "vue";
   import axios from "../../plugins/axios";
@@ -148,6 +148,6 @@ import { reactive } from "vue";
         // 正常終了・エラー問わず必ず行う処理
       });
   };
-  </script>
+  </script> -->
 
 <style></style>
