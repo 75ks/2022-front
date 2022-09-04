@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-full">
-    <p class="pb-10 text-center font-bold text-2xl">編集画面</p>
+    <p class="pb-10 text-center font-bold text-2xl">プロフィール画面</p>
     <div
       v-if="message.messageList.length"
       class="pb-10 w-1/3 m-auto"
@@ -98,21 +98,18 @@
     </div>
 
   </div>
-  <!-- <div>プロフィール画面</div> -->
 </template>
 
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { reactive } from "vue";
 
-</script> -->
-<script setup lang="ts">
+</script>
+<!-- <script setup lang="ts">
   import CustomButton from "../../components/Atoms/Button/CustomButton.vue";
   import { reactive, computed } from "vue";
-  //axios階層変化
   import axios from "../../plugins/axios";
   import InputWithLabel from "../../components/Molecules/InputWithLabel.vue";
   import SelectBoxWithLabel from "../../components/Molecules/SelectBoxWithLabel.vue";
-  //axios階層変化×6
   import { GenderList } from "../../constants/Gender";
   import { PrefectureIdList } from "../../constants/PrefectureId";
   import { CustomerCreateScreenObj } from "../../models/screenObj/CustomerCreateScreenObj";
@@ -152,6 +149,6 @@ import { reactive } from "vue";
         // 正常終了・エラー問わず必ず行う処理
       });
   };
-  </script>
+  </script> -->
 
 <style></style>
