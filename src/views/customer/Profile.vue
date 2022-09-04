@@ -100,10 +100,10 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { reactive } from "vue";
-</script>
 <!-- <script setup lang="ts">
+import { reactive } from "vue";
+</script> -->
+<script setup lang="ts">
   import CustomButton from "../../components/Atoms/Button/CustomButton.vue";
   import { reactive, computed } from "vue";
   import axios from "../../plugins/axios";
@@ -131,23 +131,23 @@ import { reactive } from "vue";
     screenObj: new CustomerCreateScreenObj(),
   });
   
-  /** 登録ボタンクリックイベント */
-  const register = async () => {
-    const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
-    Object.assign(reqForm, state.screenObj);
-    await axios
-      .post("/customerCreate", reqForm)
-      .then(() => {
-        // 入力項目を初期化する
-        state.screenObj = new CustomerCreateScreenObj();
-      })
-      .catch((error) => {
-        // エラー発生時の処理
-      })
-      .finally(() => {
-        // 正常終了・エラー問わず必ず行う処理
-      });
-  };
-  </script> -->
+  // /** 登録ボタンクリックイベント */
+  // const register = async () => {
+  //   const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
+  //   Object.assign(reqForm, state.screenObj);
+  //   await axios
+  //     .post("/customerCreate", reqForm)
+  //     .then(() => {
+  //       // 入力項目を初期化する
+  //       state.screenObj = new CustomerCreateScreenObj();
+  //     })
+  //     .catch((error) => {
+  //       // エラー発生時の処理
+  //     })
+  //     .finally(() => {
+  //       // 正常終了・エラー問わず必ず行う処理
+  //     });
+  // };
+  </script>
 
 <style></style>
