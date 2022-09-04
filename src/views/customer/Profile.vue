@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-full">
-    <p class="pb-10 text-center font-bold text-2xl">顧客登録</p>
+    <p class="pb-10 text-center font-bold text-2xl">編集画面</p>
     <div
       v-if="message.messageList.length"
       class="pb-10 w-1/3 m-auto"
@@ -10,7 +10,7 @@
         <li>※{{ mes }}</li>
       </ul>
     </div>
-    <div class="grid gap-6 mb-6 grid-cols-1">
+    <div class="grid gap-6 mb-20 grid-cols-1">
         <InputWithLabel
           v-model:input-value="state.screenObj.lastName"
           label="姓"
