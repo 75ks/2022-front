@@ -10,7 +10,7 @@
         <li>※{{ mes }}</li>
       </ul>
     </div>
-    <div class="grid gap-6 mb-6 mx-6 grid-cols-1">
+    <div class="grid mb-6 mx-6 grid-cols-1">
         <InputWithLabel
           v-model:input-value="state.screenObj.lastName"
           label="姓"
@@ -90,7 +90,7 @@
         />
         <CustomButton
           class="w-full mt-16"
-          :button-name="'登録'"
+          :button-name="'編集'"
           :button-color-number="1"
           @click="register"
         />
