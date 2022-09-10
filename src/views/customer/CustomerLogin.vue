@@ -39,13 +39,13 @@
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue';
-import CustomInputWithLabel from '../components/Molecules/InputWithLabel.vue';
-import CustomButton from '../components/Atoms/Button/CustomButton.vue';
-import { LoginForm } from '../models/form/LoginForm';
-import { LoginScreenObj } from '../models/screenObj/LoginScreenObj';
-import { MessageStatus } from '../constants/MessageStatus';
-import { useCustomerAuthorizationStore } from '../store/customerAuthorization';
-import { useMessageStore } from '../store/message';
+import CustomInputWithLabel from '../../components/Molecules/InputWithLabel.vue';
+import CustomButton from '../../components/Atoms/Button/CustomButton.vue';
+import { LoginForm } from '../../models/form/LoginForm';
+import { LoginScreenObj } from '../../models/screenObj/LoginScreenObj';
+import { MessageStatus } from '../../constants/MessageStatus';
+import { useCustomerAuthorizationStore } from '../../store/customerAuthorization';
+import { useMessageStore } from '../../store/message';
 import { useRouter } from 'vue-router';
 
 const customerAuthorizationStore = useCustomerAuthorizationStore();

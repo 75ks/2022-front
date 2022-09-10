@@ -1,4 +1,6 @@
-export class EditCalendarModalScreenObj {
+export class EditReserveForm {
+  /** 予約履歴ID */
+  reserveHistoryId: number | null = null;
   /** 顧客ID */
   customerId: number | null = null;
   /** スタッフID */
@@ -7,4 +9,6 @@ export class EditCalendarModalScreenObj {
   menuId: number | null = null;
   /** 予約日時 */
   reserveDateTime: string = "";
+  /** 予約状態 */
+  reserveState: number | null = null;
 }
