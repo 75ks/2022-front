@@ -11,25 +11,25 @@
       class="fixed top-1/2 left-1/2 bg-white flex flex-col items-center justify-center w-1/2 h-auto rounded p-5"
       id="modal-content"
     >
-      <p>顧客ID: {{ modalCustomerData?.customerId }}</p>
-      <p>店舗コードID: {{ modalCustomerData?.storeId }}</p>
-      <p>顧客名: {{ modalCustomerData?.lastName }} {{ modalCustomerData?.firstName }}</p>
-      <p>顧客仮名: {{ modalCustomerData?.lastNameKana }} {{ modalCustomerData?.firstNameKana }}</p>
-      <p>ランク: {{ modalCustomerData?.rank }}</p>
-      <p>年齢: {{ modalCustomerData?.age }}</p>
-      <p>性別: {{ modalCustomerData?.gender }}</p>
+      <p>スタッフID: {{ modalStuffData.stuffId }}</p>
+      <p>店舗コードID: {{ modalStuffData.storeId }}</p>
+      <p>スタッフ名: {{ modalStuffData.lastName }} {{ modalStuffData.firstName }}</p>
+      <p>スタッフ仮名: {{ modalStuffData.lastNameKana }} {{ modalStuffData.firstNameKana }}</p>
+      <p>ランク: {{ modalStuffData.rank }}</p>
+      <p>年齢: {{ modalStuffData.age }}</p>
+      <p>性別: {{ modalStuffData.gender }}</p>
     </div>
   </teleport>
 </template>
 
 <script setup lang="ts">
-import { Customer } from '../../../models/Customer';
+import { Stuff } from '../../../models/Stuff';
 
 interface Props {
   /** モーダル表示フラグ */
   isVisibleModal: boolean;
   /** モーダルが表示するデータ */
-  modalCustomerData: Customer;
+  modalStuffData:  Stuff;
 }
 
 interface Emits {

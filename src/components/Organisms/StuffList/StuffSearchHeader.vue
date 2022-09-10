@@ -20,8 +20,8 @@
   <div class="p-3 grid grid-cols-6 gap-4 bg-white">
     <div>
       <InputWithLabel
-        v-model:input-value='searchForm.customerId'
-        label="顧客ID"
+        v-model:input-value='searchForm.stuffId'
+        label="スタッフID"
       />
     </div>
     <div>
@@ -32,8 +32,8 @@
     </div>
     <div>
       <InputWithLabel
-        v-model:input-value='searchForm.customerName'
-        label="顧客名"
+        v-model:input-value='searchForm.stuffName'
+        label="スタッフ名"
       />
     </div>
     <div>
@@ -61,25 +61,25 @@
 <script setup lang="ts">
 import CustomButton from '../../Atoms/Button/CustomButton.vue';
 import { computed } from 'vue';
-import { useCustomerStore } from '../../../store/customer';
+import { useStuffStore } from '../../../store/stuff';
 import InputWithLabel from '../../Molecules/InputWithLabel.vue';
 import SuggestInputWithLabel from '../../Molecules/SuggestInputWithLabel.vue';
 
-const customerStore = useCustomerStore();
+const stuffStore = useStuffStore();
 
 /** 検索条件入力欄 */
 const searchForm = computed(() => {
-  return customerStore.getSearchCond;
+  return stuffStore.getSearchCond;
 })
 
 /** 「検索」クリックイベント(検索条件でフィルターをかける) */
 const search = async () => {
-  await customerStore.search(searchForm.value);
+  await stuffStore.search(searchForm.value);
 }
 
 /** 「クリア」クリックイベント(検索条件入力欄を初期状態にし、データを再取得する) */
 const clearSearchCond = () => {
-  customerStore.clearSearchCond();
+  stuffStore.clearSearchCond();
 }
 
 </script>

@@ -1,15 +1,15 @@
-export class Customer {
-  /** 顧客ID */
-  customerId: number | null = null;
+export class Stuff {
+  /** スタッフID */
+  stuffId: number | null = null;
   /** 店舗ID */
   storeId: number | null = null;
-  /** 顧客(姓) */
+  /** スタッフ(姓) */
   lastName: string = "";
-  /** 顧客(名) */
+  /** スタッフ(名) */
   firstName: string = "";
-  /** 顧客(セイ) */
+  /** スタッフ(セイ) */
   lastNameKana: string = "";
-  /** 顧客(メイ) */
+  /** スタッフ(メイ) */
   firstNameKana: string = "";
   /** ランク */
   rank: string = "";

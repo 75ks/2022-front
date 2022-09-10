@@ -9,6 +9,7 @@ import Login from "../views/Login.vue";
 import RegisterSample from "../views/RegisterSample.vue";
 import RegisterSampleRev from "../views/RegisterSampleRev.vue";
 import CustomerList from '../views/CustomerList.vue';
+import StuffList from '../views/StuffList.vue';
 // 顧客用
 import CustomerLogin from "../views/customer/CustomerLogin.vue";
 import Profile from "../views/customer/Profile.vue";
@@ -28,6 +29,7 @@ const routes = [
   { path: "/registerSample", component: RegisterSample, meta: { requiredAuth: true } },
   { path: "/registerSampleRev", component: RegisterSampleRev, meta: { requiredAuth: true } },
   { path: "/customerList", component: CustomerList },
+  { path: "/stuffList", component: StuffList, meta: { requiredAuth: true } },
   // 顧客用画面
   { path: "/customer/login", component: CustomerLogin },
   { path: "/customer/profile", component: Profile },

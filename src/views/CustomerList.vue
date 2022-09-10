@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :header-name="'スタッフ管理'" />
+    <Header :header-name="'顧客管理'" />
     <CustomerSearchHeader />
     <CustomerSearchDetail :customer-list="customerList" />
   </div>
