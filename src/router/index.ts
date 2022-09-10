@@ -1,59 +1,36 @@
 import * as vueRouter from "vue-router";
-import Test from '../views/Test.vue';
-import ComponentsSample from '../views/ComponentsSample.vue';
-import ReserveList from '../views/ReserveList.vue';
-import ReserveListCalender from '../views/ReserveListCalendar.vue';
-import Login from '../views/Login.vue';
-import RegisterSample from '../views/RegisterSample.vue';
-import RegisterSampleRev from '../views/RegisterSampleRev.vue';
-import CustomerLogin from '../views/CustomerLogin.vue';
+// スタッフ用
+import Test from "../views/Test.vue";
+import ComponentsSample from "../views/ComponentsSample.vue";
+import ReserveList from "../views/ReserveList.vue";
+import CustomerCreate from "../views/CustomerCreate.vue";
+import ReserveListCalender from "../views/ReserveListCalendar.vue";
+import Login from "../views/Login.vue";
+import RegisterSample from "../views/RegisterSample.vue";
+import RegisterSampleRev from "../views/RegisterSampleRev.vue";
 import StuffList from '../views/StuffList.vue';
-import { useAuthorizationStore } from '../store/authorization';
+// 顧客用
+import CustomerLogin from "../views/customer/CustomerLogin.vue";
+import Profile from "../views/customer/Profile.vue";
+
+import { useAuthorizationStore } from "../store/authorization";
 import { useMessageStore } from "../store/message";
 import { MessageStatus } from "../constants/MessageStatus";
 
 const routes = [
-  {
-    path: "/",
-    component: Test,
-  },
-  {
-    path: "/componentsSample",
-    component: ComponentsSample,
-    meta: { requiredAuth: true }
-  },
-  {
-    path: "/reserveList",
-    component: ReserveList,
-    meta: { requiredAuth: true }
-  },
-  {
-    path: "/reserveListCalendar",
-    component: ReserveListCalender,
-    meta: { requiredAuth: true }
-  },
-  {
-    path: "/login",
-    component: Login,
-  },
-  {
-    path: "/customerLogin",
-    component: CustomerLogin,
-  },
-  {
-    path: "/registerSample",
-    component: RegisterSample,
-    meta: { requiredAuth: true }
-  },
-  {
-    path: "/registerSampleRev",
-    component: RegisterSampleRev,
-    meta: { requiredAuth: true }
-  },
-  {
-    path: "/stuffList",
-    component: StuffList,
-  },
+  // スタッフ用画面
+  { path: "/", component: Test },
+  { path: "/componentsSample", component: ComponentsSample, meta: { requiredAuth: true } },
+  { path: "/reserveList", component: ReserveList, meta: { requiredAuth: true } },
+  { path: "/customerCreate", component: CustomerCreate },
+  { path: "/reserveListCalendar", component: ReserveListCalender, meta: { requiredAuth: true } },
+  { path: "/login", component: Login },
+  { path: "/registerSample", component: RegisterSample, meta: { requiredAuth: true } },
+  { path: "/registerSampleRev", component: RegisterSampleRev, meta: { requiredAuth: true } },
+  { path: "/stuffList", component: StuffList, meta: { requiredAuth: true } },
+  // 顧客用画面
+  { path: "/customer/login", component: CustomerLogin },
+  { path: "/customer/profile", component: Profile },
 ];
 
 const router = vueRouter.createRouter({
@@ -71,7 +48,7 @@ router.beforeEach((to, from, next) => {
       useMessageStore().addMessageList(["認証に失敗しました。再度ログインしてください。"]);
       useMessageStore().addMessageType(MessageStatus.WARNING.code!);
       next("/login");
-    } 
+    }
   } else {
     next();
   }

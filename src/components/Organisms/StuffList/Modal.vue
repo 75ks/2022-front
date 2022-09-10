@@ -11,13 +11,13 @@
       class="fixed top-1/2 left-1/2 bg-white flex flex-col items-center justify-center w-1/2 h-auto rounded p-5"
       id="modal-content"
     >
-      <p>スタッフID: {{ modalStuffData?.stuffId }}</p>
-      <p>店舗コードID: {{ modalStuffData?.storeId }}</p>
-      <p>スタッフ名: {{ modalStuffData?.lastName }} {{ modalStuffData?.firstName }}</p>
-      <p>スタッフ仮名: {{ modalStuffData?.lastNameKana }} {{ modalStuffData?.firstNameKana }}</p>
-      <p>ランク: {{ modalStuffData?.rank }}</p>
-      <p>年齢: {{ modalStuffData?.age }}</p>
-      <p>性別: {{ modalStuffData?.gender }}</p>
+      <p>スタッフID: {{ modalStuffData.stuffId }}</p>
+      <p>店舗コードID: {{ modalStuffData.storeId }}</p>
+      <p>スタッフ名: {{ modalStuffData.lastName }} {{ modalStuffData.firstName }}</p>
+      <p>スタッフ仮名: {{ modalStuffData.lastNameKana }} {{ modalStuffData.firstNameKana }}</p>
+      <p>ランク: {{ modalStuffData.rank }}</p>
+      <p>年齢: {{ modalStuffData.age }}</p>
+      <p>性別: {{ modalStuffData.gender }}</p>
     </div>
   </teleport>
 </template>
