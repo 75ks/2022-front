@@ -5,4 +5,6 @@ export class Authorization {
   jwt: string = '';
   /** 認証タイプ */
   authenticationType: number | null = null;
+  /** 初回ログインフラグ */
+  firstLoginFlg: number | null = null;
 }

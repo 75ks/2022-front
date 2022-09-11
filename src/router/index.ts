@@ -12,6 +12,7 @@ import StuffList from '../views/StuffList.vue';
 // 顧客用
 import CustomerLogin from "../views/customer/CustomerLogin.vue";
 import Profile from "../views/customer/Profile.vue";
+import PasswordSetting from "../views/customer/PasswordSetting.vue";
 
 import { useAuthorizationStore } from "../store/authorization";
 import { useMessageStore } from "../store/message";
@@ -31,6 +32,7 @@ const routes = [
   // 顧客用画面
   { path: "/customer/login", component: CustomerLogin },
   { path: "/customer/profile", component: Profile },
+  { path: "/customer/passwordSetting", component: PasswordSetting },
 ];
 
 const router = vueRouter.createRouter({
