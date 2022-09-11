@@ -46,7 +46,7 @@ const props = defineProps<{
 }>();
 
 /** モーダルに渡すデータ */
-const modalCustomerData = ref<Customer>();
+const modalCustomerData = ref<Customer>(new Customer());
 /** モーダル表示フラグ */
 const isVisibleModal = ref<boolean>(false);
 /** レコードクリックイベント(モーダルを表示する) */

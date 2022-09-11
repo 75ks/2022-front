@@ -11,13 +11,13 @@
       class="fixed top-1/2 left-1/2 bg-white flex flex-col items-center justify-center w-1/2 h-auto rounded p-5"
       id="modal-content"
     >
-      <p>顧客ID: {{ modalCustomerData?.customerId }}</p>
-      <p>店舗コードID: {{ modalCustomerData?.storeId }}</p>
-      <p>顧客名: {{ modalCustomerData?.lastName }} {{ modalCustomerData?.firstName }}</p>
-      <p>顧客仮名: {{ modalCustomerData?.lastNameKana }} {{ modalCustomerData?.firstNameKana }}</p>
-      <p>ランク: {{ modalCustomerData?.rank }}</p>
-      <p>年齢: {{ modalCustomerData?.age }}</p>
-      <p>性別: {{ modalCustomerData?.gender }}</p>
+      <p>顧客ID: {{ modalCustomerData.customerId }}</p>
+      <p>店舗コードID: {{ modalCustomerData.storeId }}</p>
+      <p>顧客名: {{ modalCustomerData.lastName }} {{ modalCustomerData.firstName }}</p>
+      <p>顧客仮名: {{ modalCustomerData.lastNameKana }} {{ modalCustomerData.firstNameKana }}</p>
+      <p>ランク: {{ modalCustomerData.rank }}</p>
+      <p>年齢: {{ modalCustomerData.age }}</p>
+      <p>性別: {{ modalCustomerData.gender }}</p>
     </div>
   </teleport>
 </template>
