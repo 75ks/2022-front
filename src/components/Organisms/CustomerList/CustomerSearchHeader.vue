@@ -37,13 +37,6 @@
       />
     </div>
     <div>
-      <SuggestInputWithLabel
-        v-model:input-value='searchForm.rankName'
-        targetUrl="/selectOption/ranks"
-        label="ランク"
-      />
-    </div>
-    <div>
       <InputWithLabel
         v-model:input-value='searchForm.age'
         label="年齢"
@@ -63,7 +56,6 @@ import CustomButton from '../../Atoms/Button/CustomButton.vue';
 import { computed } from 'vue';
 import { useCustomerStore } from '../../../store/customer';
 import InputWithLabel from '../../Molecules/InputWithLabel.vue';
-import SuggestInputWithLabel from '../../Molecules/SuggestInputWithLabel.vue';
 
 const customerStore = useCustomerStore();
 

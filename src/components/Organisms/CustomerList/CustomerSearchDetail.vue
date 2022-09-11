@@ -7,7 +7,6 @@
           <th class="border border-gray-300 p-2 text-gray-600">店舗コードID</th>
           <th class="border border-gray-300 p-2 text-gray-600">顧客名</th>
           <th class="border border-gray-300 p-2 text-gray-600">顧客仮名</th>
-          <th class="border border-gray-300 p-2 text-gray-600">ランク</th>
           <th class="border border-gray-300 p-2 text-gray-600">年齢</th>
           <th class="border border-gray-300 p-2 text-gray-600">性別</th>
         </tr>
@@ -22,7 +21,6 @@
           <td class="border border-gray-300 p-2">{{ customer.storeId }}</td>
           <td class="border border-gray-300 p-2">{{ customer.lastName }}{{ customer.firstName }}</td>
           <td class="border border-gray-300 p-2">{{ customer.lastNameKana }}{{ customer.firstNameKana }}</td>
-          <td class="border border-gray-300 p-2">{{ customer.rank }}</td>
           <td class="border border-gray-300 p-2">{{ customer.age }}</td>
           <td class="border border-gray-300 p-2">{{ customer.gender }}</td>
         </tr>

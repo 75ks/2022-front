@@ -11,8 +11,6 @@ export class Customer {
   lastNameKana: string = "";
   /** 顧客(メイ) */
   firstNameKana: string = "";
-  /** ランク */
-  rank: string = "";
   /** 生年月日 */
   birthday: string = "";
   /** 年齢 */

@@ -7,8 +7,6 @@ export class CustomerSearchCondScreenObj {
   customerName: string = "";
   /** 顧客仮名 */
   customerNameKana: string = "";
-  /** ランク名 */
-  rankName: string = "";
   /** 年齢 */
   age: number | null = null;
   /** 性別 */
