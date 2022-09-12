@@ -4,9 +4,9 @@
       <thead>
         <tr>
           <th class="border border-gray-300 p-2 text-gray-600">顧客ID</th>
-          <th class="border border-gray-300 p-2 text-gray-600">店舗コードID</th>
+          <th class="border border-gray-300 p-2 text-gray-600">店舗ID</th>
           <th class="border border-gray-300 p-2 text-gray-600">顧客名</th>
-          <th class="border border-gray-300 p-2 text-gray-600">顧客仮名</th>
+          <th class="border border-gray-300 p-2 text-gray-600">顧客名(カナ)</th>
           <th class="border border-gray-300 p-2 text-gray-600">年齢</th>
           <th class="border border-gray-300 p-2 text-gray-600">性別</th>
         </tr>

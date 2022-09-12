@@ -27,13 +27,19 @@
     <div>
       <InputWithLabel
         v-model:input-value='searchForm.storeId'
-        label="店舗コードID"
+        label="店舗ID"
       />
     </div>
     <div>
       <InputWithLabel
         v-model:input-value='searchForm.customerName'
         label="顧客名"
+      />
+    </div>
+    <div>
+      <InputWithLabel
+        v-model:input-value='searchForm.customerNameKana'
+        label="顧客名(カナ)"
       />
     </div>
     <div>
