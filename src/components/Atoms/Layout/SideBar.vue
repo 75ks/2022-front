@@ -1,5 +1,8 @@
 <template>
-  <div class="w-1/6 h-screen fixed top-0 left-0 right-0 bg-gray-700 text-white">
+  <div
+    v-if="loginType == 1"
+    class="w-1/6 h-screen fixed top-0 left-0 right-0 bg-gray-700 text-white"
+  >
     <router-link to="/" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
       <div class="flex items-center">
         <font-awesome-icon :icon="['fas', 'user']" class="w-4 h-4 pr-2 font-black" />
@@ -35,28 +38,44 @@
       </div>
       <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
     </router-link>
-    <div
-      @click="logout"
-      class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
+    <router-link to="/login" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
       <div class="flex items-center">
         <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" class="w-4 h-4 pr-2 font-black" />
         <p>ログアウト</p>
       </div>
       <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
-    </div>
+    </router-link>
   </div>
-  <div class="w-1/5"></div>
+  <div
+    v-if="loginType == 2"
+    class="w-1/6 h-screen fixed top-0 left-0 right-0 bg-gray-700 text-white"
+  >
+    <router-link to="/customer/profile" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
+      <div class="flex items-center">
+        <font-awesome-icon :icon="['fas', 'id-card']" class="w-4 h-4 pr-2 font-black" />
+        <p>プロフィール</p>
+      </div>
+      <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
+    </router-link>
+    <router-link to="/customer/login" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
+      <div class="flex items-center">
+        <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" class="w-4 h-4 pr-2 font-black" />
+        <p>ログアウト</p>
+      </div>
+      <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
+    </router-link>
+  </div>
+  <div v-if="loginType == 1 || loginType == 2" class="w-1/5"></div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { computed } from 'vue';
+import { useAuthorizationStore } from '../../../store/authorization';
+import { useCustomerAuthorizationStore } from '../../../store/customerAuthorization';
 
-const router = useRouter();
-
-/** ログアウトボタンクリックイベント */
-const logout = () => {
-  router.push("/login");
-}
+const loginType = computed<number>(() => {
+  return useAuthorizationStore().getAuthorization.jwt ? 1 : useCustomerAuthorizationStore().getAuthorization.jwt ? 2 : 0;
+});
 </script>
 
 <style>

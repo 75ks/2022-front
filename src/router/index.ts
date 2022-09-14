@@ -12,8 +12,10 @@ import StuffList from '../views/StuffList.vue';
 // 顧客用
 import CustomerLogin from "../views/customer/CustomerLogin.vue";
 import Profile from "../views/customer/Profile.vue";
+import PasswordSetting from "../views/customer/PasswordSetting.vue";
 
 import { useAuthorizationStore } from "../store/authorization";
+import { useCustomerAuthorizationStore } from "../store/customerAuthorization";
 import { useMessageStore } from "../store/message";
 import { MessageStatus } from "../constants/MessageStatus";
 
@@ -30,7 +32,8 @@ const routes = [
   { path: "/stuffList", component: StuffList, meta: { requiredAuth: true } },
   // 顧客用画面
   { path: "/customer/login", component: CustomerLogin },
-  { path: "/customer/profile", component: Profile },
+  { path: "/customer/profile", component: Profile, meta: { requiredAuthCustomer: true } },
+  { path: "/customer/passwordSetting", component: PasswordSetting, meta: { requiredAuthCustomer: true } },
 ];
 
 const router = vueRouter.createRouter({
@@ -48,6 +51,16 @@ router.beforeEach((to, from, next) => {
       useMessageStore().addMessageList(["認証に失敗しました。再度ログインしてください。"]);
       useMessageStore().addMessageType(MessageStatus.WARNING.code!);
       next("/login");
+    }
+  } else if (to.matched.some(record => record.meta.requiredAuthCustomer)) {
+    useMessageStore().resetMessageList();
+    useMessageStore().resetMessageType();
+    if (useCustomerAuthorizationStore().getAuthorization.jwt) {
+      next();
+    } else {
+      useMessageStore().addMessageList(["認証に失敗しました。再度ログインしてください。"]);
+      useMessageStore().addMessageType(MessageStatus.WARNING.code!);
+      next("/customer/login");
     }
   } else {
     next();
