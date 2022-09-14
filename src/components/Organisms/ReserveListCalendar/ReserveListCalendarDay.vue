@@ -44,13 +44,15 @@
             >
               <p
                 v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))"
-                class="w-full text-white pl-1 text-xs bg-red-500"
+                class="w-full text-white pl-1 text-xs"
+                :class="reserve.salesHistoryId !== null ? 'bg-gray-500' : 'bg-red-500'"
               >
                 {{ reserve.menu }}
               </p>
               <p
                 v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))"
-                class="w-full text-white pl-1 text-xs bg-red-500"
+                class="w-full text-white pl-1 text-xs"
+                :class="reserve.salesHistoryId !== null ? 'bg-gray-500' : 'bg-red-500'"
               >
                 {{ moment(reserve.reserveDatetime).format('HH:mm[〜]') }}
               </p>
@@ -108,6 +110,7 @@ const getDayReserves = (date: moment.Moment): Reserve[] => {
 const getCalenderDay = (): Calender => {
   const day: Calender = {
     date: props.currentDate.get("date"),
+    datetime: props.currentDate.format("YYYY-MM-DD HH:mm"),
     dayReserves: getDayReserves(props.currentDate)
   }
   return day;

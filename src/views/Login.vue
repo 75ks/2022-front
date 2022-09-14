@@ -45,10 +45,12 @@ import { LoginForm } from '../models/form/LoginForm';
 import { LoginScreenObj } from '../models/screenObj/LoginScreenObj';
 import { MessageStatus } from '../constants/MessageStatus';
 import { useAuthorizationStore } from '../store/authorization';
+import { useCustomerAuthorizationStore } from '../store/customerAuthorization';
 import { useMessageStore } from '../store/message';
 import { useRouter } from 'vue-router'
 
 const authorizationStore = useAuthorizationStore();
+const customerAuthorizationStore = useCustomerAuthorizationStore();
 const messageStore = useMessageStore();
 const router = useRouter();
 
@@ -59,6 +61,7 @@ if (messageStore.getMessage.messageType !== MessageStatus.WARNING.code) {
 
 authorizationStore.fetchLogout();
 authorizationStore.resetAuthorization();
+customerAuthorizationStore.resetAuthorization();
 
 const message = computed(() => {
   return messageStore.getMessage;

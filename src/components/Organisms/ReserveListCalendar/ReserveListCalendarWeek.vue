@@ -38,28 +38,24 @@
       <div class="w-full flex border-l border-gray-300">
         <div
           v-for="(day, index) in week" :key="index"
-          class="w-full border-r border-gray-300"
+          class="w-full border-r border-gray-300 overflow-hidden"
         >
           <div
             v-for="(n, index) in 24" :key="index"
             @click="showRegisterModal(day.datetime, n-1)"
-            class="w-full h-12 boder-r border-b border-gray-300 hover:bg-gray-100 cursor-pointer overflow-scroll"
+            class="flex w-full h-12 boder-r border-b border-gray-300 hover:bg-gray-100 cursor-pointer"
           >
             <div
-              v-if="day.dayReserves.length > 0"
-              v-for="(reserve, index) in day.dayReserves" :key=index
+              v-for="(reserve, index) in timeReserves(n, day.dayReserves)" :key=index
               @click.stop="showEditModal(reserve)"
+              class="h-9"
+              :class="timeReserves(n, day.dayReserves).length !== 1 ? `w-1/${timeReserves(n, day.dayReserves).length}` : 'w-full'"
             >
               <p
-                v-if="n-1 === Number(moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH'))"
-                class="w-full text-white pl-1 text-xs bg-red-500"
+                class="w-full text-white border pl-1 text-xs whitespace-nowrap overflow-scroll"
+                :class="reserve.salesHistoryId !== null ? 'bg-gray-400' : 'bg-red-400 hover:bg-red-500'"
               >
-                {{ reserve.menu }}
-              </p>
-              <p
-                v-if="n-1 === Number(moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH'))"
-                class="w-full text-white pl-1 text-xs bg-red-500"
-              >
+                {{ reserve.menu }}<br>
                 {{ moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH:mm[〜]') }}
               </p>
             </div>
@@ -113,6 +109,13 @@ const isVisibleEditModal = ref<boolean>(false);
 const selectDateTime = ref<string>("");
 /** 予約情報 */
 const selectReserve = ref<Reserve>(new Reserve());
+
+/** 各時間の予約情報を取得 */
+const timeReserves = computed(() => (n: number, reserves: Reserve[]) => {
+  return reserves.filter(reserve => {
+    return n-1 === Number(moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH'))
+  });
+});
 
 /** 予約日時クリックイベント */
 const showRegisterModal = (datetime: string, hours: number) => {
