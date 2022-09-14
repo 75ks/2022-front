@@ -1,5 +1,6 @@
 <template>
   <div class="w-full">
+    <Loading :is-loading="isLoading"/>
     <div class="w-1/2 m-auto p-8 mt-20 bg-white">
       <p class="pb-10 text-center font-bold text-2xl">パスワード変更</p>
       <div
@@ -33,7 +34,8 @@
 
 <script setup lang="ts">
 
-import { reactive, computed } from 'vue';
+import { reactive, computed, ref } from 'vue';
+import Loading from '../../components/Atoms/Layout/Loading.vue';
 import CustomInputWithLabel from '../../components/Molecules/InputWithLabel.vue';
 import CustomButton from '../../components/Atoms/Button/CustomButton.vue';
 import { PasswordSettingScreenObj } from '../../models/screenObj/PasswordSettingScreenObj';
@@ -63,13 +65,22 @@ const state = reactive<State>({
   screenObj: new PasswordSettingScreenObj()
 });
 
+/** ローティングフラグ */
+const isLoading = ref<boolean>(false);
+
 /** 「パスワード変更」クリックイベント */
 const register = async () => {
-  let checkRegisterFlg = window.confirm('入力したパスワードで設定してよろしいですか？\r\nパスワード: ' + state.screenObj.password);
-  if (checkRegisterFlg) {
-    await customerAuthorizationStore.registerPassword(state.screenObj);
-    // プロフィール画面に遷移
-    router.push("/customer/profile");
+  try {
+    isLoading.value = !isLoading.value;
+    let checkRegisterFlg = window.confirm('入力したパスワードで設定してよろしいですか？\r\nパスワード: ' + state.screenObj.password);
+    if (checkRegisterFlg) {
+      await customerAuthorizationStore.registerPassword(state.screenObj);
+      // プロフィール画面に遷移
+      router.push("/customer/profile");
+    }
+    isLoading.value = !isLoading.value;
+  } catch (error) {
+    isLoading.value = !isLoading.value;
   }
 }
 </script>
