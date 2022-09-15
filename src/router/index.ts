@@ -13,6 +13,7 @@ import StuffList from '../views/StuffList.vue';
 import CustomerLogin from "../views/customer/CustomerLogin.vue";
 import Profile from "../views/customer/Profile.vue";
 import PasswordSetting from "../views/customer/PasswordSetting.vue";
+import ReserveRegister from "../views/customer/ReserveRegister.vue";
 
 import { useAuthorizationStore } from "../store/authorization";
 import { useCustomerAuthorizationStore } from "../store/customerAuthorization";
@@ -34,6 +35,7 @@ const routes = [
   { path: "/customer/login", component: CustomerLogin },
   { path: "/customer/profile", component: Profile, meta: { requiredAuthCustomer: true } },
   { path: "/customer/passwordSetting", component: PasswordSetting, meta: { requiredAuthCustomer: true } },
+  { path: "/customer/reserveRegister", component: ReserveRegister, meta: { requiredAuthCustomer: true } },
 ];
 
 const router = vueRouter.createRouter({
