@@ -35,4 +35,6 @@ export class Reserve {
   stuffLastNameKana: string = "";
   /** 顧客(メイ) */
   stuffFirstNameKana: string = "";
+  /** 来店履歴ID */
+  salesHistoryId: number | null = null;
 }

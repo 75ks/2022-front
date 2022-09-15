@@ -42,8 +42,8 @@ instance.interceptors.response.use(
     // ステータスが401の場合、ログイン画面に遷移する
     if (error.response.status === 401) {
       useMessageStore().addMessageType(MessageStatus.WARNING.code!);
-      if (error.request.responseURL.match(/customerAuthorization/)) {
-        router.push('/customerLogin');
+      if (error.request.responseURL.match(/customer/)) {
+        router.push('/customer/login');
       } else {
         router.push('/login');
       }

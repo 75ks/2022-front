@@ -33,6 +33,7 @@
           v-model:select-value="state.screenObj.customerId"
           targetUrl="/selectOption/customers"
           label="顧客"
+          :disable-flg="isVisited"
         />
       </div>
       <div class="w-1/2">
@@ -40,6 +41,7 @@
           v-model:select-value="state.screenObj.stuffId"
           targetUrl="/selectOption/stuffs"
           label="スタッフ"
+          :disable-flg="isVisited"
         />
       </div>
       <div class="w-1/2">
@@ -47,12 +49,14 @@
           v-model:select-value="state.screenObj.menuId"
           targetUrl="/selectOption/menus"
           label="メニュー"
+          :disable-flg="isVisited"
         />
       </div>
       <div class="w-1/2">
         <DateTimePickerWithLabel
           v-model:inputValue='state.screenObj.reserveDateTime'
           label="予約日時"
+          :disable-flg="isVisited"
         />
       </div>
       <div class="w-1/2">
@@ -60,20 +64,23 @@
           v-model:select-value='state.screenObj.reserveState'
           targetUrl="/selectOption/reserveStates"
           label="予約状態"
+          :disable-flg="isVisited"
         />
       </div>
       <div class="w-1/2 flex justify-around items-center">
         <div class="mt-4">
           <CustomButton
             button-name="更新"
-            :button-color-number="1"
+            :button-color-number="isVisited ? 0 : 1"
+            :disable-flg="isVisited"
             @click="updateReserve()"
           />
         </div>
         <div class="mt-4">
           <CustomButton
             button-name="削除"
-            :button-color-number="2"
+            :button-color-number="isVisited ? 0 : 2"
+            :disable-flg="isVisited"
             @click="deleteReserve()"
           />
         </div>
@@ -127,6 +134,10 @@ const state = reactive<State>({
 
 const { selectReserve } = toRefs(props);
 
+const isVisited = computed<boolean>(() => {
+  return selectReserve.value.salesHistoryId !== null;
+});
+
 watchEffect(() => {
   if (selectReserve.value.reserveHistoryId) {
     state.screenObj.reserveHistoryId = selectReserve.value.reserveHistoryId;
@@ -150,23 +161,27 @@ watchEffect(() => {
 
 /** 更新ボタンクリックイベント */
 const updateReserve = async (): Promise<void> => {
-  await reserveStore.update(state.screenObj);
-  reserveStore.fetchReserves();
-  messageStore.resetMessageList();
-  messageStore.resetMessageType();
-  closeModal();
+  if (!isVisited.value) {
+    await reserveStore.update(state.screenObj);
+    reserveStore.fetchReserves();
+    messageStore.resetMessageList();
+    messageStore.resetMessageType();
+    closeModal();
+  }
 }
 
 /** 削除ボタンクリックイベント */
 const deleteReserve = async (): Promise<void> => {
-  let checkDeleteFlg = window.confirm('予約情報を削除してもよろしいですか？');
-  if (checkDeleteFlg) {
-    await reserveStore.delete(state.screenObj);
-    reserveStore.fetchReserves();
-    messageStore.resetMessageList();
-    messageStore.resetMessageType();
+  if (!isVisited.value) {
+    let checkDeleteFlg = window.confirm('予約情報を削除してもよろしいですか？');
+    if (checkDeleteFlg) {
+      await reserveStore.delete(state.screenObj);
+      reserveStore.fetchReserves();
+      messageStore.resetMessageList();
+      messageStore.resetMessageType();
+    }
+    closeModal();
   }
-  closeModal();
 }
 
 /** モーダル✖︎ボタンクリックイベント */
