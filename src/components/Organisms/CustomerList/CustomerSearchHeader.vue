@@ -26,12 +26,6 @@
     </div>
     <div>
       <InputWithLabel
-        v-model:input-value='searchForm.storeId'
-        label="店舗ID"
-      />
-    </div>
-    <div>
-      <InputWithLabel
         v-model:input-value='searchForm.customerName'
         label="顧客名"
       />

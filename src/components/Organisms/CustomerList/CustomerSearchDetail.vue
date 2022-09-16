@@ -4,7 +4,6 @@
       <thead>
         <tr>
           <th class="border border-gray-300 p-2 text-gray-600">顧客ID</th>
-          <th class="border border-gray-300 p-2 text-gray-600">店舗ID</th>
           <th class="border border-gray-300 p-2 text-gray-600">顧客名</th>
           <th class="border border-gray-300 p-2 text-gray-600">顧客名(カナ)</th>
           <th class="border border-gray-300 p-2 text-gray-600">年齢</th>
@@ -18,7 +17,6 @@
           class="hover:bg-slate-100"
         >
           <td class="border border-gray-300 p-2">{{ customer.customerId }}</td>
-          <td class="border border-gray-300 p-2">{{ customer.storeId }}</td>
           <td class="border border-gray-300 p-2">{{ customer.lastName }}{{ customer.firstName }}</td>
           <td class="border border-gray-300 p-2">{{ customer.lastNameKana }}{{ customer.firstNameKana }}</td>
           <td class="border border-gray-300 p-2">{{ customer.age }}</td>

@@ -12,7 +12,6 @@
       id="modal-content"
     >
       <p>顧客ID: {{ modalCustomerData.customerId }}</p>
-      <p>店舗ID: {{ modalCustomerData.storeId }}</p>
       <p>顧客名: {{ modalCustomerData.lastName }} {{ modalCustomerData.firstName }}</p>
       <p>顧客名(カナ): {{ modalCustomerData.lastNameKana }} {{ modalCustomerData.firstNameKana }}</p>
       <p>年齢: {{ modalCustomerData.age }}</p>

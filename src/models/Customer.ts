@@ -1,8 +1,6 @@
 export class Customer {
   /** 顧客ID */
   customerId: number | null = null;
-  /** 店舗ID */
-  storeId: number | null = null;
   /** 顧客(姓) */
   lastName: string = "";
   /** 顧客(名) */
