@@ -32,12 +32,6 @@
     </div>
     <div>
       <InputWithLabel
-        v-model:input-value='searchForm.customerNameKana'
-        label="顧客名(カナ)"
-      />
-    </div>
-    <div>
-      <InputWithLabel
         v-model:input-value='searchForm.age'
         label="年齢"
       />
