@@ -5,7 +5,6 @@
       v-if="createButtonTo"
       button-name="新規作成"
       @click="$router.push(createButtonTo)"
-      :disable-flg="true"
     />
   </div>
 </template>
