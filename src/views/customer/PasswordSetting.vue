@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <Loading :is-loading="isLoading"/>
-    <div class="w-1/2 m-auto p-8 mt-20 bg-white">
+    <div class="w-2/3 m-auto p-8 mt-20 bg-white">
       <p class="pb-10 text-center font-bold text-2xl">パスワード変更</p>
       <div
         v-if="message.messageList.length"
