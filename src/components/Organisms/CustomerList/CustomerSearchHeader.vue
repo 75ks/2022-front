@@ -7,12 +7,12 @@
     <div class="flex">
       <CustomButton
         @click="search"
-        :button-name="'検索'"
+        button-name="検索"
         :button-color-number=1
       />
       <CustomButton
         @click="clearSearchCond"
-        :button-name="'クリア'"
+        button-name="クリア"
         class="ml-2"
       />
     </div>
