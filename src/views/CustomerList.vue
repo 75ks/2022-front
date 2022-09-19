@@ -1,6 +1,9 @@
 <template>
   <div>
-    <Header :header-name="'顧客管理'" />
+    <Header
+      header-name="顧客管理"
+      createButtonTo="/customerCreate"
+    />
     <CustomerSearchHeader />
     <CustomerSearchDetail :customer-list="customerList" />
   </div>
