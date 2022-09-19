@@ -20,7 +20,7 @@
           <td class="border border-gray-300 p-2">{{ customer.lastName }}{{ customer.firstName }}</td>
           <td class="border border-gray-300 p-2">{{ customer.lastNameKana }}{{ customer.firstNameKana }}</td>
           <td class="border border-gray-300 p-2">{{ customer.age }}</td>
-          <td class="border border-gray-300 p-2">{{ customer.gender }}</td>
+          <td class="border border-gray-300 p-2">{{ Gender.getNameByCode(customer.gender) }}</td>
         </tr>
       </tbody>
     </table>
@@ -36,6 +36,7 @@
 import Modal from './Modal.vue';
 import { Customer } from '../../../models/Customer';
 import { ref } from 'vue';
+import { Gender } from '../../../constants/Gender';
 
 const props = defineProps<{
   customerList: Customer[]
