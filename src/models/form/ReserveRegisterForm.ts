@@ -1,4 +1,4 @@
-export class ReserveRegisterScreenObj {
+export class ReserveRegisterForm {
   /** スタッフID */
   stuffId: number | null = null;
   /** メニューID */
