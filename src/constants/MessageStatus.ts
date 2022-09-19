@@ -8,13 +8,14 @@ export const MessageStatus = {
   WARNING: new MessageStatusConstant(2, "warning"),
   DANGER: new MessageStatusConstant(3, "danger"),
   INFO: new MessageStatusConstant(4, "info"),
+  getNameByCode: (code: number | null): string => {
+    return <string>codeNameMap.get(code);
+  }
 };
-
-const getNameByCode = (code: number | null): string => {
-  return <string>codeNameMap.get(code);
-}
 
 const codeNameMap = new Map<number | null, string>();
 Object.values(MessageStatus).forEach((elem) => {
-  codeNameMap.set(elem.code, elem.name);
+  if (elem instanceof MessageStatusConstant) {
+    codeNameMap.set(elem.code, elem.name);
+  }
 });
