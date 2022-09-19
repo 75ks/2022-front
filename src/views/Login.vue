@@ -2,7 +2,7 @@
   <div class="w-full">
     <Loading :is-loading="isLoading"/>
     <div class="w-1/2 m-auto p-8 mt-20 bg-white">
-      <p class="pb-10 text-center font-bold text-2xl">ログイン</p>
+      <p class="pb-10 text-center font-bold text-2xl">ログイン（管理用）</p>
       <div
         v-if="message.messageList.length"
         class="pb-10 w-2/3 m-auto"
