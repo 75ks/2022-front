@@ -1,7 +1,8 @@
 <template>
   <div class="w-full">
+    <Loading :is-loading="isLoading"/>
     <div class="w-1/2 m-auto p-8 mt-20 bg-white">
-      <p class="pb-10 text-center font-bold text-2xl">ログイン</p>
+      <p class="pb-10 text-center font-bold text-2xl">ログイン（管理用）</p>
       <div
         v-if="message.messageList.length"
         class="pb-10 w-2/3 m-auto"
@@ -38,7 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed } from 'vue';
+import { reactive, computed, ref } from 'vue';
+import Loading from '../components/Atoms/Layout/Loading.vue';
 import CustomInputWithLabel from '../components/Molecules/InputWithLabel.vue';
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { LoginForm } from '../models/form/LoginForm';
@@ -75,15 +77,24 @@ const state = reactive<State>({
   screenObj: new LoginScreenObj()
 });
 
+/** ローティングフラグ */
+const isLoading = ref<boolean>(false);
+
 /** 「ログイン」クリックイベント(ログイン処理をする) */
 const login = async () => {
-  const reqForm: LoginForm = new LoginForm();
-  Object.assign(reqForm, state.screenObj);
-  await authorizationStore.fetchLogin(reqForm);
-  if (authorizationStore.getAuthorization.jwt) {
-    router.push("/reserveList");
-  } else {
-    alert("メールアドレスまたはパスワードが違います");
+  try {
+    isLoading.value = !isLoading.value;
+    const reqForm: LoginForm = new LoginForm();
+    Object.assign(reqForm, state.screenObj);
+    await authorizationStore.fetchLogin(reqForm);
+    if (authorizationStore.getAuthorization.jwt) {
+      router.push("/reserveList");
+    } else {
+      alert("メールアドレスまたはパスワードが違います");
+    }
+    isLoading.value = !isLoading.value;
+  } catch (error) {
+    isLoading.value = !isLoading.value;
   }
 }
 </script>

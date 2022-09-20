@@ -57,11 +57,11 @@ export const PrefectureId = {
 
 export const PrefectureIdList = [
   new PrefectureIdConstant(1, "北海道"),
-  new PrefectureIdConstant(2, "青森"),
-  new PrefectureIdConstant(3, "岩手"),
-  new PrefectureIdConstant(4, "宮城"),
-  new PrefectureIdConstant(5, "秋田"),
-  new PrefectureIdConstant(6, "山形"),
+  new PrefectureIdConstant(2, "青森県"),
+  new PrefectureIdConstant(3, "岩手県"),
+  new PrefectureIdConstant(4, "宮城県"),
+  new PrefectureIdConstant(5, "秋田県"),
+  new PrefectureIdConstant(6, "山形県"),
   new PrefectureIdConstant(7, "福島県"),
   new PrefectureIdConstant(8, "茨城県"),
   new PrefectureIdConstant(9, "栃木県"),

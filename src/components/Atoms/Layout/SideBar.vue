@@ -57,6 +57,13 @@
       </div>
       <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
     </router-link>
+    <router-link to="/customer/reserveRegister" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
+      <div class="flex items-center">
+        <font-awesome-icon :icon="['fas', 'calendar-check']" class="w-4 h-4 pr-2 font-black" />
+        <p>予約</p>
+      </div>
+      <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
+    </router-link>
     <router-link to="/customer/login" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
       <div class="flex items-center">
         <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" class="w-4 h-4 pr-2 font-black" />
