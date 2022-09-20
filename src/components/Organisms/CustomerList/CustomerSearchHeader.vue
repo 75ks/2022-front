@@ -7,12 +7,12 @@
     <div class="flex">
       <CustomButton
         @click="search"
-        :button-name="'検索'"
+        button-name="検索"
         :button-color-number=1
       />
       <CustomButton
         @click="clearSearchCond"
-        :button-name="'クリア'"
+        button-name="クリア"
         class="ml-2"
       />
     </div>
@@ -37,8 +37,9 @@
       />
     </div>
     <div>
-      <InputWithLabel
-        v-model:input-value='searchForm.gender'
+      <SelectBoxWithLabel
+        v-model:select-value="searchForm.gender"
+        :options="GenderList"
         label="性別"
       />
     </div>
@@ -50,6 +51,8 @@ import CustomButton from '../../Atoms/Button/CustomButton.vue';
 import { computed } from 'vue';
 import { useCustomerStore } from '../../../store/customer';
 import InputWithLabel from '../../Molecules/InputWithLabel.vue';
+import SelectBoxWithLabel from '../../Molecules/SelectBoxWithLabel.vue';
+import { GenderList } from '../../../constants/Gender';
 
 const customerStore = useCustomerStore();
 
