@@ -10,6 +10,7 @@ import RegisterSample from "../views/RegisterSample.vue";
 import RegisterSampleRev from "../views/RegisterSampleRev.vue";
 import StuffList from '../views/StuffList.vue';
 import CustomerList from '../views/CustomerList.vue';
+import CustomerDetail from "../views/CustomerDetail.vue";
 // 顧客用
 import CustomerLogin from "../views/customer/CustomerLogin.vue";
 import Profile from "../views/customer/Profile.vue";
@@ -33,6 +34,7 @@ const routes = [
   { path: "/registerSampleRev", component: RegisterSampleRev, meta: { requiredAuth: true } },
   { path: "/stuffList", component: StuffList, meta: { requiredAuth: true } },
   { path: "/customerList", component: CustomerList },
+  { path: "/customerDetail", component: CustomerDetail },
   // 顧客用画面
   { path: "/customer/login", component: CustomerLogin },
   { path: "/customer/profile", component: Profile, meta: { requiredAuthCustomer: true } },
