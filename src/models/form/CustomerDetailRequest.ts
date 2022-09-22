@@ -1,4 +1,4 @@
-export class CustomerDetailScreenObj {
+export class CustomerDetailRequest {
   /** 姓 */
   lastName: string = "";
   /** 名 */
