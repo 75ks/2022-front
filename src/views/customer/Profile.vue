@@ -12,8 +12,8 @@
     </div>
     <div class="grid gap-6 mb-6 mx-6 grid-cols-1">
         <InputWithLabel
-          v-model:input-value="state.screenObj.lastName"
-          label="姓"
+          v-model:input-value="customerList[0].lastName"
+          label="姓test"
           :requiredFlg="true"
         />
         <InputWithLabel
@@ -116,6 +116,8 @@ import { reactive } from "vue";
   import { MessageStatus } from '../../constants/MessageStatus'
   import { useMessageStore } from '../../store/message'
   import DatePickerWithLabel from '../../components/Molecules/DatePickerWithLabel.vue';
+  import { useCustomerAuthorizationStore } from '../../store/customerAuthorization'
+  import { useCustomerStore } from '../../store/customer'
   
   const messageStore = useMessageStore();
   
@@ -130,6 +132,14 @@ import { reactive } from "vue";
   const state = reactive<State>({
     screenObj: new CustomerCreateScreenObj(),
   });
+
+  const CustomerStore = useCustomerStore();
+
+  CustomerStore.fetchCustomers();
+
+  const customerList = computed(() => {
+  return CustomerStore.getCustomers;
+});
   
   // /** 登録ボタンクリックイベント */
   // const register = async () => {
