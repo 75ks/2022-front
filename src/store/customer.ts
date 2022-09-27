@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+
 import { CustomerCreateRequest } from '../models/form/CustomerCreateRequest';
 import axios from '../plugins/axios';
 //import { ReserveSearchForm } from '../models/form/ReserveSearchForm';
@@ -9,9 +10,11 @@ import { EditModalScreenObj } from '../models/screenObj/EditModalScreenObj';
 import { RegisterReserveForm } from '../models/form/RegisterReserveForm';
 import { EditReserveForm } from '../models/form/EditReserveForm';
 
+
 export const useCustomerStore = defineStore({
   id: "customer",
   state: () => ({
+
     customers: [] as CustomerCreateRequest[],
     //searchCond: new ReserveSearchCondScreenObj()
   }),
@@ -26,11 +29,13 @@ export const useCustomerStore = defineStore({
   actions: {
     async fetchCustomers(): Promise<void> {
       const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
+
       const { data } = await axios.get("/customers/", {
         params: reqForm
       });
       this.addCustomers(data);
     },
+
     // async search(searchCond: ReserveSearchCondScreenObj): Promise<void> {
     //   const reqForm: ReserveSearchForm = new ReserveSearchForm();
     //   _.assign(reqForm, _.pick(searchCond, _.keys(reqForm)));
@@ -58,6 +63,7 @@ export const useCustomerStore = defineStore({
       this.resetCustomers();
       array.forEach(obj => {
         const customer: CustomerCreateRequest = new CustomerCreateRequest();
+
         _.assign(customer, _.pick(obj, _.keys(customer)));
         this.customers.push(customer);
       });
@@ -65,8 +71,10 @@ export const useCustomerStore = defineStore({
     resetCustomers(): void {
       this.customers.splice(0);
     },
+
     // clearSearchCond(): void {
     //   Object.assign(this.searchCond, new ReserveSearchCondScreenObj())
     // }
   },
 })
+

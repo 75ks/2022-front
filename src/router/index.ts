@@ -9,10 +9,12 @@ import Login from "../views/Login.vue";
 import RegisterSample from "../views/RegisterSample.vue";
 import RegisterSampleRev from "../views/RegisterSampleRev.vue";
 import StuffList from '../views/StuffList.vue';
+import CustomerList from '../views/CustomerList.vue';
 // 顧客用
 import CustomerLogin from "../views/customer/CustomerLogin.vue";
 import Profile from "../views/customer/Profile.vue";
 import PasswordSetting from "../views/customer/PasswordSetting.vue";
+import ReserveRegister from "../views/customer/ReserveRegister.vue";
 
 import { useAuthorizationStore } from "../store/authorization";
 import { useCustomerAuthorizationStore } from "../store/customerAuthorization";
@@ -30,10 +32,12 @@ const routes = [
   { path: "/registerSample", component: RegisterSample, meta: { requiredAuth: true } },
   { path: "/registerSampleRev", component: RegisterSampleRev, meta: { requiredAuth: true } },
   { path: "/stuffList", component: StuffList, meta: { requiredAuth: true } },
+  { path: "/customerList", component: CustomerList },
   // 顧客用画面
   { path: "/customer/login", component: CustomerLogin },
   { path: "/customer/profile", component: Profile, meta: { requiredAuthCustomer: true } },
   { path: "/customer/passwordSetting", component: PasswordSetting, meta: { requiredAuthCustomer: true } },
+  { path: "/customer/reserveRegister", component: ReserveRegister, meta: { requiredAuthCustomer: true } },
 ];
 
 const router = vueRouter.createRouter({

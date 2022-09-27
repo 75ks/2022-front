@@ -10,6 +10,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Datepicker from '@vuepic/vue-datepicker';
+import VueElementLoading from "vue-element-loading";
 import '@vuepic/vue-datepicker/dist/main.css'
 
 const pinia = createPinia()
@@ -21,4 +22,5 @@ createApp(App)
   .use(pinia)
   .component('font-awesome-icon', FontAwesomeIcon )
   .component('Datepicker', Datepicker)
+  .component("VueElementLoading", VueElementLoading)
   .mount('#app')
