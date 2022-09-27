@@ -13,9 +13,9 @@
       <tbody class="hover:cursor-pointer">
         <tr
           v-for="(customer, index) in customerList" :key="index"
-          @click="showModal(customer)"
+          @click="onRowClicked(customer)"
           class="hover:bg-slate-100"
-        >
+          >
           <td class="border border-gray-300 p-2">{{ customer.customerId }}</td>
           <td class="border border-gray-300 p-2">{{ customer.lastName }}{{ customer.firstName }}</td>
           <td class="border border-gray-300 p-2">{{ customer.lastNameKana }}{{ customer.firstNameKana }}</td>
@@ -24,37 +24,31 @@
         </tr>
       </tbody>
     </table>
-    <Modal
-      :is-visible-modal="isVisibleModal"
-      :modal-customer-data="modalCustomerData"
-      @close="closeModal"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
-import Modal from './Modal.vue';
 import { Customer } from '../../../models/Customer';
-import { ref } from 'vue';
 import { Gender } from '../../../constants/Gender';
+import router from '../../../router';
 
 const props = defineProps<{
   customerList: Customer[]
 }>();
 
-/** モーダルに渡すデータ */
-const modalCustomerData = ref<Customer>(new Customer());
-/** モーダル表示フラグ */
-const isVisibleModal = ref<boolean>(false);
-/** レコードクリックイベント(モーダルを表示する) */
-const showModal = (customerData: Customer) => {
-  modalCustomerData.value = customerData;
-  isVisibleModal.value = true;
-}
-/** モーダル表示時、モーダル外クリックイベント(モーダルを非表示する) */
-const closeModal = () => {
-  isVisibleModal.value = false;
-}
+/**
+ * 顧客詳細画面へ遷移
+ * @param selectedCustomerScreenObj
+ */
+  const onRowClicked = (selectedCustomerScreenObj: Customer) => {
+  router.push({ path: '/customerDetail', query: { customerId: selectedCustomerScreenObj.customerId } });
+
+  return {
+    onRowClicked
+  };
+
+};
+
 </script>
 
 <style>

@@ -87,16 +87,24 @@
           label="メールアドレス"
           type="email"
           :requiredFlg="true"
-        />
-        <CustomButton
-          class="w-full mt-16"
-          :button-name="'更新'"
-          :button-color-number="1"
-          @click="register"
-        />
-
+        />      
     </div>
 
+    <div class="">
+      <CustomButton
+        class="w-24 mt-16 mr-2"
+        :button-name="'戻る'"
+        :button-color-number="0"
+        @click='$router.push("/customerList")'
+      />
+      <CustomButton
+        class="w-24 mt-16 ml-2"
+        :button-name="'更新'"
+        :button-color-number="1"
+        @click="register"
+      />
+    </div>
+      
   </div>
 </template>
 
@@ -128,7 +136,7 @@ const state = reactive<State>({
   screenObj: new CustomerDetailScreenObj(),
 });
 
-/** 登録ボタンクリックイベント */
+/** 更新ボタンクリックイベント */
 const register = async () => {
   const reqForm: CustomerDetailRequest = new CustomerDetailRequest();
   Object.assign(reqForm, state.screenObj);
