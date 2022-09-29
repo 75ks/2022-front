@@ -10,7 +10,7 @@
         >
           ◀︎
         </button>
-        <p>{{ year }}</p>
+        <p>{{ year }}年</p>
         <button
           @click="nextYear()"
           class="text-black hover:text-gray-500"
