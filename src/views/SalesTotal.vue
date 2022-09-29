@@ -3,71 +3,78 @@
     <Loading :is-loading="isLoading"/>
     <Header :header-name="'売上集計'" />
     <div class="p-2 mt-2 bg-white">
-      <div class="w-full h-12 py-2 flex justify-between font-bold text-2xl bg-white sticky top-0 z-40">
-        <button
-          @click="prevYear()"
-          class="text-black hover:text-gray-500"
-        >
-          ◀︎
-        </button>
-        <p>{{ year }}年</p>
-        <button
-          @click="nextYear()"
-          class="text-black hover:text-gray-500"
-        >
-          ▶︎
-        </button>
-      </div>
-      <ul class="w-full flex justify-center items-center">
-        <li
-          v-for="(n, index) in 12" :key="index"
-          class="w-1/12 mr-1 h-10 leading-10 text-center font-bold cursor-pointer border-gray-300 border-t border-x rounded-t-lg"
-          :class="[month == n ? 'text-black bg-white' : 'text-white bg-gray-400 hover:bg-gray-500']"
-          @click="chengeMonth(n)"
-        >
-          {{ n }}月
-        </li>
-      </ul>
-      <table class="p-2 mt-10 w-full">
-        <thead>
-          <tr>
-            <th class="border border-gray-300 px-2 py-2 text-gray-600 text-xl text-center">来店人数（月 / 年）</th>
-            <th class="border border-gray-300 px-2 py-2 text-gray-600 text-xl text-center">売上金額（月 / 年）</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border border-gray-300 px-2 py-2 text-xl text-center">{{ salesTotalMonth.numberOfVisitors }}人　/　{{ sumNumberOfVisitorsYears }}人</td>
-            <td class="border border-gray-300 px-2 py-2 text-xl text-center">{{ salesTotalMonth.salesAmount }}円　/　{{ sumSalesAmountYears }}円</td>
-          </tr>
-        </tbody>
-      </table>
-      <table class="mt-10 w-full">
-        <thead>
-          <tr>
-            <th class="border border-gray-300 px-2 py-2 text-gray-600">売上履歴ID</th>
-            <th class="border border-gray-300 px-2 py-2 text-gray-600">顧客名</th>
-            <th class="border border-gray-300 px-2 py-2 text-gray-600">担当スタッフ</th>
-            <th class="border border-gray-300 px-2 py-2 text-gray-600">ランク</th>
-            <th class="border border-gray-300 px-2 py-2 text-gray-600">メニュー</th>
-            <th class="border border-gray-300 px-2 py-2 text-gray-600">料金</th>
-            <th class="border border-gray-300 px-2 py-2 text-gray-600">来店日時</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(salesHistory, index) in salesHistorys" :key="index"
+      <div class="sticky top-0 z-40 bg-white">
+        <div class="w-full h-12 py-2 flex justify-between font-bold text-2xl">
+          <button
+            @click="prevYear()"
+            class="text-black hover:text-gray-500"
           >
-            <td class="border border-gray-300 px-2 py-2">{{ salesHistory.salesHistoryId }}</td>
-            <td class="border border-gray-300 px-2 py-2">{{ salesHistory.customerLastName }} {{salesHistory.customerFirstName}}</td>
-            <td class="border border-gray-300 px-2 py-2">{{ salesHistory.stuffLastName }} {{ salesHistory.stuffFirstName }}</td>
-            <td class="border border-gray-300 px-2 py-2">{{ salesHistory.rank }}</td>
-            <td class="border border-gray-300 px-2 py-2">{{ salesHistory.menu }}</td>
-            <td class="border border-gray-300 px-2 py-2">{{ salesHistory.price }}</td>
-            <td class="border border-gray-300 px-2 py-2">{{ datetimeFormat(salesHistory.salesDatetime) }}</td>
-          </tr>
-        </tbody>
-      </table>
+            ◀︎
+          </button>
+          <p>{{ year }}年</p>
+          <button
+            @click="nextYear()"
+            class="text-black hover:text-gray-500"
+          >
+            ▶︎
+          </button>
+        </div>
+        <ul class="w-full flex justify-center items-center">
+          <li
+            v-for="(n, index) in 12" :key="index"
+            class="w-1/12 mr-1 h-10 leading-10 text-center font-bold cursor-pointer border-gray-300 border-t border-x rounded-t-lg"
+            :class="[month == n ? 'text-black bg-white' : 'text-white bg-gray-400 hover:bg-gray-500']"
+            @click="chengeMonth(n)"
+          >
+            {{ n }}月
+          </li>
+        </ul>
+      </div>
+      <div>
+        <table class="p-2 mt-10 w-full">
+          <thead>
+            <tr>
+              <th class="border border-gray-300 px-2 py-2 text-gray-600 text-xl text-center">来店人数（月 / 年）</th>
+              <th class="border border-gray-300 px-2 py-2 text-gray-600 text-xl text-center">売上金額（月 / 年）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-300 px-2 py-2 text-xl text-center">{{ salesTotalMonth.numberOfVisitors }}人　/　{{ sumNumberOfVisitorsYears }}人</td>
+              <td class="border border-gray-300 px-2 py-2 text-xl text-center">{{ salesTotalMonth.salesAmount }}円　/　{{ sumSalesAmountYears }}円</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="mt-10 w-full">
+          <thead>
+            <tr>
+              <th class="border border-gray-300 px-2 py-2 text-gray-600">売上履歴ID</th>
+              <th class="border border-gray-300 px-2 py-2 text-gray-600">顧客名</th>
+              <th class="border border-gray-300 px-2 py-2 text-gray-600">担当スタッフ</th>
+              <th class="border border-gray-300 px-2 py-2 text-gray-600">ランク</th>
+              <th class="border border-gray-300 px-2 py-2 text-gray-600">メニュー</th>
+              <th class="border border-gray-300 px-2 py-2 text-gray-600">料金</th>
+              <th class="border border-gray-300 px-2 py-2 text-gray-600">来店日時</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(salesHistory, index) in salesHistorys" :key="index"
+            >
+              <td class="border border-gray-300 px-2 py-2">{{ salesHistory.salesHistoryId }}</td>
+              <td class="border border-gray-300 px-2 py-2">{{ salesHistory.customerLastName }} {{salesHistory.customerFirstName}}</td>
+              <td class="border border-gray-300 px-2 py-2">{{ salesHistory.stuffLastName }} {{ salesHistory.stuffFirstName }}</td>
+              <td class="border border-gray-300 px-2 py-2">{{ salesHistory.rank }}</td>
+              <td class="border border-gray-300 px-2 py-2">{{ salesHistory.menu }}</td>
+              <td class="border border-gray-300 px-2 py-2">{{ salesHistory.price }}</td>
+              <td class="border border-gray-300 px-2 py-2">{{ datetimeFormat(salesHistory.salesDatetime) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+
+      </div>
     </div>
   </div>
 </template>
