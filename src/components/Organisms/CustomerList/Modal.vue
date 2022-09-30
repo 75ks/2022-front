@@ -11,27 +11,23 @@
       class="fixed top-1/2 left-1/2 bg-white flex flex-col items-center justify-center w-1/2 h-auto rounded p-5"
       id="modal-content"
     >
-      <p>予約履歴ID: {{ modalReserveData.reserveHistoryId }}</p>
-      <p>顧客名: {{ modalReserveData.customerLastName }} {{ modalReserveData.customerFirstName }}</p>
-      <p>担当スタッフ: {{ modalReserveData.stuffLastName }} {{ modalReserveData.stuffFirstName }}</p>
-      <p>ランク: {{ modalReserveData.rank }}</p>
-      <p>メニュー: {{ modalReserveData.menu }}</p>
-      <p>料金: {{ modalReserveData.price }}</p>
-      <p>予約日時: {{ datetimeFormat(modalReserveData.reserveDatetime) }}</p>
-      <p>予約状態: {{ modalReserveData.reserveStateName }}</p>
+      <p>顧客ID: {{ modalCustomerData.customerId }}</p>
+      <p>顧客名: {{ modalCustomerData.lastName }} {{ modalCustomerData.firstName }}</p>
+      <p>顧客名(カナ): {{ modalCustomerData.lastNameKana }} {{ modalCustomerData.firstNameKana }}</p>
+      <p>年齢: {{ modalCustomerData.age }}</p>
+      <p>性別: {{ modalCustomerData.gender }}</p>
     </div>
   </teleport>
 </template>
 
 <script setup lang="ts">
-import { Reserve } from '../../../models/Reserve';
-import { datetimeFormat } from '../../../utils/Format';
+import { Customer } from '../../../models/Customer';
 
 interface Props {
   /** モーダル表示フラグ */
   isVisibleModal: boolean;
   /** モーダルが表示するデータ */
-  modalReserveData: Reserve;
+  modalCustomerData: Customer;
 }
 
 interface Emits {

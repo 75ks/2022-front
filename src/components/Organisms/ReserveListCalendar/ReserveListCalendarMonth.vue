@@ -47,16 +47,7 @@ interface Props {
   dayOfWeek: string[]
 }
 
-interface Emits {
-  /** -1(月) */
-  (e: "prevMonth", value: moment.Moment): void;
-  /** +1(月) */
-  (e: "nextMonth", value: moment.Moment): void;
-}
-
 const props = defineProps<Props>();
-
-const emits = defineEmits<Emits>();
 
 const calendars = computed<Calender[][]>(() => {
   return getCalenderMonth();
@@ -104,6 +95,7 @@ const getCalenderMonth = (): Calender[][] => {
       const dayReserves: Reserve[] = getDayReserves(startDate);
       weekRow.push({
         date: startDate.get("date"),
+        datetime: startDate.format("YYYY-MM-DD HH:mm"),
         dayReserves
       });
       startDate.add(1, "days");

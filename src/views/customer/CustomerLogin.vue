@@ -1,5 +1,6 @@
 <template>
   <div class="w-full">
+    <Loading :is-loading="isLoading" />
     <div class="w-1/2 m-auto p-8 mt-20 bg-white">
       <p class="pb-10 text-center font-bold text-2xl">ログイン</p>
       <div
@@ -38,16 +39,19 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed } from 'vue';
-import CustomInputWithLabel from '../components/Molecules/InputWithLabel.vue';
-import CustomButton from '../components/Atoms/Button/CustomButton.vue';
-import { LoginForm } from '../models/form/LoginForm';
-import { LoginScreenObj } from '../models/screenObj/LoginScreenObj';
-import { MessageStatus } from '../constants/MessageStatus';
-import { useCustomerAuthorizationStore } from '../store/customerAuthorization';
-import { useMessageStore } from '../store/message';
+import { reactive, computed, ref } from 'vue';
+import Loading from '../../components/Atoms/Layout/Loading.vue';
+import CustomInputWithLabel from '../../components/Molecules/InputWithLabel.vue';
+import CustomButton from '../../components/Atoms/Button/CustomButton.vue';
+import { LoginForm } from '../../models/form/LoginForm';
+import { LoginScreenObj } from '../../models/screenObj/LoginScreenObj';
+import { MessageStatus } from '../../constants/MessageStatus';
+import { useAuthorizationStore } from '../../store/authorization';
+import { useCustomerAuthorizationStore } from '../../store/customerAuthorization';
+import { useMessageStore } from '../../store/message';
 import { useRouter } from 'vue-router';
 
+const authorizationStore = useAuthorizationStore();
 const customerAuthorizationStore = useCustomerAuthorizationStore();
 const messageStore = useMessageStore();
 const router = useRouter();
@@ -57,6 +61,8 @@ if (messageStore.getMessage.messageType !== MessageStatus.WARNING.code) {
   messageStore.resetMessageType();
 }
 
+authorizationStore.fetchLogout();
+authorizationStore.resetAuthorization();
 customerAuthorizationStore.fetchLogout();
 customerAuthorizationStore.resetAuthorization();
 
@@ -72,15 +78,30 @@ const state = reactive<State>({
   screenObj: new LoginScreenObj()
 });
 
+/** ローティングフラグ */
+const isLoading = ref<boolean>(false);
+
 /** 「ログイン」クリックイベント(ログイン処理をする) */
 const login = async () => {
-  const reqForm: LoginForm = new LoginForm();
-  Object.assign(reqForm, state.screenObj);
-  await customerAuthorizationStore.fetchLogin(reqForm);
-  if (customerAuthorizationStore.getAuthorization.jwt) {
-    router.push("/");
-  } else {
-    alert("メールアドレスまたはパスワードが違います");
+  try {
+    isLoading.value = !isLoading.value;
+    const reqForm: LoginForm = new LoginForm();
+    Object.assign(reqForm, state.screenObj);
+    await customerAuthorizationStore.fetchLogin(reqForm);
+    if (customerAuthorizationStore.getAuthorization.jwt) {
+      if (customerAuthorizationStore.getAuthorization.firstLoginFlg == 0) {
+        // 初回ログインの場合、パスワード設定画面に遷移
+        router.push("/customer/passwordSetting");
+      } else {
+        // 初回ログインではない場合、プロフィール画面に遷移
+        router.push("/customer/profile");
+      }
+    } else {
+      alert("メールアドレスまたはパスワードが違います");
+    }
+    isLoading.value = !isLoading.value;
+  } catch (error) {
+    isLoading.value = !isLoading.value;
   }
 }
 </script>

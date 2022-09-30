@@ -1,6 +1,9 @@
+import _ from 'lodash';
 import { defineStore } from 'pinia';
 import { Authorization } from '../models/Authorization';
 import { LoginForm } from '../models/form/LoginForm';
+import { RegisterPasswordForm } from '../models/form/RegisterPasswordForm';
+import { PasswordSettingScreenObj } from '../models/screenObj/PasswordSettingScreenObj';
 import axios from '../plugins/axios';
 
 export const useCustomerAuthorizationStore = defineStore({
@@ -20,6 +23,11 @@ export const useCustomerAuthorizationStore = defineStore({
     },
     async fetchLogout(): Promise<void> {
       await axios.get("/customerAuthorization/logout/");
+    },
+    async registerPassword(screenObj: PasswordSettingScreenObj): Promise<void> {
+      const reqForm: RegisterPasswordForm = new RegisterPasswordForm();
+      _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
+      await axios.post("/customerAuthorization/registerPassword/", reqForm);
     },
     addAuthorization(obj: Authorization): void {
       Object.assign(this.authorization, obj);

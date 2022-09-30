@@ -38,13 +38,24 @@
             v-for="(n, index) in 24" :key="index"
             class="w-full h-12 boder-r border-b border-gray-300"
           >
-            <div v-if="day.dayReserves.length > 0">
-              <div v-for="(reserve, index) in day.dayReserves" :key=index>
-                <div v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))">
-                  <p class="w-full text-white pl-1 text-xs bg-red-500">{{ reserve.menu }}</p>
-                  <p class="w-full text-white pl-1 text-xs bg-red-500">{{ moment(reserve.reserveDatetime).format('HH:mm[〜]') }}</p>
-                </div>
-              </div>
+            <div
+              v-if="day.dayReserves.length > 0"
+              v-for="(reserve, index) in day.dayReserves" :key=index
+            >
+              <p
+                v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))"
+                class="w-full text-white pl-1 text-xs"
+                :class="reserve.salesHistoryId !== null ? 'bg-gray-500' : 'bg-red-500'"
+              >
+                {{ reserve.menu }}
+              </p>
+              <p
+                v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))"
+                class="w-full text-white pl-1 text-xs"
+                :class="reserve.salesHistoryId !== null ? 'bg-gray-500' : 'bg-red-500'"
+              >
+                {{ moment(reserve.reserveDatetime).format('HH:mm[〜]') }}
+              </p>
             </div>
           </div>
         </div>
@@ -70,16 +81,7 @@ interface Props {
   dayOfWeek: string[]
 }
 
-interface Emits {
-  /** -1(日) */
-  (e: "prevDay", value: moment.Moment): void;
-  /** +1(日) */
-  (e: "nextDay", value: moment.Moment): void;
-}
-
 const props = defineProps<Props>();
-
-const emits = defineEmits<Emits>();
 
 const day = computed<Calender>(() => {
   return getCalenderDay();
@@ -108,6 +110,7 @@ const getDayReserves = (date: moment.Moment): Reserve[] => {
 const getCalenderDay = (): Calender => {
   const day: Calender = {
     date: props.currentDate.get("date"),
+    datetime: props.currentDate.format("YYYY-MM-DD HH:mm"),
     dayReserves: getDayReserves(props.currentDate)
   }
   return day;

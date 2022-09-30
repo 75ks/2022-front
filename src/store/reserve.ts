@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia';
 import { Reserve } from '../models/Reserve';
 import axios from '../plugins/axios';
-import {ReserveSearchForm} from '../models/form/ReserveSearchForm';
-import {ReserveSearchCondScreenObj} from '../models/screenObj/ReserveSearchCondScreenObj';
+import { ReserveSearchForm } from '../models/form/ReserveSearchForm';
+import { ReserveSearchCondScreenObj } from '../models/screenObj/ReserveSearchCondScreenObj';
 import _ from 'lodash';
+import { RegisterModalScreenObj } from '../models/screenObj/RegisterModalScreenObj';
+import { EditModalScreenObj } from '../models/screenObj/EditModalScreenObj';
+import { RegisterReserveForm } from '../models/form/RegisterReserveForm';
+import { EditReserveForm } from '../models/form/EditReserveForm';
 
 export const useReserveStore = defineStore({
   id: "reserve",
@@ -34,6 +38,21 @@ export const useReserveStore = defineStore({
         params: reqForm
       });
       this.addReserves(data);
+    },
+    async register(screenObj: RegisterModalScreenObj): Promise<void> {
+      const reqForm: RegisterReserveForm = new RegisterReserveForm();
+      _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
+      await axios.post("/reserves/register", reqForm);
+    },
+    async update(screenObj: EditModalScreenObj): Promise<void> {
+      const reqForm: EditReserveForm = new EditReserveForm();
+      _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
+      await axios.put("/reserves/update", reqForm);
+    },
+    async delete(screenObj: EditModalScreenObj): Promise<void> {
+      const reqForm: EditReserveForm = new EditReserveForm();
+      _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
+      await axios.put("/reserves/delete", reqForm);
     },
     addReserves(array: Object[]): void {
       this.resetReserves();

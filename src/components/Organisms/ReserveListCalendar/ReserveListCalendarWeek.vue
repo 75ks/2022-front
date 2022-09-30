@@ -38,32 +38,54 @@
       <div class="w-full flex border-l border-gray-300">
         <div
           v-for="(day, index) in week" :key="index"
-          class="w-full border-r border-gray-300"
+          class="w-full border-r border-gray-300 overflow-hidden"
         >
           <div
             v-for="(n, index) in 24" :key="index"
-            class="w-full h-12 boder-r border-b border-gray-300"
+            @click="showRegisterModal(day.datetime, n-1)"
+            class="flex w-full h-12 boder-r border-b border-gray-300 hover:bg-gray-100 cursor-pointer"
           >
-            <div v-if="day.dayReserves.length > 0">
-              <div v-for="(reserve, index) in day.dayReserves" :key=index>
-                <div v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))">
-                  <p class="w-full text-white pl-1 text-xs bg-red-500">{{ reserve.menu }}</p>
-                  <p class="w-full text-white pl-1 text-xs bg-red-500">{{ moment(reserve.reserveDatetime).format('HH:mm[〜]') }}</p>
-                </div>
-              </div>
+            <div
+              v-for="(reserve, index) in timeReserves(n, day.dayReserves)" :key=index
+              @click.stop="showEditModal(reserve)"
+              class="h-9"
+              :class="timeReserves(n, day.dayReserves).length !== 1 ? `w-1/${timeReserves(n, day.dayReserves).length}` : 'w-full'"
+            >
+              <p
+                class="w-full text-white border pl-1 text-xs whitespace-nowrap overflow-scroll"
+                :class="reserve.salesHistoryId !== null ? 'bg-gray-400' : 'bg-red-400 hover:bg-red-500'"
+              >
+                {{ reserve.menu }}<br>
+                {{ moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH:mm[〜]') }}
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <RegisterModal
+    :is-visible-modal="isVisibleRegisterModal"
+    :select-date-time="selectDateTime"
+    @closeModal="closeRegisterModal"
+  />
+  <EditModal
+    :is-visible-modal="isVisibleEditModal"
+    :select-reserve="selectReserve"
+    @closeModal="closeEditModal"
+  />
 </template>
 
 <script setup lang="ts">
 import moment from 'moment';
 import { Reserve } from '../../../models/Reserve';
 import { Calender } from '../../../models/Calender';
-import { computed } from 'vue';
+import RegisterModal from './RegisterModal.vue';
+import EditModal from './EditModal.vue';
+import { useMessageStore } from '../../../store/message';
+import { computed, ref } from 'vue';
+
+const messageStore = useMessageStore();
 
 interface Props {
   /** 予約情報一覧 */
@@ -76,16 +98,52 @@ interface Props {
   dayOfWeek: string[]
 }
 
-interface Emits {
-  /** -1(週) */
-  (e: "prevWeek", value: moment.Moment): void;
-  /** +1(週) */
-  (e: "nextWeek", value: moment.Moment): void;
-}
-
 const props = defineProps<Props>();
 
-const emits = defineEmits<Emits>();
+/** 登録モーダル表示フラグ */
+const isVisibleRegisterModal = ref<boolean>(false);
+/** 編集モーダル表示フラグ */
+const isVisibleEditModal = ref<boolean>(false);
+
+/** 選択予約日時 */
+const selectDateTime = ref<string>("");
+/** 予約情報 */
+const selectReserve = ref<Reserve>(new Reserve());
+
+/** 各時間の予約情報を取得 */
+const timeReserves = computed(() => (n: number, reserves: Reserve[]) => {
+  return reserves.filter(reserve => {
+    return n-1 === Number(moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH'))
+  });
+});
+
+/** 予約日時クリックイベント */
+const showRegisterModal = (datetime: string, hours: number) => {
+  selectDateTime.value = moment(datetime).add(hours, "hours").format("YYYY-MM-DD HH:mm");
+  isVisibleRegisterModal.value = true;
+}
+
+/** 予約情報クリックイベント */
+const showEditModal = (reserve: Reserve) => {
+  selectReserve.value = reserve;
+  isVisibleEditModal.value = true;
+}
+
+/** 登録モーダル✖︎ボタンクリックイベント */
+const closeRegisterModal = () => {
+  selectDateTime.value = "";
+  messageStore.resetMessageList();
+  messageStore.resetMessageType();
+  isVisibleRegisterModal.value = false;
+}
+
+/** 編集モーダル✖︎ボタンクリックイベント */
+const closeEditModal = () => {
+  selectReserve.value = new Reserve();
+  messageStore.resetMessageList();
+  messageStore.resetMessageType();
+  isVisibleEditModal.value = false;
+}
 
 const week = computed<Calender[]>(() => {
   return getCalenderWeek();
@@ -101,7 +159,8 @@ const getStartDate = (): moment.Moment => {
 const getDayReserves = (date: moment.Moment): Reserve[] => {
   const dayReserves: Reserve[] = [];
   props.reserveList.forEach(reserve => {
-    const reserveDate: string = moment(reserve.reserveDatetime).format('YYYY-MM-DD');
+    // 日本時間にするためマイナス9時間で設定
+    const reserveDate: string = moment(reserve.reserveDatetime).subtract(9, 'hours').format('YYYY-MM-DD');
     const targetDate: string = date.format('YYYY-MM-DD');
     if (reserveDate === targetDate) {
       dayReserves.push(reserve);
@@ -118,6 +177,7 @@ const getCalenderWeek = (): Calender[] => {
     const dayReserves: Reserve[] = getDayReserves(startDate);
     week.push({
       date: startDate.get("date"),
+      datetime: startDate.format("YYYY-MM-DD HH:mm"),
       dayReserves
     });
     startDate.add(1, "days");
