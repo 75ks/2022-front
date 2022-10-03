@@ -10,6 +10,7 @@ import RegisterSample from "../views/RegisterSample.vue";
 import RegisterSampleRev from "../views/RegisterSampleRev.vue";
 import StuffList from '../views/StuffList.vue';
 import CustomerList from '../views/CustomerList.vue';
+import  MenuManagement  from "../views/MenuManagement.vue";
 // 顧客用
 import CustomerLogin from "../views/customer/CustomerLogin.vue";
 import Profile from "../views/customer/Profile.vue";
@@ -20,53 +21,8 @@ import { useAuthorizationStore } from "../store/authorization";
 import { useCustomerAuthorizationStore } from "../store/customerAuthorization";
 import { useMessageStore } from "../store/message";
 import { MessageStatus } from "../constants/MessageStatus";
-import MenuManagement from "../views/MenuManagement.vue";
 
 const routes = [
-<<<<<<< HEAD
-  {
-    path: "/",
-    component: Test,
-  },
-  {
-    path: "/componentsSample",
-    component: ComponentsSample,
-    meta: { requiredAuth: true }
-  },
-  {
-    path: "/reserveList",
-    component: ReserveList,
-    meta: { requiredAuth: true }
-  },
-  {
-    path: "/reserveListCalendar",
-    component: ReserveListCalender,
-    meta: { requiredAuth: true }
-  },
-  {
-    path: "/login",
-    component: Login,
-  },
-  {
-    path: "/customerLogin",
-    component: CustomerLogin,
-  },
-  {
-    path: "/registerSample",
-    component: RegisterSample,
-    meta: { requiredAuth: true }
-  },
-  {
-    path: "/registerSampleRev",
-    component: RegisterSampleRev,
-    meta: { requiredAuth: true }
-  },
-  {
-    path: "/menuManagement",
-    component: MenuManagement,
-    meta: { requiredAuth: true }
-  },
-=======
   // スタッフ用画面
   { path: "/", component: Test },
   { path: "/componentsSample", component: ComponentsSample, meta: { requiredAuth: true } },
@@ -78,12 +34,12 @@ const routes = [
   { path: "/registerSampleRev", component: RegisterSampleRev, meta: { requiredAuth: true } },
   { path: "/stuffList", component: StuffList, meta: { requiredAuth: true } },
   { path: "/customerList", component: CustomerList },
+  { path: "/menuManagement", component: MenuManagement, meta: { requiredAuth: true }},
   // 顧客用画面
   { path: "/customer/login", component: CustomerLogin },
   { path: "/customer/profile", component: Profile, meta: { requiredAuthCustomer: true } },
   { path: "/customer/passwordSetting", component: PasswordSetting, meta: { requiredAuthCustomer: true } },
   { path: "/customer/reserveRegister", component: ReserveRegister, meta: { requiredAuthCustomer: true } },
->>>>>>> a8995039ff6d4eae22911a13220908e8be14bb1c
 ];
 
 const router = vueRouter.createRouter({
@@ -102,8 +58,6 @@ router.beforeEach((to, from, next) => {
       useMessageStore().addMessageType(MessageStatus.WARNING.code!);
       next("/login");
     }
-<<<<<<< HEAD
-=======
   } else if (to.matched.some(record => record.meta.requiredAuthCustomer)) {
     useMessageStore().resetMessageList();
     useMessageStore().resetMessageType();
@@ -114,7 +68,6 @@ router.beforeEach((to, from, next) => {
       useMessageStore().addMessageType(MessageStatus.WARNING.code!);
       next("/customer/login");
     }
->>>>>>> a8995039ff6d4eae22911a13220908e8be14bb1c
   } else {
     next();
   }

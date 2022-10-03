@@ -1,6 +1,6 @@
 <template>
   <div class="container p-5">
-     <!-- {{ state.menuList }} -->
+     {{ menuManagementList }}
     <div class="flex justify-center">
       <table class="w-2/3">
         <thead>
@@ -102,6 +102,42 @@ const states = reactive<State>({
 });
 
 
+const MenuManagementStore = useMenuManagementStore();
+
+MenuManagementStore.fetchMenuManagement();
+
+const menuManagementList = computed(() => {
+  return MenuManagementStore.getMenuManagement;
+});
+
+const props = defineProps<{
+  menuManagementList: MenuManagement[]
+}>();
+
+// const menuManagementData = ref<MenuManagement>(new MenuManagement());
+
+
+
+
+const addRow = (): void => {
+  const menuManagementData = ref<MenuManagement>(new MenuManagement());
+  menuManagementData.value.detail.push(new MenuManagementDetail());
+  menuManagementList.value.push(menuManagementData.value);
+};
+
+const deleteRow = (index: number) => {
+  menuManagementList.value.splice(index, 1);
+};
+
+const addDetailRow = (index: number): void => {
+  menuManagementList.value[index].detail.push(new MenuManagementDetail());
+};
+
+const deleteDetailRow = (index: number) => {
+  menuManagementList.value[index].detail.pop();
+
+
+
 // const updateMenuManagement = async (): Promise<void> => {
 //     await useMenuManagementStore.update(states.screenObj);
 //     useMenuManagementStore.fetchMenuManagement();
@@ -140,71 +176,6 @@ const states = reactive<State>({
 //       // 正常終了・エラー問わず必ず行う処理
 //     });
 // };
-
-
-
-
-
-
-
-
-
-
-
-const MenuManagementStore = useMenuManagementStore();
-
-MenuManagementStore.fetchMenuManagement();
-
-const menuManagementList = computed(() => {
-  return MenuManagementStore.getMenuManagement;
-});
-
-const props = defineProps<{
-  menuManagementList: MenuManagement[]
-}>();
-
-// const menuManagementData = ref<MenuManagement>(new MenuManagement());
-
-
-
-
-const addRow = (): void => {
-  const menuManagementData = ref<MenuManagement>(new MenuManagement());
-  menuManagementData.value.detail.push(new MenuManagementDetail());
-  menuManagementList.value.push(menuManagementData.value);
-};
-
-const deleteRow = (index: number) => {
-  menuManagementList.value.splice(index, 1);
-};
-
-const addDetailRow = (index: number): void => {
-  menuManagementList.value[index].detail.push(new MenuManagementDetail());
-};
-
-const deleteDetailRow = (index: number) => {
-  menuManagementList.value[index].detail.pop();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
