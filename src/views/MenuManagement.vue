@@ -1,6 +1,6 @@
 <template>
   <div class="container p-5">
-    {{ state.menuList }}
+     <!-- {{ state.menuList }} -->
     <div class="flex justify-center">
       <table class="w-2/3">
         <thead>
@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          <template v-for="(data, index1) in state.menuList" :key="index1">
+          <template v-for="(data, index1) in menuManagementList" :key="index1">
             <tr v-for="(detail, index2) in data.detail" :key="index2">
               <td
                 v-if="index2 === 0"
@@ -83,85 +83,217 @@
 <script setup lang="ts">
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
-import { reactive } from "vue";
+import { reactive,ref } from "vue";
 import { MenuManagement } from "../models/MenuManagement";
 import { MenuManagementDetail } from "../models/MenuManagementDetail";
+import { computed } from 'vue';
+import { useMenuManagementStore } from '../store/MenuManagement';
+import axios from "../plugins/axios";
+import { MenuManagementObj } from "../models/screenObj/MenuManagementObj";
+
+
 
 interface State {
-  menuList: MenuManagement[];
+  screenObj: MenuManagementObj;
 }
 
-const state = reactive<State>({
-  menuList: [],
+const states = reactive<State>({
+  screenObj: new MenuManagementObj()
 });
 
-const init = () => {
-  // テストデータ生成
-  const testdata1 = new MenuManagement();
-  testdata1.menuId = 1;
-  const testdata1_1 = new MenuManagementDetail();
-  testdata1_1.rankId = 1;
-  testdata1_1.price = 3000;
-  const testdata1_2 = new MenuManagementDetail();
-  testdata1_2.rankId = 2;
-  testdata1_2.price = 4000;
-  const testdata1_3 = new MenuManagementDetail();
-  testdata1_3.rankId = 3;
-  testdata1_3.price = 5000;
-  testdata1.detail.push(testdata1_1, testdata1_2, testdata1_3);
 
-  const testdata2 = new MenuManagement();
-  testdata2.menuId = 2;
-  const testdata2_1 = new MenuManagementDetail();
-  testdata2_1.rankId = 1;
-  testdata2_1.price = 2000;
-  const testdata2_2 = new MenuManagementDetail();
-  testdata2_2.rankId = 2;
-  testdata2_2.price = 3000;
-  const testdata2_3 = new MenuManagementDetail();
-  testdata2_3.rankId = 3;
-  testdata2_3.price = 4000;
-  testdata2.detail.push(testdata2_1, testdata2_2, testdata2_3);
+// const updateMenuManagement = async (): Promise<void> => {
+//     await useMenuManagementStore.update(states.screenObj);
+//     useMenuManagementStore.fetchMenuManagement();
+// }
 
-  const testdata3 = new MenuManagement();
-  testdata3.menuId = 3;
-  const testdata3_1 = new MenuManagementDetail();
-  testdata3_1.rankId = 1;
-  testdata3_1.price = 4500;
-  const testdata3_2 = new MenuManagementDetail();
-  testdata3_2.rankId = 2;
-  testdata3_2.price = 6500;
-  const testdata3_3 = new MenuManagementDetail();
-  testdata3_3.rankId = 3;
-  testdata3_3.price = 8500;
-  testdata3.detail.push(testdata3_1, testdata3_2, testdata3_3);
 
-  state.menuList.push(testdata1, testdata2, testdata3);
-};
-init();
+
+
+
+
+
+
+
+// interface State {
+//   screenObj: CustomerCreateScreenObj;
+// }
+
+// const state = reactive<State>({
+//   screenObj: new CustomerCreateScreenObj(),
+// });
+
+// /** 登録ボタンクリックイベント */
+// const register = async () => {
+//   const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
+//   Object.assign(reqForm, state.screenObj);
+//   await axios
+//     .post("/customerCreate", reqForm)
+//     .then(() => {
+//       // 入力項目を初期化する
+//       state.screenObj = new CustomerCreateScreenObj();
+//     })
+//     .catch((error) => {
+//       // エラー発生時の処理
+//     })
+//     .finally(() => {
+//       // 正常終了・エラー問わず必ず行う処理
+//     });
+// };
+
+
+
+
+
+
+
+
+
+
+
+const MenuManagementStore = useMenuManagementStore();
+
+MenuManagementStore.fetchMenuManagement();
+
+const menuManagementList = computed(() => {
+  return MenuManagementStore.getMenuManagement;
+});
+
+const props = defineProps<{
+  menuManagementList: MenuManagement[]
+}>();
+
+// const menuManagementData = ref<MenuManagement>(new MenuManagement());
+
+
+
 
 const addRow = (): void => {
-  const newMenu = new MenuManagement();
-  newMenu.detail.push(new MenuManagementDetail());
-  state.menuList.push(newMenu);
+  const menuManagementData = ref<MenuManagement>(new MenuManagement());
+  menuManagementData.value.detail.push(new MenuManagementDetail());
+  menuManagementList.value.push(menuManagementData.value);
 };
 
 const deleteRow = (index: number) => {
-  state.menuList.splice(index, 1);
+  menuManagementList.value.splice(index, 1);
 };
 
 const addDetailRow = (index: number): void => {
-  state.menuList[index].detail.push(new MenuManagementDetail());
+  menuManagementList.value[index].detail.push(new MenuManagementDetail());
 };
 
 const deleteDetailRow = (index: number) => {
-  state.menuList[index].detail.pop();
-  // 削除後、detailの要素が空になった場合
-  if (!state.menuList[index].detail.length) {
-    // 空のオブジェクトを追加する
-    state.menuList[index].detail.push(new MenuManagementDetail());
-  }
+  menuManagementList.value[index].detail.pop();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // // 削除後、detailの要素が空になった場合
+  // if (!state.menuList[index].detail.length) {
+  //   // 空のオブジェクトを追加する
+  //   state.menuList[index].detail.push(new MenuManagementDetail());
+  // }
 };
+
+
+
+// interface State {
+//   menuList: MenuManagement[];
+// }
+
+// const state = reactive<State>({
+//   menuList: [],
+// });
+
+// const init = () => {
+//   // テストデータ生成
+//   const testdata1 = new MenuManagement();
+//   testdata1.menuId = 1;
+//   const testdata1_1 = new MenuManagementDetail();
+//   testdata1_1.rankId = 1;
+//   testdata1_1.price = 3000;
+//   const testdata1_2 = new MenuManagementDetail();
+//   testdata1_2.rankId = 2;
+//   testdata1_2.price = 4000;
+//   const testdata1_3 = new MenuManagementDetail();
+//   testdata1_3.rankId = 3;
+//   testdata1_3.price = 5000;
+//   testdata1.detail.push(testdata1_1, testdata1_2, testdata1_3);
+
+//   const testdata2 = new MenuManagement();
+//   testdata2.menuId = 2;
+//   const testdata2_1 = new MenuManagementDetail();
+//   testdata2_1.rankId = 1;
+//   testdata2_1.price = 2000;
+//   const testdata2_2 = new MenuManagementDetail();
+//   testdata2_2.rankId = 2;
+//   testdata2_2.price = 3000;
+//   const testdata2_3 = new MenuManagementDetail();
+//   testdata2_3.rankId = 3;
+//   testdata2_3.price = 4000;
+//   testdata2.detail.push(testdata2_1, testdata2_2, testdata2_3);
+
+//   const testdata3 = new MenuManagement();
+//   testdata3.menuId = 3;
+//   const testdata3_1 = new MenuManagementDetail();
+//   testdata3_1.rankId = 1;
+//   testdata3_1.price = 4500;
+//   const testdata3_2 = new MenuManagementDetail();
+//   testdata3_2.rankId = 2;
+//   testdata3_2.price = 6500;
+//   const testdata3_3 = new MenuManagementDetail();
+//   testdata3_3.rankId = 3;
+//   testdata3_3.price = 8500;
+//   testdata3.detail.push(testdata3_1, testdata3_2, testdata3_3);
+
+//   state.menuList.push(testdata1, testdata2, testdata3);
+// };
+// init();
+
+// const addRow = (): void => {
+//   const newMenu = new MenuManagement();
+//   newMenu.detail.push(new MenuManagementDetail());
+//   state.menuList.push(newMenu);
+// };
+
+// const deleteRow = (index: number) => {
+//   state.menuList.splice(index, 1);
+// };
+
+// const addDetailRow = (index: number): void => {
+//   state.menuList[index].detail.push(new MenuManagementDetail());
+// };
+
+// const deleteDetailRow = (index: number) => {
+//   state.menuList[index].detail.pop();
+//   // 削除後、detailの要素が空になった場合
+//   if (!state.menuList[index].detail.length) {
+//     // 空のオブジェクトを追加する
+//     state.menuList[index].detail.push(new MenuManagementDetail());
+//   }
+// };
+
 </script>
 
 <style></style>
