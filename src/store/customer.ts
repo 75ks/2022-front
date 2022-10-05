@@ -30,7 +30,7 @@ export const useCustomerStore = defineStore({
     async fetchCustomers(): Promise<void> {
       const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
 
-      const { data } = await axios.get("/customers/", {
+      const { data } = await axios.get("/customer/", {
         params: reqForm
       });
       this.addCustomers(data);
@@ -47,17 +47,17 @@ export const useCustomerStore = defineStore({
     async register(screenObj: RegisterModalScreenObj): Promise<void> {
       const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
       _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
-      await axios.post("/customers/register", reqForm);
+      await axios.post("/customer/register", reqForm);
     },
     async update(screenObj: EditModalScreenObj): Promise<void> {
       const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
       _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
-      await axios.put("/customers/update", reqForm);
+      await axios.put("/customer/update", reqForm);
     },
     async delete(screenObj: EditModalScreenObj): Promise<void> {
       const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
       _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
-      await axios.put("/customers/delete", reqForm);
+      await axios.put("/customer/delete", reqForm);
     },
     addCustomers(array: Object[]): void {
       this.resetCustomers();
