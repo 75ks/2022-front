@@ -86,8 +86,10 @@ const register = async (): Promise<void> => {
   try {
     isLoading.value = !isLoading.value;
     await customerStore.reserveRegister(state.screenObj);
+    // プロフィール画面に遷移
     router.push("/customer/profile");
   } catch (error) {
+  } finally {
     isLoading.value = !isLoading.value;
   }
 };

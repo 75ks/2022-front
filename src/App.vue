@@ -11,7 +11,7 @@ import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 
 const isVisible = computed<boolean>(() => {
-  return !(useRoute().path === '/login' || useRoute().path === '/customer/login');
+  return !(useRoute().path === '/login' || useRoute().path === '/customer/login' || useRoute().name === 'NotFound');
 });
 </script>
 

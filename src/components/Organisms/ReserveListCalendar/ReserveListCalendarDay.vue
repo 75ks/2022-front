@@ -33,28 +33,24 @@
         </div>
       </div>
       <div class="w-full flex border-l border-gray-300">
-        <div class="w-full border-r border-gray-300">
+        <div class="w-full border-r border-gray-300 overflow-hidden">
           <div
             v-for="(n, index) in 24" :key="index"
-            class="w-full h-12 boder-r border-b border-gray-300"
+            @click="showRegisterModal(day.datetime, n-1)"
+            class="flex w-full h-12 boder-r border-b border-gray-300 hover:bg-gray-100 cursor-pointer"
           >
             <div
-              v-if="day.dayReserves.length > 0"
-              v-for="(reserve, index) in day.dayReserves" :key=index
+              v-for="(reserve, index) in timeReserves(n, day.dayReserves)" :key=index
+              @click.stop="showEditModal(reserve)"
+              class="h-9"
+              :class="timeReserves(n, day.dayReserves).length !== 1 ? `w-1/${timeReserves(n, day.dayReserves).length}` : 'w-full'"
             >
               <p
-                v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))"
-                class="w-full text-white pl-1 text-xs"
-                :class="reserve.salesHistoryId !== null ? 'bg-gray-500' : 'bg-red-500'"
+                class="w-full h-full text-white border pl-1 text-xs whitespace-nowrap overflow-scroll"
+                :class="reserve.salesHistoryId !== null ? 'bg-gray-400' : 'bg-red-400 hover:bg-red-500'"
               >
                 {{ reserve.menu }}
-              </p>
-              <p
-                v-if="n-1 === Number(moment(reserve.reserveDatetime).format('HH'))"
-                class="w-full text-white pl-1 text-xs"
-                :class="reserve.salesHistoryId !== null ? 'bg-gray-500' : 'bg-red-500'"
-              >
-                {{ moment(reserve.reserveDatetime).format('HH:mm[〜]') }}
+                {{ moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH:mm[〜]') }}
               </p>
             </div>
           </div>
@@ -62,13 +58,28 @@
       </div>
     </div>
   </div>
+  <RegisterModal
+    :is-visible-modal="isVisibleRegisterModal"
+    :select-date-time="selectDateTime"
+    @closeModal="closeRegisterModal"
+  />
+  <EditModal
+    :is-visible-modal="isVisibleEditModal"
+    :select-reserve="selectReserve"
+    @closeModal="closeEditModal"
+  />
 </template>
 
 <script setup lang="ts">
 import moment from 'moment';
 import { Reserve } from '../../../models/Reserve';
 import { Calender } from '../../../models/Calender';
-import { computed } from 'vue';
+import RegisterModal from './RegisterModal.vue';
+import EditModal from './EditModal.vue';
+import { useMessageStore } from '../../../store/message';
+import { computed, ref } from 'vue';
+
+const messageStore = useMessageStore();
 
 interface Props {
   /** 予約情報一覧 */
@@ -82,6 +93,51 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+/** 登録モーダル表示フラグ */
+const isVisibleRegisterModal = ref<boolean>(false);
+/** 編集モーダル表示フラグ */
+const isVisibleEditModal = ref<boolean>(false);
+
+/** 選択予約日時 */
+const selectDateTime = ref<string>("");
+/** 予約情報 */
+const selectReserve = ref<Reserve>(new Reserve());
+
+/** 各時間の予約情報を取得 */
+const timeReserves = computed(() => (n: number, reserves: Reserve[]) => {
+  return reserves.filter(reserve => {
+    return n-1 === Number(moment(reserve.reserveDatetime).subtract(9, 'hours').format('HH'))
+  });
+});
+
+/** 予約日時クリックイベント */
+const showRegisterModal = (datetime: string, hours: number) => {
+  selectDateTime.value = moment(datetime).add(hours, "hours").format("YYYY-MM-DD HH:mm");
+  isVisibleRegisterModal.value = true;
+}
+
+/** 予約情報クリックイベント */
+const showEditModal = (reserve: Reserve) => {
+  selectReserve.value = reserve;
+  isVisibleEditModal.value = true;
+}
+
+/** 登録モーダル✖︎ボタンクリックイベント */
+const closeRegisterModal = () => {
+  selectDateTime.value = "";
+  messageStore.resetMessageList();
+  messageStore.resetMessageType();
+  isVisibleRegisterModal.value = false;
+}
+
+/** 編集モーダル✖︎ボタンクリックイベント */
+const closeEditModal = () => {
+  selectReserve.value = new Reserve();
+  messageStore.resetMessageList();
+  messageStore.resetMessageType();
+  isVisibleEditModal.value = false;
+}
 
 const day = computed<Calender>(() => {
   return getCalenderDay();
