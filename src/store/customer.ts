@@ -1,31 +1,53 @@
-import axios from "../plugins/axios";
-import _ from "lodash";
-import { defineStore } from "pinia";
-import { Customer } from "../models/Customer";
-import { ReserveRegisterForm } from "../models/form/ReserveRegisterForm";
-import { ReserveRegisterScreenObj } from "../models/screenObj/ReserveRegisterScreenObj";
+import { defineStore } from 'pinia';
+import { Customer } from '../models/Customer';
+import axios from '../plugins/axios';
+import {CustomerSearchForm} from '../models/form/CustomerSearchForm';
+import {CustomerSearchCondScreenObj} from '../models/screenObj/CustomerSearchCondScreenObj';
+import _ from 'lodash';
 
 export const useCustomerStore = defineStore({
   id: "customer",
   state: () => ({
-    customer: new Customer() as Customer,
+    customers: [] as Customer[],
+    searchCond: new CustomerSearchCondScreenObj()
   }),
   getters: {
-    getCustomer(state): Customer {
-      return state.customer;
+    getCustomers(state): Customer[] {
+      return state.customers;
+    },
+    getSearchCond(state): CustomerSearchCondScreenObj {
+      return state.searchCond;
     },
   },
   actions: {
-    async reserveRegister(screenObj: ReserveRegisterScreenObj): Promise<void> {
-      const reqForm: ReserveRegisterForm = new ReserveRegisterForm();
-      _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
-      await axios.post("/reserveRegister/", reqForm);
+    async fetchCustomers(): Promise<void> {
+      const reqForm: CustomerSearchForm = new CustomerSearchForm();
+      const { data } = await axios.get("/customers/", {
+        params: reqForm
+      });
+      this.addCustomers(data);
     },
-    addCustomer(obj: Customer): void {
-      Object.assign(this.customer, obj);
+    async search(searchCond: CustomerSearchCondScreenObj): Promise<void> {
+      const reqForm: CustomerSearchForm = new CustomerSearchForm();
+      _.assign(reqForm, _.pick(searchCond, _.keys(reqForm)));
+      const { data } = await axios.get("/customers/", {
+        params: reqForm
+      });
+      this.addCustomers(data);
     },
-    resetCustomer(): void {
-      Object.assign(this.customer, new Customer);
+    addCustomers(array: Customer[]): void {
+      this.resetCustomers();
+      array.forEach(obj => {
+        const customer: Customer = new Customer();
+        _.assign(customer, _.pick(obj, _.keys(customer)));
+        this.customers.push(customer);
+      });
     },
+    resetCustomers(): void {
+      this.customers.splice(0);
+    },
+    clearSearchCond(): void {
+      Object.assign(this.searchCond, new CustomerSearchCondScreenObj())
+    }
   },
-});
+})

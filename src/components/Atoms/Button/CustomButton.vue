@@ -4,7 +4,7 @@
     :class="[
       buttonColor(buttonColorNumber),
     ]"
-    :disable="disableFlg"
+    :disabled="disableFlg"
   >
     {{ buttonName }}
   </button>
