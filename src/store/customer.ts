@@ -30,7 +30,7 @@ export const useCustomerStore = defineStore({
     async fetchCustomers(): Promise<void> {
       const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
 
-      const { data } = await axios.get("/customer/", {
+      const { data } = await axios.get("/customer/profile", {
         params: reqForm
       });
       this.addCustomers(data);
