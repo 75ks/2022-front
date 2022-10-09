@@ -11,6 +11,7 @@ import RegisterSampleRev from "../views/RegisterSampleRev.vue";
 import StuffList from '../views/StuffList.vue';
 import CustomerList from '../views/CustomerList.vue';
 import SalesTotal from '../views/SalesTotal.vue';
+import StuffCreate from '../views/StuffCreate.vue';
 // 顧客用
 import CustomerLogin from "../views/customer/CustomerLogin.vue";
 import Profile from "../views/customer/Profile.vue";
@@ -37,6 +38,7 @@ const routes = [
   { path: "/stuffList", component: StuffList, meta: { requiredAuth: true } },
   { path: "/customerList", component: CustomerList },
   { path: "/salesTotal", component: SalesTotal, meta: { requiredAuth: true } },
+  { path: "/stuffCreate", component: StuffCreate, meta: { requiredAuth: true } },
   // 顧客用画面
   { path: "/customer/login", component: CustomerLogin },
   { path: "/customer/profile", component: Profile, meta: { requiredAuthCustomer: true } },
