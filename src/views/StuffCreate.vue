@@ -53,7 +53,7 @@
         />
         <SelectBoxWithLabel
           v-model:select-value="state.screenObj.rankId"
-          :options="RankList"
+          targetUrl="/selectOption/ranks"
           label="ランク"
           :requiredFlg="true"
         />
@@ -119,7 +119,7 @@ import axios from "../plugins/axios";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import { GenderList } from "../constants/Gender";
-import { RankList } from "../constants/Rank";
+//import { RankList } from "../constants/Rank";
 import { PrefectureIdList } from "../constants/PrefectureId";
 import { StuffCreateScreenObj } from "../models/screenObj/StuffCreateScreenObj";
 import { StuffCreateRequest } from "../models/form/StuffCreateRequest";
