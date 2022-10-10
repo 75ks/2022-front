@@ -96,6 +96,7 @@
         class="w-full mt-16"
         button-name="更新"
         :button-color-number="1"
+        @click="update"
       />
     </div>
   </div>
@@ -133,10 +134,10 @@ const state = reactive<State>({
 const initialize = () => {
   axios.get("/customer/profile/initialize")
     .then(({ data }) => {
-      console.log(data); // 確認用※最終的には消してください
+      // console.log(data); // 確認用※最終的には消してください
 
       Object.assign(state.screenObj, data);
-      console.log(state.screenObj); // 確認用※最終的には消してください
+      // console.log(state.screenObj); // 確認用※最終的には消してください
     });
 };
 initialize();
