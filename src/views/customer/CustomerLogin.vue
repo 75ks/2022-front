@@ -99,8 +99,8 @@ const login = async () => {
     } else {
       alert("メールアドレスまたはパスワードが違います");
     }
-    isLoading.value = !isLoading.value;
   } catch (error) {
+  } finally {
     isLoading.value = !isLoading.value;
   }
 }

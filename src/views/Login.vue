@@ -88,12 +88,13 @@ const login = async () => {
     Object.assign(reqForm, state.screenObj);
     await authorizationStore.fetchLogin(reqForm);
     if (authorizationStore.getAuthorization.jwt) {
+      // 予約管理画面に遷移
       router.push("/reserveList");
     } else {
       alert("メールアドレスまたはパスワードが違います");
     }
-    isLoading.value = !isLoading.value;
   } catch (error) {
+  } finally {
     isLoading.value = !isLoading.value;
   }
 }
