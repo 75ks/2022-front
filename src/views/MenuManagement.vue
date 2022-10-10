@@ -1,6 +1,5 @@
 <template>
   <div class="container p-5">
-     {{ menuManagementList }}
     <div class="flex justify-center">
       <table class="w-2/3">
         <thead>
@@ -24,10 +23,7 @@
         <tbody>
           <template v-for="(data, index1) in menuManagementList" :key="index1">
             <tr v-for="(detail, index2) in data.detail" :key="index2">
-              <td
-                v-if="index2 === 0"
-                :rowspan="data.detail.length"
-              >
+              <td v-if="index2 === 0" :rowspan="data.detail.length">
                 <font-awesome-icon
                   :icon="['fas', 'minus-circle']"
                   class="ml-1 text-red-600 cursor-pointer hover:text-red-400"
@@ -83,24 +79,21 @@
 <script setup lang="ts">
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
-import { reactive,ref } from "vue";
+import { reactive, ref } from "vue";
 import { MenuManagement } from "../models/MenuManagement";
 import { MenuManagementDetail } from "../models/MenuManagementDetail";
-import { computed } from 'vue';
-import { useMenuManagementStore } from '../store/MenuManagement';
+import { computed } from "vue";
+import { useMenuManagementStore } from "../store/MenuManagement";
 import axios from "../plugins/axios";
 import { MenuManagementObj } from "../models/screenObj/MenuManagementObj";
-
-
 
 interface State {
   screenObj: MenuManagementObj;
 }
 
 const states = reactive<State>({
-  screenObj: new MenuManagementObj()
+  screenObj: new MenuManagementObj(),
 });
-
 
 const MenuManagementStore = useMenuManagementStore();
 
@@ -111,13 +104,10 @@ const menuManagementList = computed(() => {
 });
 
 const props = defineProps<{
-  menuManagementList: MenuManagement[]
+  menuManagementList: MenuManagement[];
 }>();
 
-// const menuManagementData = ref<MenuManagement>(new MenuManagement());
-
-
-
+const menuManagementData = ref<MenuManagement>(new MenuManagement());
 
 const addRow = (): void => {
   const menuManagementData = ref<MenuManagement>(new MenuManagement());
@@ -135,21 +125,18 @@ const addDetailRow = (index: number): void => {
 
 const deleteDetailRow = (index: number) => {
   menuManagementList.value[index].detail.pop();
+  if (!menuManagementList.value[index].detail.length) {
+    menuManagementList.value[index].detail.push(new MenuManagementDetail());
+  }
+};
 
-
-
-// const updateMenuManagement = async (): Promise<void> => {
-//     await useMenuManagementStore.update(states.screenObj);
-//     useMenuManagementStore.fetchMenuManagement();
-// }
-
-
-
-
-
-
-
-
+// const deleteDetailRow = (index: number) => {
+//   state.menuList[index].detail.pop();
+//   // 削除後、detailの要素が空になった場合
+//   if (!state.menuList[index].detail.length) {
+//     // 空のオブジェクトを追加する
+//     state.menuList[index].detail.push(new MenuManagementDetail());
+//   }
 
 // interface State {
 //   screenObj: CustomerCreateScreenObj;
@@ -177,17 +164,12 @@ const deleteDetailRow = (index: number) => {
 //     });
 // };
 
-
-
-
-  // // 削除後、detailの要素が空になった場合
-  // if (!state.menuList[index].detail.length) {
-  //   // 空のオブジェクトを追加する
-  //   state.menuList[index].detail.push(new MenuManagementDetail());
-  // }
-};
-
-
+// // 削除後、detailの要素が空になった場合
+// if (!state.menuList[index].detail.length) {
+//   // 空のオブジェクトを追加する
+//   state.menuList[index].detail.push(new MenuManagementDetail());
+// }
+// };
 
 // interface State {
 //   menuList: MenuManagement[];
@@ -263,8 +245,6 @@ const deleteDetailRow = (index: number) => {
 //     // 空のオブジェクトを追加する
 //     state.menuList[index].detail.push(new MenuManagementDetail());
 //   }
-// };
-
 </script>
 
 <style></style>
