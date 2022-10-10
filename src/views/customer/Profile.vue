@@ -94,7 +94,7 @@
       />
       <CustomButton
         class="w-full mt-16"
-        :button-name="'編集'"
+        button-name="更新"
         :button-color-number="1"
       />
     </div>
@@ -109,11 +109,12 @@ import InputWithLabel from "../../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../../components/Molecules/SelectBoxWithLabel.vue";
 import { GenderList } from "../../constants/Gender";
 import { PrefectureIdList } from "../../constants/PrefectureId";
-import { CustomerCreateScreenObj } from "../../models/screenObj/CustomerCreateScreenObj";
 import { MessageStatus } from "../../constants/MessageStatus";
 import { useMessageStore } from "../../store/message";
 import DatePickerWithLabel from "../../components/Molecules/DatePickerWithLabel.vue";
-import { useCustomerStore } from "../../store/customer";
+import { ProfileScreenObj } from "../../models/screenObj/customer/ProfileScreenObj";
+import {ProfileUpdateRequest} from '../../models/form/customer/ProfileUpdateRequest';
+import _ from 'lodash';
 
 const messageStore = useMessageStore();
 
@@ -122,38 +123,40 @@ const message = computed(() => {
 });
 
 interface State {
-  screenObj: CustomerCreateScreenObj;
+  screenObj: ProfileScreenObj;
 }
 
 const state = reactive<State>({
-  screenObj: new CustomerCreateScreenObj(),
+  screenObj: new ProfileScreenObj(),
 });
 
-const CustomerStore = useCustomerStore();
+const initialize = () => {
+  axios.get("/customer/profile/initialize")
+    .then(({ data }) => {
+      console.log(data); // 確認用※最終的には消してください
 
-CustomerStore.fetchCustomers();
+      Object.assign(state.screenObj, data);
+      console.log(state.screenObj); // 確認用※最終的には消してください
+    });
+};
+initialize();
 
-const customerList = computed(() => {
-  return CustomerStore.getCustomers;
-});
-
-// /** 登録ボタンクリックイベント */
-// const register = async () => {
-//   const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
-//   Object.assign(reqForm, state.screenObj);
-//   await axios
-//     .post("/customerCreate", reqForm)
-//     .then(() => {
-//       // 入力項目を初期化する
-//       state.screenObj = new CustomerCreateScreenObj();
-//     })
-//     .catch((error) => {
-//       // エラー発生時の処理
-//     })
-//     .finally(() => {
-//       // 正常終了・エラー問わず必ず行う処理
-//     });
-// };
+/** 更新ボタンクリックイベント */
+const update = async () => {
+  const reqForm: ProfileUpdateRequest = new ProfileUpdateRequest();
+  _.assign(reqForm, _.pick(state.screenObj, _.keys(reqForm)));
+  await axios
+    .post("/customer/profile/update", reqForm)
+    .then(() => {
+      // 正常終了時の処理
+    })
+    .catch((error) => {
+      // エラー発生時の処理
+    })
+    .finally(() => {
+      // 正常終了・エラー問わず必ず行う処理
+    });
+};
 </script>
 
 <style></style>
