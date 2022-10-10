@@ -146,7 +146,7 @@ const update = async () => {
   const reqForm: ProfileUpdateRequest = new ProfileUpdateRequest();
   _.assign(reqForm, _.pick(state.screenObj, _.keys(reqForm)));
   await axios
-    .post("/customer/profile/update", reqForm)
+    .put("/customer/profile/update", reqForm)
     .then(() => {
       // 正常終了時の処理
     })
