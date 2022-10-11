@@ -1,5 +1,6 @@
 <template>
   <div class="container p-5">
+    {{menuManagementList}}
     <div class="flex justify-center">
       <table class="w-2/3">
         <thead>
@@ -68,8 +69,16 @@
                   />
                 </div>
               </td>
-            </tr>
+            </tr>            
           </template>
+          <div class="w-1/2 flex justify-around items-center">
+            <div class="mt-4">
+              <CustomButton
+                button-name="更新"
+                @click="updateReserve()"
+              />
+            </div>
+          </div>
         </tbody>
       </table>
     </div>
@@ -86,6 +95,8 @@ import { computed } from "vue";
 import { useMenuManagementStore } from "../store/MenuManagement";
 import axios from "../plugins/axios";
 import { MenuManagementObj } from "../models/screenObj/MenuManagementObj";
+import CustomButton from '../components/Atoms/Button/CustomButton.vue';
+import { useMessageStore } from '../store/message';
 
 interface State {
   screenObj: MenuManagementObj;
@@ -129,6 +140,33 @@ const deleteDetailRow = (index: number) => {
     menuManagementList.value[index].detail.push(new MenuManagementDetail());
   }
 };
+
+const messageStore = useMessageStore();
+
+interface State {
+  screenObj: MenuManagementObj;
+}
+
+
+
+const state = reactive<State>({
+  screenObj: new MenuManagementObj()
+});
+
+
+
+
+/** 更新ボタンクリックイベント */
+const updateReserve = async (): Promise<void> => {
+    await MenuManagementStore.update(state.screenObj);
+    MenuManagementStore.fetchMenuManagement();
+    messageStore.resetMessageList();
+
+  }
+
+
+
+
 
 // const deleteDetailRow = (index: number) => {
 //   state.menuList[index].detail.pop();
