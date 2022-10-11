@@ -88,15 +88,17 @@
 <script setup lang="ts">
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
-import { reactive, ref } from "vue";
+import { reactive, ref, toRefs } from "vue";
 import { MenuManagement } from "../models/MenuManagement";
 import { MenuManagementDetail } from "../models/MenuManagementDetail";
 import { computed } from "vue";
 import { useMenuManagementStore } from "../store/MenuManagement";
 import axios from "../plugins/axios";
 import { MenuManagementObj } from "../models/screenObj/MenuManagementObj";
+import { MenuManagementDetailObj } from "../models/screenObj/MenuManagementDetailObj";
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { useMessageStore } from '../store/message';
+
 
 interface State {
   screenObj: MenuManagementObj;
@@ -143,6 +145,14 @@ const deleteDetailRow = (index: number) => {
 
 const messageStore = useMessageStore();
 
+
+
+interface Props {
+
+  /** 選択予約情報 */
+  selectReserve: MenuManagement;
+}
+
 interface State {
   screenObj: MenuManagementObj;
 }
@@ -152,6 +162,8 @@ interface State {
 const state = reactive<State>({
   screenObj: new MenuManagementObj()
 });
+
+
 
 
 

@@ -7,6 +7,7 @@ export class MenuManagementObj {
     rankId: number | null = null;
     /** 料金 */
     price: number | null = null;
+
   // /** 詳細 */
   // detail: MenuManagementDetailObj[] = [];
 }
