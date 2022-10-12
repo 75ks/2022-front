@@ -123,6 +123,7 @@ const menuAnimationType = ref<number>(0);
 const calculateWindowWidth = () => {
   // PC画面の場合
   if (window.innerWidth >= 768) {
+    menuAnimationType.value = 0;
     isVisibleMenu.value = true;
   } else {
     menuAnimationType.value = 0;
