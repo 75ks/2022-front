@@ -94,7 +94,7 @@ watch(stuffId, async (after, before) => {
   if (stuffId.value) {
     // スタッフIDをキーにランクIDを取得
     const { data } = await axios.get("/reserveRegister/?stuffId=" + stuffId.value);
-    // URLを生成
+    // メニュープルダウンのURLを生成
     targetUrl.value = "/selectOption/menuPrice?rankId=" + data;
     selectOptionMenuDisableFlg.value = false;
   } else {
