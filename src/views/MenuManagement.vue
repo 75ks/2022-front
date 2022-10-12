@@ -69,13 +69,12 @@
                   />
                 </div>
               </td>
-            </tr>            
+            </tr>
           </template>
           <div class="w-1/2 flex justify-around items-center">
             <div class="mt-4">
               <CustomButton
                 button-name="更新"
-                @click="updateReserve()"
               />
             </div>
           </div>
@@ -88,7 +87,7 @@
 <script setup lang="ts">
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
-import { reactive, ref, toRefs } from "vue";
+import { reactive, ref, toRefs, watchEffect } from "vue";
 import { MenuManagement } from "../models/MenuManagement";
 import { MenuManagementDetail } from "../models/MenuManagementDetail";
 import { computed } from "vue";
@@ -100,13 +99,12 @@ import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { useMessageStore } from '../store/message';
 
 
-interface State {
-  screenObj: MenuManagementObj;
-}
 
-const states = reactive<State>({
-  screenObj: new MenuManagementObj(),
-});
+
+
+
+
+
 
 const MenuManagementStore = useMenuManagementStore();
 
@@ -120,7 +118,6 @@ const props = defineProps<{
   menuManagementList: MenuManagement[];
 }>();
 
-const menuManagementData = ref<MenuManagement>(new MenuManagement());
 
 const addRow = (): void => {
   const menuManagementData = ref<MenuManagement>(new MenuManagement());
@@ -147,34 +144,64 @@ const messageStore = useMessageStore();
 
 
 
-interface Props {
+// interface props {
+//   selectReserve: MenuManagement;
+  
+  
+// }
 
-  /** 選択予約情報 */
-  selectReserve: MenuManagement;
-}
+// const props = defineProps<props>();
 
-interface State {
-  screenObj: MenuManagementObj;
-}
+//   const { selectReserve } = toRefs(props);
 
-
-
-const state = reactive<State>({
-  screenObj: new MenuManagementObj()
-});
+// interface State {
+//   screenObj: MenuManagementObj;
+// }
 
 
 
+// const state = reactive<State>({
+//   screenObj: new MenuManagementObj()
+// });
 
 
 
-/** 更新ボタンクリックイベント */
-const updateReserve = async (): Promise<void> => {
-    await MenuManagementStore.update(state.screenObj);
-    MenuManagementStore.fetchMenuManagement();
-    messageStore.resetMessageList();
+// watchEffect(() => {
+//   if (selectReserve.value.menuId) {
+//     state.screenObj.menuId = selectReserve.value.menuId;
+//   }
+//   if (selectReserve.value.detail) {
+//     state.screenObj.detail = selectReserve.value.detail;
+//   }
+// });
 
-  }
+
+
+
+
+// /** 更新ボタンクリックイベント */
+// const updateReserve = async (): Promise<void> => {
+//     await MenuManagementStore.update(state.screenObj);
+//     MenuManagementStore.fetchMenuManagement();
+//     messageStore.resetMessageList();
+
+//   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

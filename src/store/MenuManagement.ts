@@ -18,7 +18,7 @@ export const useMenuManagementStore = defineStore({
   },
   actions: {
     async fetchMenuManagement(): Promise<void> {
-      const { data } = await axios.get("/menuManagement", {});
+      const { data } = await axios.get("/menuManagement/initialize", {});
       this.addMenuManagement(data);
     },
     async update(screenObj: MenuManagementObj): Promise<void> {
