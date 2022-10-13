@@ -14,6 +14,8 @@ export const useCustomerAuthorizationStore = defineStore({
   getters: {
     getAuthorization(state): Authorization {
       return state.authorization;
+
+      
     },
   },
   actions: {
