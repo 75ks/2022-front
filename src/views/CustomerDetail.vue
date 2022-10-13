@@ -110,7 +110,7 @@
 
 <script setup lang="ts">
 import CustomButton from "../components/Atoms/Button/CustomButton.vue";
-import { reactive, computed } from "vue";
+import { reactive, computed, watchEffect, toRefs, ref } from "vue";
 import axios from "../plugins/axios";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
@@ -135,6 +135,90 @@ interface State {
 const state = reactive<State>({
   screenObj: new CustomerDetailScreenObj(),
 });
+
+// /** 初期表示 */
+// await axios.get('/customerDetail/initialize', {
+//         params: { customerId: customerId}
+//       }
+//     ).then(({ data }) => {
+//         data.CustomerSearchDetail;
+//       }
+//     );
+
+
+// interface Props {
+//   /** モーダル表示フラグ */
+//   isVisibleModal: boolean;
+//   /** 選択顧客情報 */
+//   selectCustomer: CustomerDetailRequest;
+// }
+
+// const props = defineProps<Props>();
+
+// const { selectCustomer } = toRefs(props);
+
+// const isVisited = computed<boolean>(() => {
+//   return selectCustomer.value.lastName !== null;
+// });
+
+// /** 初期画面をカレンダー(月)に設定 */
+// const customerSelectValue = ref<string>("");
+
+// /** 初期表示イベント */
+// watchEffect(() => {
+//   if (selectCustomer.value.lastName) {
+//     state.customerDetailScreenObj.lastName = selectCustomer.value.lastName;
+//   }
+//   if (selectCustomer.value.firstName) {
+//     state.customerDetailScreenObj.firstName = selectCustomer.value.firstName;
+//   }
+//   if (selectCustomer.value.lastNameKana) {
+//     state.customerDetailScreenObj.lastNameKana = selectCustomer.value.lastNameKana;
+//   }
+//   if (selectCustomer.value.firstNameKana) {
+//     state.customerDetailScreenObj.firstNameKana = selectCustomer.value.firstNameKana;
+//   }
+//   if (selectCustomer.value.birthday) {
+//     state.customerDetailScreenObj.birthday = selectCustomer.value.birthday;
+//   }
+//   if (selectCustomer.value.age) {
+//     state.customerDetailScreenObj.age = selectCustomer.value.age;
+//   }
+//   if (selectCustomer.value.gender) {
+//     state.customerDetailScreenObj.gender = selectCustomer.value.gender;
+//   }
+//   if (selectCustomer.value.postalCode) {
+//     state.customerDetailScreenObj.postalCode = selectCustomer.value.postalCode;
+//   }
+//   if (selectCustomer.value.prefectureId) {
+//     state.customerDetailScreenObj.prefectureId = selectCustomer.value.prefectureId;
+//   }
+//   if (selectCustomer.value.address1) {
+//     state.customerDetailScreenObj.address1 = selectCustomer.value.address1;
+//   }
+//   if (selectCustomer.value.address2) {
+//     state.customerDetailScreenObj.address2 = selectCustomer.value.address2;
+//   }
+//   if (selectCustomer.value.address3) {
+//     state.customerDetailScreenObj.address3 = selectCustomer.value.address3;
+//   }
+//   if (selectCustomer.value.phoneNumber) {
+//     state.customerDetailScreenObj.phoneNumber = selectCustomer.value.phoneNumber;
+//   }
+//   if (selectCustomer.value.email) {
+//     state.customerDetailScreenObj.email = selectCustomer.value.email;
+//   }
+// // });
+
+/** 初期表示イベント */
+// const customerId = Customer.lastName;
+// axios.get<{ customerDetail: CustomerDetailScreenObj }>(`customerDetail/${customId}`)
+//   .then(({ data }) => {
+//     Object.assign(state.customerDetailScreenObj, data.customerDetail);
+//   });
+// //   .finally(() => {
+// //     AppModule.SET_IS_CONNECTING_TO_SERVER(false);
+// // });
 
 /** 更新ボタンクリックイベント */
 const register = async () => {
