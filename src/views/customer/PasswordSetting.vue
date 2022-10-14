@@ -78,8 +78,8 @@ const register = async () => {
       // プロフィール画面に遷移
       router.push("/customer/profile");
     }
-    isLoading.value = !isLoading.value;
   } catch (error) {
+  } finally {
     isLoading.value = !isLoading.value;
   }
 }
