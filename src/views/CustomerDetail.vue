@@ -136,15 +136,14 @@ const state = reactive<State>({
   screenObj: new CustomerDetailScreenObj(),
 });
 
-// /** 初期表示 */
-// await axios.get('/customerDetail/initialize', {
-//         params: { customerId: customerId}
-//       }
-//     ).then(({ data }) => {
-//         data.CustomerSearchDetail;
-//       }
-//     );
-
+/** 初期表示 */
+axios.get("/customerDetail/initialize", {
+        params: { customerId: 1 }
+      })
+      .then(({ data }) => {
+      Object.assign(state.screenObj, data);
+        // data.CustomerSearchDetail;
+      });
 
 // interface Props {
 //   /** モーダル表示フラグ */
