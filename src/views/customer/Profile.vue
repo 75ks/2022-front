@@ -116,6 +116,7 @@ import DatePickerWithLabel from "../../components/Molecules/DatePickerWithLabel.
 import { ProfileScreenObj } from "../../models/screenObj/customer/ProfileScreenObj";
 import {ProfileUpdateRequest} from '../../models/form/customer/ProfileUpdateRequest';
 import _ from 'lodash';
+import { useRouter } from 'vue-router';
 
 const messageStore = useMessageStore();
 
@@ -143,6 +144,7 @@ const initialize = () => {
 initialize();
 
 /** 更新ボタンクリックイベント */
+const router = useRouter();
 const update = async () => {
   const reqForm: ProfileUpdateRequest = new ProfileUpdateRequest();
   _.assign(reqForm, _.pick(state.screenObj, _.keys(reqForm)));
@@ -150,6 +152,7 @@ const update = async () => {
     .put("/customer/profile/update", reqForm)
     .then(() => {
       // 正常終了時の処理
+      router.push("/customer/profile");
     })
     .catch((error) => {
       // エラー発生時の処理
