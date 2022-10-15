@@ -22,18 +22,21 @@
       <div>
         <InputWithLabel
           v-model:input-value='searchForm.reserveHistoryId'
+          placeholder="1"
           label="予約履歴ID"
         />
       </div>
       <div>
         <InputWithLabel
           v-model:input-value='searchForm.customerName'
+          placeholder="山田"
           label="顧客名"
         />
       </div>
       <div>
         <InputWithLabel
           v-model:input-value='searchForm.stuffName'
+          placeholder="田中"
           label="担当スタッフ"
         />
       </div>
@@ -66,6 +69,8 @@
           v-model:from-input-value="searchForm.priceMin"
           v-model:to-input-value="searchForm.priceMax"
           label="料金"
+          fromPlaceholder="5000"
+          toPlaceholder="10000"
         />
       </div>
       <div class="col-span-2 justify-self-start">
