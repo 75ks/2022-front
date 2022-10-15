@@ -3,6 +3,7 @@
     <CustomInputWithLabel
       v-model:inputValue='fromInputValue'
       type="number"
+      :placeholder="fromPlaceholder"
       :label="label"
       :sideBySideFlg="sideBySideFlg"
       :inputWidth="inputWidth"
@@ -15,6 +16,7 @@
     <CustomInputWithLabel
       v-model:inputValue='toInputValue'
       type="number"
+      :placeholder="toPlaceholder"
       :sideBySideFlg="sideBySideFlg"
       :inputWidth="inputWidth"
       :size="size"
@@ -35,6 +37,10 @@ interface Props {
   toInputValue: number | null;
   /** 任意のラベル名 */
   label?: string;
+  /** プレースホルダー(下限) */
+  fromPlaceholder?: string;
+  /** プレースホルダー(上限) */
+  toPlaceholder?: string;
   /** ラベルと入力欄横並びフラグ */
   sideBySideFlg?: boolean;
   /** 入力欄の幅 */
@@ -54,6 +60,8 @@ interface Emits {
 
 const props = withDefaults(defineProps<Props>(), {
   label: '',
+  fromPlaceholder: '',
+  toPlaceholder: '',
   sideBySideFlg: false,
   inputWidth: 'w-3/4',
   size: 'md',
