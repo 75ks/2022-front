@@ -150,9 +150,10 @@ const update = async () => {
   _.assign(reqForm, _.pick(state.screenObj, _.keys(reqForm)));
   await axios
     .put("/customer/profile/update", reqForm)
-    .then(() => {
+    .then(({ data }) => {
       // 正常終了時の処理
-      router.push("/customer/profile");
+      //router.push("/customer/profile");
+      Object.assign(state.screenObj, data);
     })
     .catch((error) => {
       // エラー発生時の処理
