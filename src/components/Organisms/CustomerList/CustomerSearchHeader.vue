@@ -21,18 +21,21 @@
     <div>
       <InputWithLabel
         v-model:input-value='searchForm.customerId'
+        placeholder="1"
         label="顧客ID"
       />
     </div>
     <div>
       <InputWithLabel
         v-model:input-value='searchForm.customerName'
+        placeholder="山田"
         label="顧客名"
       />
     </div>
     <div>
       <InputWithLabel
         v-model:input-value='searchForm.age'
+        placeholder="25"
         label="年齢"
       />
     </div>
