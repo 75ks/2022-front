@@ -99,10 +99,13 @@ import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { useMessageStore } from '../store/message';
 import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateForm";
 import { MenuManagementUnityForm } from "../models/form/MenuManagementUnityUpdateFrom";
+import { MenuManagementUnityObj } from "../models/screenObj/MenuManagementUnityObj";
 
 
+const props = defineProps<{
+  menuManagementList: MenuManagement[];
 
-
+}>();
 
 const MenuManagementStore = useMenuManagementStore();
 
@@ -110,12 +113,8 @@ MenuManagementStore.fetchMenuManagement();
 
 const menuManagementList = computed(() => {
   return MenuManagementStore.getMenuManagement;
+  
 });
-
-const props = defineProps<{
-  menuManagementList: MenuManagement[];
-
-}>();
 
 
 const addRow = (): void => {
@@ -141,20 +140,24 @@ const deleteDetailRow = (index: number) => {
 
 
 interface State {
-  screenObj: MenuManagementObj;
+  screenObj: MenuManagementUnityObj;
 };
 const state = reactive<State>({
-  screenObj: new MenuManagementObj(),
+  screenObj: new MenuManagementUnityObj(),
 });
 /** 登録ボタンクリックイベント */
 const register = async () => {
   const reqForm: MenuManagementUnityForm = new MenuManagementUnityForm();
+  for(let i = 0; i < menuManagementList.value.length; i++){
+    
+  }
   Object.assign(reqForm, state.screenObj);
   await axios
     .put("/menuManagement/update", reqForm)
     .then(() => {
       // 入力項目を初期化する
-      state.screenObj = new MenuManagementObj();
+      state.screenObj = new MenuManagementUnityObj();
+
     })
     .catch((error) => {
       // エラー発生時の処理
@@ -163,6 +166,9 @@ const register = async () => {
       // 正常終了・エラー問わず必ず行う処理
     });
 };
+
+
+
 
 
 </script>
