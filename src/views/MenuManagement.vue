@@ -95,7 +95,6 @@ import { computed } from "vue";
 import { useMenuManagementStore } from "../store/MenuManagement";
 import axios from "../plugins/axios";
 import { MenuManagementObj } from "../models/screenObj/MenuManagementObj";
-import { MenuManagementDetailObj } from "../models/screenObj/MenuManagementDetailObj";
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { useMessageStore } from '../store/message';
 import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateForm";
@@ -150,7 +149,7 @@ const messageStore = useMessageStore();
 
 interface State {
   screenObj: MenuManagementObj;
-}
+};
 const state = reactive<State>({
   screenObj: new MenuManagementObj(),
 });
@@ -170,8 +169,7 @@ const register = async () => {
     .finally(() => {
       // 正常終了・エラー問わず必ず行う処理
     });
-
-
+};
 
 
 
@@ -307,7 +305,7 @@ const register = async () => {
 //   if (!state.menuList[index].detail.length) {
 //     // 空のオブジェクトを追加する
 //     state.menuList[index].detail.push(new MenuManagementDetail());
-//   }
+  // }
 </script>
 
 <style></style>
