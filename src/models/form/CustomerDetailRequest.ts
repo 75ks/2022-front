@@ -1,4 +1,6 @@
 export class CustomerDetailRequest {
+  /** 顧客ID */
+  customerId: number | null = null;
   /** 姓 */
   lastName: string = "";
   /** 名 */
