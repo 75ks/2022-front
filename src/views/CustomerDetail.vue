@@ -121,12 +121,15 @@ import { CustomerDetailRequest } from "../models/form/CustomerDetailRequest";
 import { MessageStatus } from '../constants/MessageStatus'
 import { useMessageStore } from '../store/message'
 import DatePickerWithLabel from '../components/Molecules/DatePickerWithLabel.vue';
+import { useRoute } from "vue-router";
 
 const messageStore = useMessageStore();
 
 const message = computed(() => {
   return messageStore.getMessage;
 });
+
+const route = useRoute();
 
 interface State {
   screenObj: CustomerDetailScreenObj;
@@ -136,14 +139,22 @@ const state = reactive<State>({
   screenObj: new CustomerDetailScreenObj(),
 });
 
+const customerId: number = Number(route.params.customerId);
+
 /** 初期表示 */
-axios.get("/customerDetail/initialize", {
-        params: { customerId: 1 }
-      })
-      .then(({ data }) => {
-      Object.assign(state.screenObj, data);
-        // data.CustomerSearchDetail;
-      });
+axios
+  .get("/customerDetail/initialize", {
+    params: { customerId: customerId }
+  })
+  .then(({ data }) => {
+    Object.assign(state.screenObj, data);
+  })
+  .catch((error) => {
+    // エラー発生時の処理
+  })
+  .finally(() => {
+    // 正常終了・エラー問わず必ず行う処理
+  });
 
 // interface Props {
 //   /** モーダル表示フラグ */
@@ -223,11 +234,11 @@ axios.get("/customerDetail/initialize", {
 const register = async () => {
   const reqForm: CustomerDetailRequest = new CustomerDetailRequest();
   Object.assign(reqForm, state.screenObj);
+  reqForm.customerId = customerId;
   await axios
-    .post("/customerCreate", reqForm)
+    .post("/customerDetail/", reqForm)
     .then(() => {
-      // 入力項目を初期化する
-      state.screenObj = new CustomerDetailScreenObj();
+      // 正常終了時の処理
     })
     .catch((error) => {
       // エラー発生時の処理
