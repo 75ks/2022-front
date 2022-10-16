@@ -27,4 +27,6 @@ export class ProfileScreenObj {
   phoneNumber: string = "";
   /** メールアドレス */
   email: string = "";
+  /** バージョン */  
+  versionExKey: number | null = null;
 }

@@ -144,7 +144,6 @@ const initialize = () => {
 initialize();
 
 /** 更新ボタンクリックイベント */
-const router = useRouter();
 const update = async () => {
   const reqForm: ProfileUpdateRequest = new ProfileUpdateRequest();
   _.assign(reqForm, _.pick(state.screenObj, _.keys(reqForm)));
@@ -152,8 +151,7 @@ const update = async () => {
     .put("/customer/profile/update", reqForm)
     .then(({ data }) => {
       // 正常終了時の処理
-      //router.push("/customer/profile");
-      Object.assign(state.screenObj, data);
+      //Object.assign(state.screenObj, data);
     })
     .catch((error) => {
       // エラー発生時の処理
