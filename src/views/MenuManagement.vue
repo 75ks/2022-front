@@ -170,7 +170,6 @@ const register = async () => {
     .finally(() => {
       // 正常終了・エラー問わず必ず行う処理
     });
-};
 
 
 
