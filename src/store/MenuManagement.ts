@@ -21,12 +21,6 @@ export const useMenuManagementStore = defineStore({
       const { data } = await axios.get("/menuManagement/initialize", {});
       this.addMenuManagement(data);
     },
-    async update(screenObj: MenuManagementObj): Promise<void> {
-      const reqForm: MenuManagementForm = new MenuManagementForm();
-      _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
-      await axios.put("/menuManagement/update", reqForm);
-    },
-
     addMenuManagement(array: MenuManagement[]): void {
       array.forEach((obj) => {
         const menuManagement: MenuManagement = new MenuManagement();

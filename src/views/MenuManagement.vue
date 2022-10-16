@@ -98,8 +98,7 @@ import { MenuManagementObj } from "../models/screenObj/MenuManagementObj";
 import { MenuManagementDetailObj } from "../models/screenObj/MenuManagementDetailObj";
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { useMessageStore } from '../store/message';
-import { MenuManagementForm } from "../models/form/MenuManagementForm";
-import { MenuManagementUpdateObj } from "../models/screenObj/MenuManagementUpdateObj";
+import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateForm";
 
 
 
@@ -157,7 +156,7 @@ const state = reactive<State>({
 });
 /** 登録ボタンクリックイベント */
 const register = async () => {
-  const reqForm: MenuManagementForm = new MenuManagementForm();
+  const reqForm: MenuManagementUpdateForm = new MenuManagementUpdateForm();
   Object.assign(reqForm, state.screenObj);
   await axios
     .put("/menuManagement/update", reqForm)
