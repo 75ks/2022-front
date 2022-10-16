@@ -75,6 +75,7 @@
             <div class="mt-4">
               <CustomButton
                 button-name="更新"
+                @click="register"
               />
             </div>
           </div>
@@ -97,8 +98,8 @@ import { MenuManagementObj } from "../models/screenObj/MenuManagementObj";
 import { MenuManagementDetailObj } from "../models/screenObj/MenuManagementDetailObj";
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { useMessageStore } from '../store/message';
-
-
+import { MenuManagementForm } from "../models/form/MenuManagementForm";
+import { MenuManagementUpdateObj } from "../models/screenObj/MenuManagementUpdateObj";
 
 
 
@@ -114,8 +115,12 @@ const menuManagementList = computed(() => {
   return MenuManagementStore.getMenuManagement;
 });
 
+
+
+
 const props = defineProps<{
   menuManagementList: MenuManagement[];
+
 }>();
 
 
@@ -144,48 +149,31 @@ const messageStore = useMessageStore();
 
 
 
-// interface props {
-//   selectReserve: MenuManagement;
-  
-  
-// }
-
-// const props = defineProps<props>();
-
-//   const { selectReserve } = toRefs(props);
-
-// interface State {
-//   screenObj: MenuManagementObj;
-// }
-
-
-
-// const state = reactive<State>({
-//   screenObj: new MenuManagementObj()
-// });
-
-
-
-// watchEffect(() => {
-//   if (selectReserve.value.menuId) {
-//     state.screenObj.menuId = selectReserve.value.menuId;
-//   }
-//   if (selectReserve.value.detail) {
-//     state.screenObj.detail = selectReserve.value.detail;
-//   }
-// });
+interface State {
+  screenObj: MenuManagementObj;
+}
+const state = reactive<State>({
+  screenObj: new MenuManagementObj(),
+});
+/** 登録ボタンクリックイベント */
+const register = async () => {
+  const reqForm: MenuManagementForm = new MenuManagementForm();
+  Object.assign(reqForm, state.screenObj);
+  await axios
+    .put("/menuManagement/update", reqForm)
+    .then(() => {
+      // 入力項目を初期化する
+      state.screenObj = new MenuManagementObj();
+    })
+    .catch((error) => {
+      // エラー発生時の処理
+    })
+    .finally(() => {
+      // 正常終了・エラー問わず必ず行う処理
+    });
+};
 
 
-
-
-
-// /** 更新ボタンクリックイベント */
-// const updateReserve = async (): Promise<void> => {
-//     await MenuManagementStore.update(state.screenObj);
-//     MenuManagementStore.fetchMenuManagement();
-//     messageStore.resetMessageList();
-
-//   }
 
 
 

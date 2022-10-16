@@ -1,6 +1,6 @@
 // import { MenuManagementDetailForm } from "./MenuManagementDetailForm";
 
-export class MenuManagementForm {
+export class MenuManagementUpdateObj {
   /** メニューID */
   menuId: number | null = null;
   /** ランクID */
