@@ -30,23 +30,17 @@
 <script setup lang="ts">
 import { Customer } from '../../../models/Customer';
 import { Gender } from '../../../constants/Gender';
-import router from '../../../router';
+import { useRouter } from 'vue-router';
 
 const props = defineProps<{
   customerList: Customer[]
 }>();
 
-/**
- * 顧客詳細画面へ遷移
- * @param selectedCustomerScreenObj
- */
-  const onRowClicked = (selectedCustomerScreenObj: Customer) => {
-  router.push({ path: '/customerDetail', query: { customerId: selectedCustomerScreenObj.customerId } });
+const router = useRouter();
 
-  return {
-    onRowClicked
-  };
-
+/** 顧客レコードクリックイベント(顧客詳細画面へ遷移) */
+const onRowClicked = (selectedCustomerScreenObj: Customer) => {
+  router.push({ path: `/customerDetail/${selectedCustomerScreenObj.customerId}` });
 };
 
 </script>
