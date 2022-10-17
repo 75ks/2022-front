@@ -71,16 +71,14 @@
               </td>
             </tr>
           </template>
-          <div class="w-1/2 flex justify-around items-center">
-            <div class="mt-4">
-              <CustomButton
-                button-name="更新"
-                @click="register"
-              />
-            </div>
-          </div>
         </tbody>
       </table>
+    </div>
+    <div class="w-1/4 mt-4 text-right pr-9">
+      <CustomButton
+        button-name="更新"
+        @click="register"
+      />
     </div>
   </div>
 </template>
@@ -88,22 +86,16 @@
 <script setup lang="ts">
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
-import { reactive, ref, toRefs, watchEffect } from "vue";
+import { reactive, ref } from "vue";
 import { MenuManagement } from "../models/MenuManagement";
 import { MenuManagementDetail } from "../models/MenuManagementDetail";
 import { computed } from "vue";
 import { useMenuManagementStore } from "../store/MenuManagement";
 import axios from "../plugins/axios";
-import { MenuManagementObj } from "../models/screenObj/MenuManagementObj";
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
-import { useMessageStore } from '../store/message';
 import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateForm";
-import { MenuManagementDetailForm } from "../models/form/MenuManagementDetailForm";
 import { MenuManagementUnityForm } from "../models/form/MenuManagementUnityUpdateFrom";
 import { MenuManagementUnityObj } from "../models/screenObj/MenuManagementUnityObj";
-
-
-
 
 const MenuManagementStore = useMenuManagementStore();
 
@@ -111,10 +103,7 @@ MenuManagementStore.fetchMenuManagement();
 
 const menuManagementList = computed(() => {
   return MenuManagementStore.getMenuManagement;
-  
 });
-
-
 
 const addRow = (): void => {
   const menuManagementData = ref<MenuManagement>(new MenuManagement());
@@ -137,35 +126,27 @@ const deleteDetailRow = (index: number) => {
   }
 };
 
-
 interface State {
   screenObj: MenuManagementUnityObj;
-};
+}
 const state = reactive<State>({
   screenObj: new MenuManagementUnityObj(),
 });
+
 /** 登録ボタンクリックイベント */
 const register = async () => {
-  // const reqForm: MenuManagementUnityForm = new MenuManagementUnityForm();
-  const reqForm = ref<MenuManagementUnityForm>(new MenuManagementUnityForm());
+  const reqForm: MenuManagementUnityForm = new MenuManagementUnityForm();
+  menuManagementList.value.forEach(obj => {
+    const tempForm: MenuManagementUpdateForm = new MenuManagementUpdateForm();
+    Object.assign(tempForm, obj);
+    reqForm.unity.push(tempForm);
+  })
 
-  for(let i = 0; i < menuManagementList.value.length; i++){
-      reqForm.value.unity.push(menuManagementList.value[i]);
-      for(let j = 0; j < menuManagementList.value[i].detail.length; j++) {
-        reqForm.value.unity[i].detail.push(menuManagementList.value[i].detail[j]);
-      };
-  };
-
-  console.log(reqForm);
-
-
-  Object.assign(reqForm, state.screenObj);
   await axios
     .put("/menuManagement/update", reqForm)
     .then(() => {
       // 入力項目を初期化する
       state.screenObj = new MenuManagementUnityObj();
-
     })
     .catch((error) => {
       // エラー発生時の処理
@@ -174,9 +155,6 @@ const register = async () => {
       // 正常終了・エラー問わず必ず行う処理
     });
 };
-
-
-
 </script>
 
 <style></style>
