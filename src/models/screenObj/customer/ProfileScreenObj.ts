@@ -28,5 +28,5 @@ export class ProfileScreenObj {
   /** メールアドレス */
   email: string = "";
   /** バージョン */  
-  versionExKey: number | null = 1;
+  versionExKey: number | null = null;
 }
