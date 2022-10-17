@@ -149,14 +149,25 @@ const register = async () => {
   // const reqForm: MenuManagementUnityForm = new MenuManagementUnityForm();
   const reqForm = ref<MenuManagementUnityForm>(new MenuManagementUnityForm());
 
-  for(let i = 0; i < menuManagementList.value.length; i++){
-      reqForm.value.unity.push(menuManagementList.value[i]);
-      for(let j = 0; j < menuManagementList.value[i].detail.length; j++) {
-        reqForm.value.unity[i].detail.push(menuManagementList.value[i].detail[j]);
-      };
-  };
 
-  console.log(reqForm);
+
+
+  // for(let i = 0; i < menuManagementList.value.length; i++){
+  //     reqForm.value.unity.push(menuManagementList.value[i]);
+  //     for(let j = 0; j < menuManagementList.value[i].detail.length; j++) {
+  //       reqForm.value.unity[i].detail.push(menuManagementList.value[i].detail[j]);
+  //     };
+  // };
+
+  for(let i = 0; i < menuManagementList.value.length; i++){
+  reqForm.value.unity.push(menuManagementList.value[i]);
+  reqForm.value.unity[i].menuId = menuManagementList.value[i].menuId
+  for(let j = 0; j < menuManagementList.value[i].detail.length; j++) {
+    reqForm.value.unity[i].detail[j].price = menuManagementList.value[i].detail[j].price;
+    reqForm.value.unity[i].detail[j].price = menuManagementList.value[i].detail[j].price;
+    
+  };
+};
 
 
   Object.assign(reqForm, state.screenObj);
@@ -175,6 +186,22 @@ const register = async () => {
     });
 };
 
+const reqForm = ref<MenuManagementUnityForm>(new MenuManagementUnityForm());
+
+
+
+//   for(let i = 0; i < menuManagementList.value.length; i++){
+//   reqForm.value.unity.push(menuManagementList.value[i]);
+//   reqForm.value.unity[i].menuId = menuManagementList.value[i].menuId
+//   for(let j = 0; j < menuManagementList.value[i].detail.length; j++) {
+//     reqForm.value.unity[i].detail[j].price = menuManagementList.value[i].detail[j].price;
+//     reqForm.value.unity[i].detail[j].price = menuManagementList.value[i].detail[j].price;
+    
+//   };
+// };
+
+// console.log(reqForm);
+// console.log("aaaaaaaa");
 
 
 </script>
