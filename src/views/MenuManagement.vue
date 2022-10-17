@@ -98,14 +98,12 @@ import { MenuManagementObj } from "../models/screenObj/MenuManagementObj";
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { useMessageStore } from '../store/message';
 import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateForm";
+import { MenuManagementDetailForm } from "../models/form/MenuManagementDetailForm";
 import { MenuManagementUnityForm } from "../models/form/MenuManagementUnityUpdateFrom";
 import { MenuManagementUnityObj } from "../models/screenObj/MenuManagementUnityObj";
 
 
-const props = defineProps<{
-  menuManagementList: MenuManagement[];
 
-}>();
 
 const MenuManagementStore = useMenuManagementStore();
 
@@ -115,6 +113,7 @@ const menuManagementList = computed(() => {
   return MenuManagementStore.getMenuManagement;
   
 });
+
 
 
 const addRow = (): void => {
@@ -147,10 +146,19 @@ const state = reactive<State>({
 });
 /** 登録ボタンクリックイベント */
 const register = async () => {
-  const reqForm: MenuManagementUnityForm = new MenuManagementUnityForm();
+  // const reqForm: MenuManagementUnityForm = new MenuManagementUnityForm();
+  const reqForm = ref<MenuManagementUnityForm>(new MenuManagementUnityForm());
+
   for(let i = 0; i < menuManagementList.value.length; i++){
-    
-  }
+      reqForm.value.unity.push(menuManagementList.value[i]);
+      for(let j = 0; j < menuManagementList.value[i].detail.length; j++) {
+        reqForm.value.unity[i].detail.push(menuManagementList.value[i].detail[j]);
+      };
+  };
+
+  console.log(reqForm);
+
+
   Object.assign(reqForm, state.screenObj);
   await axios
     .put("/menuManagement/update", reqForm)
@@ -166,8 +174,6 @@ const register = async () => {
       // 正常終了・エラー問わず必ず行う処理
     });
 };
-
-
 
 
 
