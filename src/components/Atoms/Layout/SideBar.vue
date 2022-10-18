@@ -3,7 +3,7 @@
     v-if="loginType == 1"
     class="w-1/6 h-screen fixed top-0 left-0 right-0 bg-gray-700 text-white z-50"
   >
-    <router-link to="/" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
+    <router-link to="/stuffCreate" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
       <div class="flex items-center">
         <font-awesome-icon :icon="['fas', 'user']" class="w-4 h-4 pr-2 font-black" />
         <p>スタッフ管理</p>
