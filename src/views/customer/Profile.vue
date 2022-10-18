@@ -135,10 +135,7 @@ const state = reactive<State>({
 const initialize = () => {
   axios.get("/customer/profile/initialize")
     .then(({ data }) => {
-      // console.log(data); // 確認用※最終的には消してください
-
       Object.assign(state.screenObj, data);
-      // console.log(state.screenObj); // 確認用※最終的には消してください
     });
 };
 initialize();
@@ -151,7 +148,6 @@ const update = async () => {
     .put("/customer/profile/update", reqForm)
     .then(({ data }) => {
       // 正常終了時の処理
-      //Object.assign(state.screenObj, data);
     })
     .catch((error) => {
       // エラー発生時の処理
