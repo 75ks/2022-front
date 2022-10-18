@@ -14,21 +14,25 @@
         <InputWithLabel
           v-model:input-value="state.screenObj.lastName"
           label="姓"
+          placeholder="山田"
           :requiredFlg="true"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.firstName"
           label="名"
+          placeholder="太郎"
           :requiredFlg="true"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.lastNameKana"
           label="セイ"
+          placeholder="ヤマダ"
           :requiredFlg="true"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.firstNameKana"
           label="メイ"
+          placeholder="タロウ"
           :requiredFlg="true"
         />
 
@@ -43,6 +47,7 @@
         <InputWithLabel
           v-model:input-value="state.screenObj.age"
           label="年齢"
+          placeholder="25"
           :requiredFlg="false"
         />
         <SelectBoxWithLabel
@@ -60,6 +65,7 @@
         <InputWithLabel
           v-model:input-value="state.screenObj.postalCode"
           label="郵便番号"
+          placeholder="1234567"
           :requiredFlg="false"
         />
         <SelectBoxWithLabel
@@ -71,26 +77,31 @@
         <InputWithLabel
           v-model:input-value="state.screenObj.address1"
           label="市区町村"
+          placeholder="新宿区"
           :requiredFlg="false"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.address2"
           label="市区町村以下"
+          placeholder="新宿1-1-1"
           :requiredFlg="false"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.address3"
           label="建物、部屋番号"
+          placeholder="新宿ビル101"
           :requiredFlg="false"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.phoneNumber"
           label="電話番号"
+          placeholder="09012345678"
           :requiredFlg="false"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.email"
           label="メールアドレス"
+          placeholder="taro@gmail.com"
           type="email"
           :requiredFlg="true"
         />
