@@ -27,4 +27,6 @@ export class ProfileUpdateRequest {
   phoneNumber: string = "";
   /** メールアドレス */
   email: string = "";
+  /** バージョン */  
+  versionExKey: number | null = null;
 }
