@@ -38,7 +38,7 @@ const routes = [
   { path: "/registerSampleRev", component: RegisterSampleRev, meta: { requiredAuth: true } },
   { path: "/stuffList", component: StuffList, meta: { requiredAuth: true } },
   { path: "/customerList", component: CustomerList },
-  { path: "/customerDetail", component: CustomerDetail },
+  { path: "/customerDetail/:customerId", component: CustomerDetail },
   { path: "/salesTotal", component: SalesTotal, meta: { requiredAuth: true } },
   { path: "/stuffCreate", component: StuffCreate, meta: { requiredAuth: true } },
   // 顧客用画面

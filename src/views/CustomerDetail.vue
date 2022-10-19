@@ -121,12 +121,15 @@ import { CustomerDetailRequest } from "../models/form/CustomerDetailRequest";
 import { MessageStatus } from '../constants/MessageStatus'
 import { useMessageStore } from '../store/message'
 import DatePickerWithLabel from '../components/Molecules/DatePickerWithLabel.vue';
+import { useRoute } from "vue-router";
 
 const messageStore = useMessageStore();
 
 const message = computed(() => {
   return messageStore.getMessage;
 });
+
+const route = useRoute();
 
 interface State {
   screenObj: CustomerDetailScreenObj;
@@ -136,98 +139,40 @@ const state = reactive<State>({
   screenObj: new CustomerDetailScreenObj(),
 });
 
+const customerId: number = Number(route.params.customerId);
+
 /** 初期表示 */
-axios.get("/customerDetail/initialize", {
-        params: { customerId: 1 }
-      })
-      .then(({ data }) => {
-      Object.assign(state.screenObj, data);
-        // data.CustomerSearchDetail;
-      });
+axios
+  .get("/customerDetail/initialize", {
+    params: { customerId: customerId }
+  })
+  .then(({ data }) => {
+    Object.assign(state.screenObj, data);
+  })
+  .catch((error) => {
+    // エラー発生時の処理
+  })
+  .finally(() => {
+    // 正常終了・エラー問わず必ず行う処理
+  });
 
-// interface Props {
-//   /** モーダル表示フラグ */
-//   isVisibleModal: boolean;
-//   /** 選択顧客情報 */
-//   selectCustomer: CustomerDetailRequest;
-// }
-
-// const props = defineProps<Props>();
-
-// const { selectCustomer } = toRefs(props);
-
-// const isVisited = computed<boolean>(() => {
-//   return selectCustomer.value.lastName !== null;
-// });
-
-// /** 初期画面をカレンダー(月)に設定 */
-// const customerSelectValue = ref<string>("");
-
-// /** 初期表示イベント */
-// watchEffect(() => {
-//   if (selectCustomer.value.lastName) {
-//     state.customerDetailScreenObj.lastName = selectCustomer.value.lastName;
-//   }
-//   if (selectCustomer.value.firstName) {
-//     state.customerDetailScreenObj.firstName = selectCustomer.value.firstName;
-//   }
-//   if (selectCustomer.value.lastNameKana) {
-//     state.customerDetailScreenObj.lastNameKana = selectCustomer.value.lastNameKana;
-//   }
-//   if (selectCustomer.value.firstNameKana) {
-//     state.customerDetailScreenObj.firstNameKana = selectCustomer.value.firstNameKana;
-//   }
-//   if (selectCustomer.value.birthday) {
-//     state.customerDetailScreenObj.birthday = selectCustomer.value.birthday;
-//   }
-//   if (selectCustomer.value.age) {
-//     state.customerDetailScreenObj.age = selectCustomer.value.age;
-//   }
-//   if (selectCustomer.value.gender) {
-//     state.customerDetailScreenObj.gender = selectCustomer.value.gender;
-//   }
-//   if (selectCustomer.value.postalCode) {
-//     state.customerDetailScreenObj.postalCode = selectCustomer.value.postalCode;
-//   }
-//   if (selectCustomer.value.prefectureId) {
-//     state.customerDetailScreenObj.prefectureId = selectCustomer.value.prefectureId;
-//   }
-//   if (selectCustomer.value.address1) {
-//     state.customerDetailScreenObj.address1 = selectCustomer.value.address1;
-//   }
-//   if (selectCustomer.value.address2) {
-//     state.customerDetailScreenObj.address2 = selectCustomer.value.address2;
-//   }
-//   if (selectCustomer.value.address3) {
-//     state.customerDetailScreenObj.address3 = selectCustomer.value.address3;
-//   }
-//   if (selectCustomer.value.phoneNumber) {
-//     state.customerDetailScreenObj.phoneNumber = selectCustomer.value.phoneNumber;
-//   }
-//   if (selectCustomer.value.email) {
-//     state.customerDetailScreenObj.email = selectCustomer.value.email;
-//   }
-// // });
-
-/** 初期表示イベント */
-// const customerId = Customer.lastName;
-// axios.get<{ customerDetail: CustomerDetailScreenObj }>(`customerDetail/${customId}`)
-//   .then(({ data }) => {
-//     Object.assign(state.customerDetailScreenObj, data.customerDetail);
+// axios
+//   .get("/customerDetail/initialize", {
+//       params: { customerId: customerId }
+//     })
+//     .then(({ data }) => {
+//     Object.assign(state.screenObj, data);
 //   });
-// //   .finally(() => {
-// //     AppModule.SET_IS_CONNECTING_TO_SERVER(false);
-// // });
 
 /** 更新ボタンクリックイベント */
 const register = async () => {
   const reqForm: CustomerDetailRequest = new CustomerDetailRequest();
   Object.assign(reqForm, state.screenObj);
+  reqForm.customerId = customerId;
   await axios
-    .post("/customerCreate", reqForm)
+    .post("/customerDetail/", reqForm)
     .then(() => {
-      // 入力項目を初期化する
-      state.screenObj = new CustomerDetailScreenObj();
+      // 正常終了時
     })
     .catch((error) => {
       // エラー発生時の処理
