@@ -116,7 +116,6 @@ import DatePickerWithLabel from "../../components/Molecules/DatePickerWithLabel.
 import { ProfileScreenObj } from "../../models/screenObj/customer/ProfileScreenObj";
 import {ProfileUpdateRequest} from '../../models/form/customer/ProfileUpdateRequest';
 import _ from 'lodash';
-import { useRouter } from 'vue-router';
 
 const messageStore = useMessageStore();
 
@@ -147,10 +146,8 @@ const update = async () => {
   await axios
     .put("/customer/profile/update", reqForm)
     .then(({ data }) => {
-      // 正常終了時の処理
-    })
-    .catch((error) => {
-      // エラー発生時の処理
+      // 初期表示イベントを呼ぶ
+      initialize();
     })
     .finally(() => {
       // 正常終了・エラー問わず必ず行う処理
