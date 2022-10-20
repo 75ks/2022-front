@@ -77,6 +77,7 @@ import { Calender } from '../../../models/Calender';
 import RegisterModal from './RegisterModal.vue';
 import EditModal from './EditModal.vue';
 import { useMessageStore } from '../../../store/message';
+import { MessageStatus } from '../../../constants/MessageStatus';
 import { computed, ref } from 'vue';
 
 const messageStore = useMessageStore();
@@ -126,16 +127,20 @@ const showEditModal = (reserve: Reserve) => {
 /** 登録モーダル✖︎ボタンクリックイベント */
 const closeRegisterModal = () => {
   selectDateTime.value = "";
-  messageStore.resetMessageList();
-  messageStore.resetMessageType();
+  if (messageStore.getMessage.messageList && messageStore.getMessage.messageType !== MessageStatus.SUCCESS.code) {
+    messageStore.resetMessageList();
+    messageStore.resetMessageType();
+  }
   isVisibleRegisterModal.value = false;
 }
 
 /** 編集モーダル✖︎ボタンクリックイベント */
 const closeEditModal = () => {
   selectReserve.value = new Reserve();
-  messageStore.resetMessageList();
-  messageStore.resetMessageType();
+  if (messageStore.getMessage.messageList && messageStore.getMessage.messageType !== MessageStatus.SUCCESS.code) {
+    messageStore.resetMessageList();
+    messageStore.resetMessageType();
+  }
   isVisibleEditModal.value = false;
 }
 

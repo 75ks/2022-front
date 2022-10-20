@@ -55,8 +55,10 @@ const router = vueRouter.createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiredAuth)) {
-    useMessageStore().resetMessageList();
-    useMessageStore().resetMessageType();
+    if (useMessageStore().getMessage.messageList && useMessageStore().getMessage.messageType !== MessageStatus.SUCCESS.code) {
+      useMessageStore().resetMessageList();
+      useMessageStore().resetMessageType();
+    }
     if (useAuthorizationStore().getAuthorization.jwt) {
       next();
     } else {
@@ -65,8 +67,10 @@ router.beforeEach((to, from, next) => {
       next("/login");
     }
   } else if (to.matched.some(record => record.meta.requiredAuthCustomer)) {
-    useMessageStore().resetMessageList();
-    useMessageStore().resetMessageType();
+    if (useMessageStore().getMessage.messageList && useMessageStore().getMessage.messageType !== MessageStatus.SUCCESS.code) {
+      useMessageStore().resetMessageList();
+      useMessageStore().resetMessageType();
+    }
     if (useCustomerAuthorizationStore().getAuthorization.jwt) {
       next();
     } else {

@@ -1,12 +1,16 @@
 <template>
   <div id="app" class="w-full min-h-screen md:flex">
     <SideBar v-if="isVisible" />
-    <router-view class="w-full p-2 bg-gray-200 min-h-screen" />
+    <div class="w-full">
+      <Message />
+      <router-view class="w-full p-2 bg-gray-200 min-h-screen" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import SideBar from './components/Atoms/Layout/SideBar.vue';
+import Message from './components/Atoms/Layout/Message.vue';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 

@@ -164,8 +164,10 @@ const updateReserve = async (): Promise<void> => {
   if (!isVisited.value) {
     await reserveStore.update(state.screenObj);
     reserveStore.fetchReserves();
-    messageStore.resetMessageList();
-    messageStore.resetMessageType();
+    if (messageStore.getMessage.messageList && messageStore.getMessage.messageType !== MessageStatus.SUCCESS.code) {
+      messageStore.resetMessageList();
+      messageStore.resetMessageType();
+    }
     closeModal();
   }
 }
@@ -177,8 +179,10 @@ const deleteReserve = async (): Promise<void> => {
     if (checkDeleteFlg) {
       await reserveStore.delete(state.screenObj);
       reserveStore.fetchReserves();
-      messageStore.resetMessageList();
-      messageStore.resetMessageType();
+      if (messageStore.getMessage.messageList && messageStore.getMessage.messageType !== MessageStatus.SUCCESS.code) {
+        messageStore.resetMessageList();
+        messageStore.resetMessageType();
+      }
     }
     closeModal();
   }

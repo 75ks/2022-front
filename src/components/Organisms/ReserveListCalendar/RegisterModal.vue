@@ -120,8 +120,10 @@ watchEffect(() => {
 const registerReserve = async (): Promise<void> => {
   await reserveStore.register(state.screenObj);
   reserveStore.fetchReserves();
-  messageStore.resetMessageList();
-  messageStore.resetMessageType();
+  if (messageStore.getMessage.messageList && messageStore.getMessage.messageType !== MessageStatus.SUCCESS.code) {
+    messageStore.resetMessageList();
+    messageStore.resetMessageType();
+  }
   closeModal();
 }
 

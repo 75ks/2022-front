@@ -48,11 +48,6 @@ const customerAuthorizationStore = useCustomerAuthorizationStore();
 const messageStore = useMessageStore();
 const router = useRouter();
 
-if (messageStore.getMessage.messageType !== MessageStatus.WARNING.code) {
-  messageStore.resetMessageList();
-  messageStore.resetMessageType();
-}
-
 const message = computed(() => {
   return messageStore.getMessage;
 });

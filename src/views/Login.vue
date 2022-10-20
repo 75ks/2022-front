@@ -56,7 +56,7 @@ const customerAuthorizationStore = useCustomerAuthorizationStore();
 const messageStore = useMessageStore();
 const router = useRouter();
 
-if (messageStore.getMessage.messageType !== MessageStatus.WARNING.code) {
+if (messageStore.getMessage.messageList && messageStore.getMessage.messageType === MessageStatus.DANGER.code) {
   messageStore.resetMessageList();
   messageStore.resetMessageType();
 }
