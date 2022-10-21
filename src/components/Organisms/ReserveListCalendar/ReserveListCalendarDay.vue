@@ -153,7 +153,8 @@ const getDayofWeek = (): string => {
 const getDayReserves = (date: moment.Moment): Reserve[] => {
   const dayReserves: Reserve[] = [];
   props.reserveList.forEach(reserve => {
-    const reserveDate: string = moment(reserve.reserveDatetime).format('YYYY-MM-DD');
+    // 日本時間にするためマイナス9時間で設定
+    const reserveDate: string = moment(reserve.reserveDatetime).subtract(9, 'hours').format('YYYY-MM-DD');
     const targetDate: string = date.format('YYYY-MM-DD');
     if (reserveDate === targetDate) {
       dayReserves.push(reserve);
@@ -166,7 +167,7 @@ const getDayReserves = (date: moment.Moment): Reserve[] => {
 const getCalenderDay = (): Calender => {
   const day: Calender = {
     date: props.currentDate.get("date"),
-    datetime: props.currentDate.format("YYYY-MM-DD HH:mm"),
+    datetime: props.currentDate.format("YYYY-MM-DD 00:00"),
     dayReserves: getDayReserves(props.currentDate)
   }
   return day;

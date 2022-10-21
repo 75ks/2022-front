@@ -1,6 +1,7 @@
 <template>
   <input
     :id="uniqueId"
+    :placeholder="placeholder"
     :type="type"
     v-model="inputValue"
     class="w-full px-2 py-1 text-gray-700 border border-gray-300 rounded-md focus:outline outline-blue-300"
@@ -18,6 +19,8 @@ import { computed } from "vue";
 interface Props {
   /** 入力値 */
   inputValue: string | number | null;
+  /** プレースホルダー */
+  placeholder?: string;
   /** type */
   type?: string;
   /** サイズ */
@@ -35,6 +38,7 @@ interface Emits {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  placeholder: "",
   type: "text",
   size: "md",
   requiredFlg: false,

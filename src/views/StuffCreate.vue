@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full">
-    <p class="pb-10 text-center font-bold text-2xl">顧客登録</p>
+    <p class="pb-10 text-center font-bold text-2xl">スタッフ登録</p>
     <div
       v-if="message.messageList.length"
       class="pb-10 w-1/3 m-auto"
@@ -56,6 +56,12 @@
           label="性別"
           :requiredFlg="true"
         />
+        <SelectBoxWithLabel
+          v-model:select-value="state.screenObj.rankId"
+          targetUrl="/selectOption/ranks"
+          label="ランク"
+          :requiredFlg="true"
+        />
         <InputWithLabel
           v-model:input-value="state.screenObj.postalCode"
           label="郵便番号"
@@ -99,6 +105,12 @@
           type="email"
           :requiredFlg="true"
         />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.password"
+          label="パスワード"
+          type="password"
+          :requiredFlg="true"
+        />
         <CustomButton
           class="w-full mt-16"
           :button-name="'登録'"
@@ -118,9 +130,10 @@ import axios from "../plugins/axios";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import { GenderList } from "../constants/Gender";
+//import { RankList } from "../constants/Rank";
 import { PrefectureIdList } from "../constants/PrefectureId";
-import { CustomerCreateScreenObj } from "../models/screenObj/CustomerCreateScreenObj";
-import { CustomerCreateRequest } from "../models/form/CustomerCreateRequest";
+import { StuffCreateScreenObj } from "../models/screenObj/StuffCreateScreenObj";
+import { StuffCreateRequest } from "../models/form/StuffCreateRequest";
 import { MessageStatus } from '../constants/MessageStatus'
 import { useMessageStore } from '../store/message'
 import DatePickerWithLabel from '../components/Molecules/DatePickerWithLabel.vue';
@@ -132,22 +145,22 @@ const message = computed(() => {
 });
 
 interface State {
-  screenObj: CustomerCreateScreenObj;
+  screenObj: StuffCreateScreenObj;
 }
 
 const state = reactive<State>({
-  screenObj: new CustomerCreateScreenObj(),
+  screenObj: new StuffCreateScreenObj(),
 });
 
 /** 登録ボタンクリックイベント */
 const register = async () => {
-  const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
+  const reqForm: StuffCreateRequest = new StuffCreateRequest();
   Object.assign(reqForm, state.screenObj);
   await axios
-    .post("/customerCreate", reqForm)
+    .post("/stuffCreate", reqForm)
     .then(() => {
       // 入力項目を初期化する
-      state.screenObj = new CustomerCreateScreenObj();
+      state.screenObj = new StuffCreateScreenObj();
     })
     .catch((error) => {
       // エラー発生時の処理
