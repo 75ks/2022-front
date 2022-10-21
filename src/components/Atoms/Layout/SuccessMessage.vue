@@ -1,6 +1,6 @@
 <template>
   <p
-    v-if="message.messageList && message.messageType == MessageStatus.SUCCESS.code"
+    v-if="message.messageList && message.messageType === MessageStatus.SUCCESS.code"
     class="p-2 bg-green-500 text-white"
   >
     {{ message.messageList[0] }}

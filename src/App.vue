@@ -2,7 +2,7 @@
   <div id="app" class="w-full min-h-screen md:flex">
     <SideBar v-if="isVisible" />
     <div class="w-full">
-      <Message class="mt-12 md:mt-0" />
+      <SuccessMessage class="mt-12 md:mt-0" />
       <router-view class="w-full p-2 bg-gray-200 min-h-screen" />
     </div>
   </div>
@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import SideBar from './components/Atoms/Layout/SideBar.vue';
-import Message from './components/Atoms/Layout/Message.vue';
+import SuccessMessage from './components/Atoms/Layout/SuccessMessage.vue';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 
