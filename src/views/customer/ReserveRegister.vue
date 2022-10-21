@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <Loading :is-loading="isLoading"/>
-    <div class="w-2/3 m-auto p-8 mt-20 bg-white">
+    <div class="w-full m-auto py-8 mt-12 md:mt-0 bg-white">
       <p class="pb-10 text-center font-bold text-2xl">予約</p>
       <p class="pb-2 m-auto text-center text-sm">◆予約情報を入力して「登録」ボタンをクリックしてください。</p>
       <p class="pb-10 m-auto text-center text-sm">※スタッフを選択すると、メニューが選択可能になります。</p>
