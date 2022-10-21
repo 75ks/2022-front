@@ -3,7 +3,7 @@
     <Loading :is-loading="isLoading"/>
     <Header :header-name="'売上集計'" />
     <div class="p-2 mt-2 bg-white">
-      <div class="sticky top-0 z-40 bg-white">
+      <div class="sticky top-0 z-30 bg-white">
         <div class="w-full h-12 py-2 flex justify-between font-bold text-2xl">
           <button
             @click="prevYear()"

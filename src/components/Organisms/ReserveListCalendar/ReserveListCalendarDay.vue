@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <div class="w-full flex bg-white sticky top-12 z-50">
+    <div class="w-full flex bg-white sticky top-12 z-30">
       <div class="w-16"></div>
       <div class="w-full flex border-l border-gray-300">
         <div class="w-full text-center border-r border-gray-300">
