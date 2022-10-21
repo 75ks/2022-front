@@ -173,8 +173,8 @@ const nextMonth = (value: moment.Moment): void => {
 
 <style>
   .custom-height {
-    /** カレンダー高さ微調整(ヘッダー:48px - border:1px) */
-    height: calc(100% - 48px - 1px);
+    /** カレンダー高さ微調整(ヘッダー:48px - (画面上部余白:8px + 画面下部余白:8px) */
+    height: calc(100vh - 48px - (8px + 8px));
   }
   .custom-height-2 {
     /** カレンダー高さ微調整(カレンダー表示形式プルダウン:38px - 現在日時:48px - border:1px) */
