@@ -17,7 +17,7 @@
     <div class="grid gap-6 mb-6 mx-6 grid-cols-1">
       <InputWithLabel
         v-model:input-value="state.screenObj.lastName"
-        label="姓test"
+        label="姓"
         :requiredFlg="true"
       />
       <InputWithLabel
