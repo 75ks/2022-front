@@ -55,7 +55,7 @@
   </div>
   <div
     v-if="loginType == 2"
-    class="md:hidden w-full fixed top-0 left-0 right-0 bg-gray-700 text-white z-50"
+    class="md:hidden w-full h-12 fixed top-0 left-0 right-0 bg-gray-700 text-white z-50"
   >
     <font-awesome-icon
       :icon="['fas', 'bars']"
