@@ -42,13 +42,6 @@ const router = useRouter();
 const onRowClicked = (selectedCustomerScreenObj: Customer) => {
   router.push({ path: `/customerDetail/${selectedCustomerScreenObj.customerId}` });
 };
-//   const onRowClicked = (selectedCustomerScreenObj: Customer) => {
-//   router.push({ path: '/customerDetail', query: { customerId: selectedCustomerScreenObj.customerId } });
-
-//   return {
-//     onRowClicked
-//   };
-
 
 </script>
 

@@ -104,7 +104,7 @@
         @click="register"
       />
     </div>
-      
+
   </div>
 </template>
 
@@ -134,11 +134,9 @@ const route = useRoute();
 interface State {
   screenObj: CustomerDetailScreenObj;
 }
-
 const state = reactive<State>({
   screenObj: new CustomerDetailScreenObj(),
 });
-
 const customerId: number = Number(route.params.customerId);
 
 /** 初期表示 */
@@ -156,14 +154,6 @@ axios
     // 正常終了・エラー問わず必ず行う処理
   });
 
-// axios
-//   .get("/customerDetail/initialize", {
-//       params: { customerId: customerId }
-//     })
-//     .then(({ data }) => {
-//     Object.assign(state.screenObj, data);
-//   });
-
 /** 更新ボタンクリックイベント */
 const register = async () => {
   const reqForm: CustomerDetailRequest = new CustomerDetailRequest();
@@ -172,7 +162,7 @@ const register = async () => {
   await axios
     .post("/customerDetail/", reqForm)
     .then(() => {
-      // 正常終了時
+      // 正常終了時の処理
     })
     .catch((error) => {
       // エラー発生時の処理
