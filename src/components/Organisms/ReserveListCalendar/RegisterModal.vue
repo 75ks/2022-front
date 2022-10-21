@@ -20,9 +20,8 @@
         </p>
       </div>
       <div 
-        v-if="message.messageList.length"
-        class="pb-10 w-1/3 m-auto"
-        :class="message.messageType === MessageStatus.DANGER.code ? 'text-red-500' : 'text-green-500'"
+        v-if="message.messageList && message.messageType !== MessageStatus.SUCCESS.code"
+        class="pb-10 w-1/3 m-auto text-red-500"
       >
         <ul v-for="(mes, index) in message.messageList" :key="index">
           <li>※{{ mes }}</li>
