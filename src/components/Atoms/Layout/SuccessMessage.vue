@@ -32,13 +32,13 @@ const messageAnimationType = ref<number>(0);
 
 watch(message.value, (after, before) => {
   // 成功メッセージが存在する場合
-  if (message.value.messageList && message.value.messageType === MessageStatus.SUCCESS.code) {
+  if (message.value.messageList.length && message.value.messageType === MessageStatus.SUCCESS.code) {
     if (messageAnimationType.value === 0) {
       isVisibleMessage.value = true;
     }
     messageAnimationType.value = 1;
   // メッセージが存在しない かつ 表示アニメーションが付与されている場合
-  } else if (!message.value.messageList && messageAnimationType.value === 1) {
+  } else if (!message.value.messageList.length && messageAnimationType.value === 1) {
     messageAnimationType.value = 2;
   // 上記以外の場合
   } else {
