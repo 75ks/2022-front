@@ -11,4 +11,3 @@ export const datetimeFormat = (timestamp: string): string => {
   // const ss = `0${datetime.getSeconds()}`.slice(-2);
   return yyyy + "/" + MM + "/" + dd + " " + HH + ":" + mm;
 }
-
