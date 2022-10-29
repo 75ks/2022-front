@@ -1,5 +1,10 @@
 <template>
-  <div class="flex justify-center mt-2 bg-white p-2">
+  <div class="mt-2 bg-white p-2">
+    <Pagination
+      :tableItemList="customerList"
+      v-model:perPageList="perPageList"
+      v-model:currentPage="currentPage"
+    />
     <table class="w-full">
       <thead>
         <tr>
@@ -12,7 +17,7 @@
       </thead>
       <tbody class="hover:cursor-pointer">
         <tr
-          v-for="(customer, index) in customerList" :key="index"
+          v-for="(customer, index) in perPageList[currentPage - 1]" :key="index"
           @click="onRowClicked(customer)"
           class="hover:bg-slate-100"
           >
@@ -31,12 +36,18 @@
 import { Customer } from '../../../models/Customer';
 import { Gender } from '../../../constants/Gender';
 import { useRouter } from 'vue-router';
+import Pagination from '../Common/Pagination.vue';
+import { ref } from 'vue';
 
 const props = defineProps<{
   customerList: Customer[]
 }>();
 
 const router = useRouter();
+// 現在のページ
+const currentPage = ref<number>(1);
+// ページ毎の塊に分割した配列
+const perPageList = ref<Customer[][]>([]);
 
 /** 顧客レコードクリックイベント(顧客詳細画面へ遷移) */
 const onRowClicked = (selectedCustomerScreenObj: Customer) => {
