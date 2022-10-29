@@ -1,5 +1,10 @@
 <template>
   <div class="p-2 mt-2 bg-white">
+    <Pagination
+      :tableItemList="reserveList"
+      v-model:perPageList="perPageList"
+      v-model:currentPage="currentPage"
+    />
     <table class="w-full">
       <thead>
         <tr>
@@ -15,7 +20,7 @@
       </thead>
       <tbody class="hover:cursor-pointer">
         <tr
-          v-for="(reserve, index) in reserveList" :key="index"
+          v-for="(reserve, index) in perPageList[currentPage - 1]" :key="index"
           @click="showModal(reserve)"
           class="hover:bg-slate-100"
         >
@@ -42,12 +47,16 @@
 import Modal from './Modal.vue';
 import { Reserve } from '../../../models/Reserve';
 import { datetimeFormat } from '../../../utils/Format';
+import Pagination from '../Common/Pagination.vue';
 import { ref } from 'vue';
 
 const props = defineProps<{
   reserveList: Reserve[]
 }>();
-
+// 現在のページ
+const currentPage = ref<number>(1);
+// ページ毎の塊に分割した配列
+const perPageList = ref<Reserve[][]>([]);
 /** モーダルに渡すデータ */
 const modalReserveData = ref<Reserve>(new Reserve());
 /** モーダル表示フラグ */
