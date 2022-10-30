@@ -1,99 +1,97 @@
 <template>
   <div class="w-full mt-12 md:mt-0">
     <Loading :is-loading="isLoading"/>
-    <p class="pb-10 text-center font-bold text-2xl">プロフィール画面</p>
-    <div
-    v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
-      class="pb-10 w-2/3 m-auto text-red-500"
-    >
-      <ul v-for="(mes, index) in message.messageList" :key="index">
-        <li>※{{ mes }}</li>
-      </ul>
-    </div>
-    <div class="grid gap-6 mb-6 mx-6 grid-cols-1">
-      <InputWithLabel
-        v-model:input-value="state.screenObj.lastName"
-        label="姓"
-        :requiredFlg="true"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.firstName"
-        label="名"
-        :requiredFlg="true"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.lastNameKana"
-        label="セイ"
-        :requiredFlg="true"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.firstNameKana"
-        label="メイ"
-        :requiredFlg="true"
-      />
-
-      <!-- DatePickerWithLabel -->
-      <DatePickerWithLabel
-        v-model:inputValue="state.screenObj.birthday"
-        label="生年月日"
-        :requiredFlg="false"
-      />
-
-      <!-- InputWithLabel -->
-      <InputWithLabel
-        v-model:input-value="state.screenObj.age"
-        label="年齢"
-        :requiredFlg="false"
-      />
-      <SelectBoxWithLabel
-        v-model:select-value="state.screenObj.gender"
-        :options="GenderList"
-        label="性別"
-        :requiredFlg="true"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.postalCode"
-        label="郵便番号"
-        :requiredFlg="false"
-      />
-      <SelectBoxWithLabel
-        v-model:select-value="state.screenObj.prefectureId"
-        :options="PrefectureIdList"
-        label="都道府県"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.address1"
-        label="市区町村"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.address2"
-        label="市区町村以下"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.address3"
-        label="建物、部屋番号"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.phoneNumber"
-        label="電話番号"
-        :requiredFlg="false"
-      />
-      <InputWithLabel
-        v-model:input-value="state.screenObj.email"
-        label="メールアドレス"
-        type="email"
-        :requiredFlg="true"
-      />
-      <CustomButton
-        class="w-full mt-16"
-        button-name="更新"
-        :button-color-number="1"
-        @click="update"
-      />
+    <div class="w-full m-auto py-8 bg-white">
+      <p class="pb-10 text-center font-bold text-2xl">プロフィール画面</p>
+      <div
+      v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
+        class="pb-10 w-2/3 m-auto text-red-500"
+      >
+        <ul v-for="(mes, index) in message.messageList" :key="index">
+          <li>※{{ mes }}</li>
+        </ul>
+      </div>
+      <div class="grid gap-6 mx-6 grid-cols-1">
+        <InputWithLabel
+          v-model:input-value="state.screenObj.lastName"
+          label="姓"
+          :requiredFlg="true"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.firstName"
+          label="名"
+          :requiredFlg="true"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.lastNameKana"
+          label="セイ"
+          :requiredFlg="true"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.firstNameKana"
+          label="メイ"
+          :requiredFlg="true"
+        />
+        <DatePickerWithLabel
+          v-model:inputValue="state.screenObj.birthday"
+          label="生年月日"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.age"
+          label="年齢"
+          :requiredFlg="false"
+        />
+        <SelectBoxWithLabel
+          v-model:select-value="state.screenObj.gender"
+          :options="GenderList"
+          label="性別"
+          :requiredFlg="true"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.postalCode"
+          label="郵便番号"
+          :requiredFlg="false"
+        />
+        <SelectBoxWithLabel
+          v-model:select-value="state.screenObj.prefectureId"
+          :options="PrefectureIdList"
+          label="都道府県"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.address1"
+          label="市区町村"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.address2"
+          label="市区町村以下"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.address3"
+          label="建物、部屋番号"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.phoneNumber"
+          label="電話番号"
+          :requiredFlg="false"
+        />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.email"
+          label="メールアドレス"
+          type="email"
+          :requiredFlg="true"
+        />
+        <CustomButton
+          class="w-full mt-4"
+          button-name="更新"
+          :button-color-number="1"
+          @click="update"
+        />
+      </div>
     </div>
   </div>
 </template>

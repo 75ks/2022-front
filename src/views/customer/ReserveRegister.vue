@@ -13,8 +13,8 @@
           <li>※{{ mes }}</li>
         </ul>
       </div>
-      <div class="flex flex-col justify-center items-center">
-        <div class="w-2/3 pb-5">
+      <div class="mx-6 flex flex-col justify-center items-center">
+        <div class="w-full pb-5">
           <SelectBoxWithLabel
             v-model:select-value="state.screenObj.stuffId"
             targetUrl="/selectOption/stuffs"
@@ -22,7 +22,7 @@
             label="スタッフ"
           />
         </div>
-        <div class="w-2/3 pb-5">
+        <div class="w-full pb-5">
           <SelectBoxWithLabel
             v-model:select-value="state.screenObj.menuId"
             :targetUrl="targetUrl"
@@ -31,14 +31,14 @@
             label="メニュー"
           />
         </div>
-        <div class="w-2/3 pb-10">
+        <div class="w-full pb-10">
           <DateTimePickerWithLabel
             v-model:inputValue='state.screenObj.reserveDateTime'
             :required-flg="true"
             label="予約日時"
           />
         </div>
-        <div class="w-2/3">
+        <div class="w-full">
           <CustomButton
             class="w-full"
             button-name="登録"
