@@ -39,6 +39,7 @@
       </tbody>
     </table>
     <Pagination
+      v-if="stuffListSplit.length"
       :data-list-split="stuffListSplit"
       v-model:selected-page="selectedPage"
       v-model:left-most-page="leftMostPage"

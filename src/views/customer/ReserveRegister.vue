@@ -6,7 +6,7 @@
       <p class="pb-2 m-auto text-center text-sm">◆予約情報を入力して「登録」ボタンをクリックしてください。</p>
       <p class="pb-10 m-auto text-center text-sm">※スタッフを選択すると、メニューが選択可能になります。</p>
       <div
-        v-if="message.messageList && message.messageType !== MessageStatus.SUCCESS.code"
+        v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
         class="pb-10 w-1/3 m-auto text-red-500"
       >
         <ul v-for="(mes, index) in message.messageList" :key="index">
