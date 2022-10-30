@@ -90,7 +90,7 @@
             :emptyOptionFlg="false"
           />
         </div>
-        <table class="mt-10 w-full">
+        <table class="w-full mt-10 mb-4">
           <thead>
             <tr>
               <th class="border border-gray-300 px-2 py-2 text-gray-600">売上履歴ID</th>
