@@ -98,7 +98,7 @@
       </div>
       <div class="w-1/2 m-auto">
         <CustomButton
-          class="w-full mt-8"
+          class="w-full mt-4"
           :button-name="'登録'"
           :button-color-number="1"
           @click="register"
