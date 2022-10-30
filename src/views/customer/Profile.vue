@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full mt-12 md:mt-0">
+  <div class="w-full mt-12 md:mt-0">
     <p class="pb-10 text-center font-bold text-2xl">プロフィール画面</p>
     <div
     v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
