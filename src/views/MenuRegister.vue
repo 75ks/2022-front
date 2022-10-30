@@ -1,5 +1,4 @@
 <template>
-  {{menuManagementList}}
   <div class="container p-5">
     <div class="flex justify-center">
       <table class="w-full">
@@ -39,17 +38,18 @@
         </tbody>
       </table>
     </div>
-    <!-- <div class="w-1/4 mt-4 text-right pr-9">
+    <div class="w-1/4 mt-4 text-right pr-40">
       <CustomButton
         button-name="更新"
         @click="register"
       />
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
+import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { reactive, ref } from "vue";
 import { MenuManagementCreate } from "../models/MenuManagementCreate";
 import { computed } from "vue";
@@ -57,8 +57,8 @@ import { useMenuManagementCreateStore } from "../store/MenuManagementCreate";
 import axios from "../plugins/axios";
 import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateForm";
 import { MenuManagementUnityForm } from "../models/form/MenuManagementUnityUpdateFrom";
-import { MenuManagementUnityObj } from "../models/screenObj/MenuManagementUnityObj";
-import { MenuManagementListForm } from "../models/form/MenuManagementListForm";
+import { MenuManagementCreateObj } from "../models/screenObj/MenuManagementCreateObj";
+import { MenuManagementCreateForm } from "../models/form/MenuManagementCreateForm";
 
 const MenuManagementCreateStore = useMenuManagementCreateStore();
 
@@ -79,35 +79,29 @@ const deleteRow = (index: number) => {
 };
 
 
-// interface State {
-//   screenObj: MenuManagementUnityObj;
-// }
-// const state = reactive<State>({
-//   screenObj: new MenuManagementUnityObj(),
-// });
-
-// /** 登録ボタンクリックイベント */
-// const register = async () => {
-//   const reqForm: MenuManagementUnityForm = new MenuManagementUnityForm();
-//   menuManagementList.value.forEach(obj => {
-//     const tempForm: MenuManagementUpdateForm = new MenuManagementUpdateForm();
-//     Object.assign(tempForm, obj);
-//     reqForm.unity.push(tempForm);
-//   })
-
-//   await axios
-//     .put("/menuManagement/update", reqForm)
-//     .then(() => {
-//       // 入力項目を初期化する
-//       state.screenObj = new MenuManagementUnityObj();
-//     })
-//     .catch((error) => {
-//       // エラー発生時の処理
-//     })
-//     .finally(() => {
-//       // 正常終了・エラー問わず必ず行う処理
-//     });
-// };
+interface State {
+  screenObj: MenuManagementCreateObj;
+}
+const state = reactive<State>({
+  screenObj: new MenuManagementCreateObj(),
+});
+/** 登録ボタンクリックイベント */
+const register = async () => {
+  const reqForm: MenuManagementCreateForm = new MenuManagementCreateForm();
+  Object.assign(reqForm, state.screenObj);
+  await axios
+    .put("/update", reqForm)
+    .then(() => {
+      // 入力項目を初期化する
+      state.screenObj = new MenuManagementCreateObj();
+    })
+    .catch((error) => {
+      // エラー発生時の処理
+    })
+    .finally(() => {
+      // 正常終了・エラー問わず必ず行う処理
+    });
+};
 </script>
 
 <style></style>
