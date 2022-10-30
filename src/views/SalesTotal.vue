@@ -117,6 +117,7 @@
           </tbody>
         </table>
         <Pagination
+          v-if="salesHistoryListSplit.length"
           :data-list-split="salesHistoryListSplit"
           v-model:selected-page="selectedPage"
           v-model:left-most-page="leftMostPage"
