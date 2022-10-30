@@ -1,5 +1,6 @@
 <template>
   <div class="w-full mt-12 md:mt-0">
+    <Loading :is-loading="isLoading"/>
     <p class="pb-10 text-center font-bold text-2xl">プロフィール画面</p>
     <div
     v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
@@ -99,7 +100,7 @@
 
 <script setup lang="ts">
 import CustomButton from "../../components/Atoms/Button/CustomButton.vue";
-import { reactive, computed } from "vue";
+import { reactive, computed, ref } from "vue";
 import axios from "../../plugins/axios";
 import InputWithLabel from "../../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../../components/Molecules/SelectBoxWithLabel.vue";
@@ -109,8 +110,9 @@ import { MessageStatus } from "../../constants/MessageStatus";
 import { useMessageStore } from "../../store/message";
 import DatePickerWithLabel from "../../components/Molecules/DatePickerWithLabel.vue";
 import { ProfileScreenObj } from "../../models/screenObj/customer/ProfileScreenObj";
-import {ProfileUpdateRequest} from '../../models/form/customer/ProfileUpdateRequest';
+import { ProfileUpdateRequest } from '../../models/form/customer/ProfileUpdateRequest';
 import _ from 'lodash';
+import Loading from '../../components/Atoms/Layout/Loading.vue';
 
 const messageStore = useMessageStore();
 
@@ -126,6 +128,9 @@ const state = reactive<State>({
   screenObj: new ProfileScreenObj(),
 });
 
+/** ローティングフラグ */
+const isLoading = ref<boolean>(false);
+
 const initialize = () => {
   axios.get("/customer/profile/initialize")
     .then(({ data }) => {
@@ -136,6 +141,7 @@ initialize();
 
 /** 更新ボタンクリックイベント */
 const update = async () => {
+  isLoading.value = !isLoading.value;
   const reqForm: ProfileUpdateRequest = new ProfileUpdateRequest();
   _.assign(reqForm, _.pick(state.screenObj, _.keys(reqForm)));
   await axios
@@ -146,6 +152,7 @@ const update = async () => {
     })
     .finally(() => {
       // 正常終了・エラー問わず必ず行う処理
+      isLoading.value = !isLoading.value;
     });
 };
 </script>
