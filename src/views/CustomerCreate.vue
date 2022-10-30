@@ -1,15 +1,16 @@
 <template>
-  <div class="w-full h-full">
-    <p class="pb-10 text-center font-bold text-2xl">顧客登録</p>
-    <div
-      v-if="message.messageList && message.messageType !== MessageStatus.SUCCESS.code"
-      class="pb-10 w-1/3 m-auto text-red-500"
-    >
-      <ul v-for="(mes, index) in message.messageList" :key="index">
-        <li>※{{ mes }}</li>
-      </ul>
-    </div>
-    <div class="grid gap-6 mb-6 grid-cols-2">
+  <div>
+    <Header :header-name="'顧客登録'" />
+    <div class="p-2 mt-2 bg-white">
+      <div
+        v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
+        class="pb-10 w-1/3 m-auto text-red-500"
+      >
+        <ul v-for="(mes, index) in message.messageList" :key="index">
+          <li>※{{ mes }}</li>
+        </ul>
+      </div>
+      <div class="grid gap-6 mb-6 grid-cols-2">
         <InputWithLabel
           v-model:input-value="state.screenObj.lastName"
           label="姓"
@@ -34,15 +35,11 @@
           placeholder="タロウ"
           :requiredFlg="true"
         />
-
-      <!-- DatePickerWithLabel -->
         <DatePickerWithLabel
             v-model:inputValue="state.screenObj.birthday"
             label="生年月日"
             :requiredFlg="false"
         />
-
-      <!-- InputWithLabel -->
         <InputWithLabel
           v-model:input-value="state.screenObj.age"
           label="年齢"
@@ -98,19 +95,21 @@
           type="email"
           :requiredFlg="true"
         />
+      </div>
+      <div class="w-1/2 m-auto">
         <CustomButton
-          class="w-full mt-16"
+          class="w-full mt-8"
           :button-name="'登録'"
           :button-color-number="1"
           @click="register"
         />
-
+      </div>
     </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
+import Header from "../components/Atoms/Layout/Header.vue";
 import CustomButton from "../components/Atoms/Button/CustomButton.vue";
 import { reactive, computed } from "vue";
 import axios from "../plugins/axios";
