@@ -104,6 +104,14 @@
           @click="register"
         />
       </div>
+      <div class="w-1/2 m-auto">
+        <CustomButton
+          class="w-full mt-4"
+          :button-name="'戻る'"
+          :button-color-number="0"
+          @click='$router.push("/customerList")'
+        />
+      </div>
     </div>
   </div>
 </template>
