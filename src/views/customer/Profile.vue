@@ -1,14 +1,9 @@
 <template>
-  <div class="w-full h-full">
+  <div class="w-full h-full mt-12 md:mt-0">
     <p class="pb-10 text-center font-bold text-2xl">プロフィール画面</p>
     <div
-      v-if="message.messageList.length"
-      class="pb-10 w-1/3 m-auto"
-      :class="
-        message.messageType === MessageStatus.DANGER.code
-          ? 'text-red-500'
-          : 'text-green-500'
-      "
+    v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
+      class="pb-10 w-2/3 m-auto text-red-500"
     >
       <ul v-for="(mes, index) in message.messageList" :key="index">
         <li>※{{ mes }}</li>
