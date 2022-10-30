@@ -1,6 +1,5 @@
 <template>
   <div class="container p-5">
-    {{menuManagementList}}
     <div class="flex justify-center">
       <table class="w-2/3">
         <thead>
@@ -74,7 +73,7 @@
         </tbody>
       </table>
     </div>
-    <div class="w-1/4 mt-4 text-right pr-9">
+    <div class="w-1/4 mt-4 ml-14 text-right pr-9">
       <CustomButton
         button-name="更新"
         @click="register"
@@ -82,6 +81,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
@@ -96,6 +96,10 @@ import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateForm";
 import { MenuManagementUnityForm } from "../models/form/MenuManagementUnityUpdateFrom";
 import { MenuManagementUnityObj } from "../models/screenObj/MenuManagementUnityObj";
+import  MenuManagementModal from "../components/MenuManagementModal/MenuManagementModal.vue";
+
+
+
 
 const MenuManagementStore = useMenuManagementStore();
 
@@ -132,6 +136,8 @@ interface State {
 const state = reactive<State>({
   screenObj: new MenuManagementUnityObj(),
 });
+
+
 
 /** 登録ボタンクリックイベント */
 const register = async () => {
