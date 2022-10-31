@@ -1,13 +1,22 @@
 <template>
   <div class="container p-5">
-    <div class="flex justify-center">
-      <table class="w-full">
+    <Header
+      header-name="メニューマスタ管理"
+    />
+    <div class="mt-2 bg-white py-3">
+      <div class="pl-6 pb-3">
+        <CustomButton
+          button-name="戻る"
+          @click="$router.push('/menuManagement')"
+        />
+      </div>
+      <table class="w-1/3">
         <thead class="w-full">
           <tr>
-            <th class="w-1/12"></th>
-            <th class="border border-gray-300 bg-white w-4/5">
+            <th></th>
+            <th class="border border-gray-300 bg-white w-full">
               <div class="align-middle">
-                新規メニュー追加
+                メニュー
                 <font-awesome-icon
                   :icon="['fas', 'plus-circle']"
                   class=" text-green-600 cursor-pointer hover:text-green-400"
@@ -17,10 +26,10 @@
             </th>
           </tr>
         </thead>
-        <tbody class="w-full">
+        <tbody>
           <template v-for="(data, index1) in menuManagementList" :key="index1">
             <tr>
-              <td>
+              <td class="p-1">
                 <font-awesome-icon
                   :icon="['fas', 'minus-circle']"
                   class=" text-red-600 cursor-pointer hover:text-red-400"
@@ -37,17 +46,19 @@
           </template>
         </tbody>
       </table>
-    </div>
-    <div class="w-1/4 mt-4 text-right pr-40">
-      <CustomButton
-        button-name="更新"
-        @click="register"
-      />
+      <div class="w-1/4 mt-4 ml-6">
+        <CustomButton
+          button-name="更新"
+          @click="register"
+          :buttonColorNumber="1"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import Header from "../components/Atoms/Layout/Header.vue";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { reactive, ref } from "vue";
@@ -55,12 +66,9 @@ import { MenuManagementCreate } from "../models/MenuManagementCreate";
 import { computed } from "vue";
 import { useMenuManagementCreateStore } from "../store/MenuManagementCreate";
 import axios from "../plugins/axios";
-import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateForm";
-import { MenuManagementUnityForm } from "../models/form/MenuManagementUnityUpdateFrom";
 import { MenuManagementCreateListObj } from "../models/screenObj/MenuManagementCreateListObj";
 import { MenuManagementCreateListForm } from "../models/form/MenuManagementCreateListForm";
 import { MenuManagementCreateForm } from "../models/form/MenuManagementCreateForm";
-import { MenuManagementListForm } from "../models/form/MenuManagementListForm";
 const MenuManagementCreateStore = useMenuManagementCreateStore();
 
 MenuManagementCreateStore.fetchMenuManagement();
@@ -69,22 +77,17 @@ const menuManagementList = computed(() => {
   return MenuManagementCreateStore.getMenuManagementCreate;
 });
 
-
-
 const addRow = (): void => {
   const menuManagementData = ref<MenuManagementCreate>(new MenuManagementCreate());
   menuManagementList.value.push(menuManagementData.value);
   for(let i = 0; i < menuManagementList.value.length; i++){
     menuManagementList.value[i].menuId = i;
   }
-
 };
 
 const deleteRow = (index: number) => {
   menuManagementList.value.splice(index, 1);
 };
-
-
 
 interface State {
   screenObj: MenuManagementCreateListObj;
@@ -93,6 +96,7 @@ const state = reactive<State>({
   screenObj: new MenuManagementCreateListObj(),
 });
 
+/** 登録ボタンクリックイベント */
 const register = async () => {
   const reqForm: MenuManagementCreateListForm = new MenuManagementCreateListForm();
   menuManagementList.value.forEach(obj => {
@@ -101,7 +105,6 @@ const register = async () => {
     reqForm.createMenu.push(tempForm);
   })
 
-/** 登録ボタンクリックイベント */
   await axios
     .put("menuRegister/update", reqForm)
     .then(() => {
