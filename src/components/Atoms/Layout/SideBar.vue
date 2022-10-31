@@ -38,10 +38,10 @@
       </div>
       <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
     </router-link>
-    <router-link to="/" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
+    <router-link to="/menuManagement" class="flex justify-between items-center px-2 py-4 hover:bg-blue-500">
       <div class="flex items-center">
         <font-awesome-icon :icon="['fas', 'scissors']" class="w-4 h-4 pr-2 font-black" />
-        <p>メニューマスタ管理</p>
+        <p>メニュー管理</p>
       </div>
       <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
     </router-link>
