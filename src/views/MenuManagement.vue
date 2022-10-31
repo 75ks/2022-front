@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-5">
+  <div class="container">
     <Header
       header-name="メニュー管理"
     />
