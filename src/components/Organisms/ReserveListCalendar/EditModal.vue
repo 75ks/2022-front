@@ -1,5 +1,6 @@
 <template>
   <teleport to="body">
+    <Loading :is-loading="isLoading"/>
     <div
       v-show="isVisibleModal"
       @click="closeModal()"
@@ -89,10 +90,11 @@
 </template>
 
 <script setup lang="ts">
+import Loading from '../../Atoms/Layout/Loading.vue';
 import moment from 'moment';
 import _ from 'lodash';
 import CustomButton from '../../Atoms/Button/CustomButton.vue';
-import { reactive, computed, toRefs, watchEffect } from 'vue';
+import { reactive, computed, toRefs, watchEffect, ref } from 'vue';
 import { EditModalScreenObj } from '../../../models/screenObj/EditModalScreenObj';
 import DateTimePickerWithLabel from '../../Molecules/DateTimePickerWithLabel.vue';
 import SelectBoxWithLabel from '../../Molecules/SelectBoxWithLabel.vue';
@@ -158,32 +160,47 @@ watchEffect(() => {
   }
 });
 
+/** ローティングフラグ */
+const isLoading = ref<boolean>(false);
+
 /** 更新ボタンクリックイベント */
 const updateReserve = async (): Promise<void> => {
-  if (!isVisited.value) {
-    await reserveStore.update(state.screenObj);
-    reserveStore.fetchReserves();
-    if (messageStore.getMessage.messageList && messageStore.getMessage.messageType !== MessageStatus.SUCCESS.code) {
-      messageStore.resetMessageList();
-      messageStore.resetMessageType();
-    }
-    closeModal();
-  }
-}
-
-/** 削除ボタンクリックイベント */
-const deleteReserve = async (): Promise<void> => {
-  if (!isVisited.value) {
-    let checkDeleteFlg = window.confirm('予約情報を削除してもよろしいですか？');
-    if (checkDeleteFlg) {
-      await reserveStore.delete(state.screenObj);
+  try {
+    isLoading.value = !isLoading.value;
+    if (!isVisited.value) {
+      await reserveStore.update(state.screenObj);
       reserveStore.fetchReserves();
       if (messageStore.getMessage.messageList && messageStore.getMessage.messageType !== MessageStatus.SUCCESS.code) {
         messageStore.resetMessageList();
         messageStore.resetMessageType();
       }
+      closeModal();
     }
-    closeModal();
+  } catch(error) {
+  } finally {
+    isLoading.value = !isLoading.value;
+  }
+}
+
+/** 削除ボタンクリックイベント */
+const deleteReserve = async (): Promise<void> => {
+  try {
+    if (!isVisited.value) {
+      let checkDeleteFlg = window.confirm('予約情報を削除してもよろしいですか？');
+      if (checkDeleteFlg) {
+        isLoading.value = !isLoading.value;
+        await reserveStore.delete(state.screenObj);
+        reserveStore.fetchReserves();
+        if (messageStore.getMessage.messageList && messageStore.getMessage.messageType !== MessageStatus.SUCCESS.code) {
+          messageStore.resetMessageList();
+          messageStore.resetMessageType();
+        }
+      }
+      closeModal();
+    }
+  } catch(error) {
+  } finally {
+    isLoading.value = !isLoading.value;
   }
 }
 

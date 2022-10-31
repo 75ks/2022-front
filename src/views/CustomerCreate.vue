@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading :is-loading="isLoading"/>
     <Header :header-name="'顧客登録'" />
     <div class="p-2 mt-2 bg-white">
       <div
@@ -117,9 +118,10 @@
 </template>
 
 <script setup lang="ts">
+import Loading from "../components/Atoms/Layout/Loading.vue";
 import Header from "../components/Atoms/Layout/Header.vue";
 import CustomButton from "../components/Atoms/Button/CustomButton.vue";
-import { reactive, computed } from "vue";
+import { reactive, computed, ref } from "vue";
 import axios from "../plugins/axios";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
@@ -145,8 +147,12 @@ const state = reactive<State>({
   screenObj: new CustomerCreateScreenObj(),
 });
 
+/** ローティングフラグ */
+const isLoading = ref<boolean>(false);
+
 /** 登録ボタンクリックイベント */
 const register = async () => {
+  isLoading.value = !isLoading.value;
   const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
   Object.assign(reqForm, state.screenObj);
   await axios
@@ -160,6 +166,7 @@ const register = async () => {
     })
     .finally(() => {
       // 正常終了・エラー問わず必ず行う処理
+      isLoading.value = !isLoading.value;
     });
 };
 </script>

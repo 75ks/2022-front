@@ -2,10 +2,7 @@
   <div id="app" class="w-full min-h-screen md:flex">
     <SideBar v-if="isVisible" />
     <div class="w-full">
-      <SuccessMessage
-        class="w-full fixed z-40"
-        :class="isVisible ? 'mt-12 md:mt-0' : ''"
-      />
+      <SuccessMessage />
       <router-view class="w-full p-2 bg-gray-200 min-h-screen" />
     </div>
   </div>

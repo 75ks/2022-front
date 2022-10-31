@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <Loading :is-loading="isLoading" />
-    <div class="w-1/2 m-auto p-8 mt-20 bg-white">
+    <div class="w-2/3 md:w-1/2 m-auto p-8 mt-20 bg-white">
       <p class="pb-10 text-center font-bold text-2xl">ログイン</p>
       <div
         v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
@@ -11,21 +11,21 @@
           <li>※{{ mes }}</li>
         </ul>
       </div>
-      <div class="w-2/3 m-auto pb-5">
+      <div class="w-full md:w-2/3 md:m-auto pb-5">
         <CustomInputWithLabel
           v-model:input-value="state.screenObj.email"
           label="メールアドレス"
           type="email"
         />
       </div>
-      <div class="w-2/3 m-auto pb-10">
+      <div class="w-full md:w-2/3 md:m-auto pb-10">
         <CustomInputWithLabel
           v-model:input-value="state.screenObj.password"
           label="パスワード"
           type="password"
         />
       </div>
-      <div class="w-2/3 m-auto text-center">
+      <div class="w-full md:w-2/3 md:m-auto text-center">
         <CustomButton
           class="w-full"
           :button-name="'ログイン'"
