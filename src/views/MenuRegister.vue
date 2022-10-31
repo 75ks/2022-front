@@ -33,12 +33,6 @@
                   type="string"
                 />
               </td>
-              <td class="border border-gray-300 bg-white p-2 w-4/5">
-                <InputWithLabel
-                  v-model:input-value="data.menuId"
-                  type="number"
-                />
-              </td>
             </tr>
           </template>
         </tbody>
@@ -63,8 +57,10 @@ import { useMenuManagementCreateStore } from "../store/MenuManagementCreate";
 import axios from "../plugins/axios";
 import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateForm";
 import { MenuManagementUnityForm } from "../models/form/MenuManagementUnityUpdateFrom";
-import { MenuManagementCreateObj } from "../models/screenObj/MenuManagementCreateObj";
+import { MenuManagementCreateListObj } from "../models/screenObj/MenuManagementCreateListObj";
+import { MenuManagementCreateListForm } from "../models/form/MenuManagementCreateListForm";
 import { MenuManagementCreateForm } from "../models/form/MenuManagementCreateForm";
+import { MenuManagementListForm } from "../models/form/MenuManagementListForm";
 const MenuManagementCreateStore = useMenuManagementCreateStore();
 
 MenuManagementCreateStore.fetchMenuManagement();
@@ -74,9 +70,14 @@ const menuManagementList = computed(() => {
 });
 
 
+
 const addRow = (): void => {
   const menuManagementData = ref<MenuManagementCreate>(new MenuManagementCreate());
   menuManagementList.value.push(menuManagementData.value);
+  for(let i = 0; i < menuManagementList.value.length; i++){
+    menuManagementList.value[i].menuId = i;
+  }
+
 };
 
 const deleteRow = (index: number) => {
@@ -84,21 +85,28 @@ const deleteRow = (index: number) => {
 };
 
 
+
 interface State {
-  screenObj: MenuManagementCreateObj;
+  screenObj: MenuManagementCreateListObj;
 }
 const state = reactive<State>({
-  screenObj: new MenuManagementCreateObj(),
+  screenObj: new MenuManagementCreateListObj(),
 });
-/** 登録ボタンクリックイベント */
+
 const register = async () => {
-  const reqForm: MenuManagementCreateForm = new MenuManagementCreateForm();
-  Object.assign(reqForm, state.screenObj);
+  const reqForm: MenuManagementCreateListForm = new MenuManagementCreateListForm();
+  menuManagementList.value.forEach(obj => {
+    const tempForm: MenuManagementCreateForm = new MenuManagementCreateForm();
+    Object.assign(tempForm, obj);
+    reqForm.createMenu.push(tempForm);
+  })
+
+/** 登録ボタンクリックイベント */
   await axios
     .put("menuRegister/update", reqForm)
     .then(() => {
       // 入力項目を初期化する
-      state.screenObj = new MenuManagementCreateObj();
+      state.screenObj = new MenuManagementCreateListObj();
     })
     .catch((error) => {
       // エラー発生時の処理
