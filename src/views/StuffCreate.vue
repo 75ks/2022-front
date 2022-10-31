@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :header-name="'顧客登録'" />
+    <Header :header-name="'スタッフ登録'" />
     <div class="p-2 mt-2 bg-white">
       <div
         v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
@@ -52,6 +52,12 @@
           label="性別"
           :requiredFlg="true"
         />
+        <SelectBoxWithLabel
+          v-model:select-value="state.screenObj.rankId"
+          targetUrl="/selectOption/ranks"
+          label="ランク"
+          :requiredFlg="true"
+        />
         <InputWithLabel
           v-model:input-value="state.screenObj.postalCode"
           label="郵便番号"
@@ -95,6 +101,12 @@
           type="email"
           :requiredFlg="true"
         />
+        <InputWithLabel
+          v-model:input-value="state.screenObj.password"
+          label="パスワード"
+          type="password"
+          :requiredFlg="true"
+        />
       </div>
       <div class="w-1/2 m-auto">
         <CustomButton
@@ -102,14 +114,6 @@
           :button-name="'登録'"
           :button-color-number="1"
           @click="register"
-        />
-      </div>
-      <div class="w-1/2 m-auto">
-        <CustomButton
-          class="w-full mt-4"
-          :button-name="'戻る'"
-          :button-color-number="0"
-          @click='$router.push("/customerList")'
         />
       </div>
     </div>
@@ -125,8 +129,8 @@ import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import { GenderList } from "../constants/Gender";
 import { PrefectureIdList } from "../constants/PrefectureId";
-import { CustomerCreateScreenObj } from "../models/screenObj/CustomerCreateScreenObj";
-import { CustomerCreateRequest } from "../models/form/CustomerCreateRequest";
+import { StuffCreateScreenObj } from "../models/screenObj/StuffCreateScreenObj";
+import { StuffCreateRequest } from "../models/form/StuffCreateRequest";
 import { MessageStatus } from '../constants/MessageStatus'
 import { useMessageStore } from '../store/message'
 import DatePickerWithLabel from '../components/Molecules/DatePickerWithLabel.vue';
@@ -138,22 +142,22 @@ const message = computed(() => {
 });
 
 interface State {
-  screenObj: CustomerCreateScreenObj;
+  screenObj: StuffCreateScreenObj;
 }
 
 const state = reactive<State>({
-  screenObj: new CustomerCreateScreenObj(),
+  screenObj: new StuffCreateScreenObj(),
 });
 
 /** 登録ボタンクリックイベント */
 const register = async () => {
-  const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
+  const reqForm: StuffCreateRequest = new StuffCreateRequest();
   Object.assign(reqForm, state.screenObj);
   await axios
-    .post("/customerCreate", reqForm)
+    .post("/stuffCreate", reqForm)
     .then(() => {
       // 入力項目を初期化する
-      state.screenObj = new CustomerCreateScreenObj();
+      state.screenObj = new StuffCreateScreenObj();
     })
     .catch((error) => {
       // エラー発生時の処理

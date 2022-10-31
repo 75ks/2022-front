@@ -16,6 +16,8 @@ export const useMenuManagementStore = defineStore({
   },
   actions: {
     async fetchMenuManagement(): Promise<void> {
+      // 一覧を初期化する
+      this.menuManagement.splice(0);
       const { data } = await axios.get("/menuManagement/initialize", {});
       this.addMenuManagement(data);
     },

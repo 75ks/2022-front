@@ -1,6 +1,16 @@
 <template>
   <div class="container p-5">
-    <div class="flex justify-center">
+    <Header
+      header-name="メニュー管理"
+    />
+    <div class="mt-2 bg-white py-3">
+      <div class="pl-6 pb-3">
+        <CustomButton
+          button-name="メニューマスタ管理"
+          :buttonColorNumber="3"
+          @click="$router.push('/menuRegister')"
+        />
+      </div>
       <table class="w-2/3">
         <thead>
           <tr>
@@ -23,7 +33,7 @@
         <tbody>
           <template v-for="(data, index1) in menuManagementList" :key="index1">
             <tr v-for="(detail, index2) in data.detail" :key="index2">
-              <td v-if="index2 === 0" :rowspan="data.detail.length">
+              <td v-if="index2 === 0" :rowspan="data.detail.length" class="p-1">
                 <font-awesome-icon
                   :icon="['fas', 'minus-circle']"
                   class="ml-1 text-red-600 cursor-pointer hover:text-red-400"
@@ -72,18 +82,20 @@
           </template>
         </tbody>
       </table>
-    </div>
-    <div class="w-1/4 mt-4 ml-14 text-right pr-9">
-      <CustomButton
-        button-name="更新"
-        @click="register"
-      />
+      <div class="w-1/4 mt-4 ml-6">
+        <CustomButton
+          button-name="更新"
+          @click="register"
+          :buttonColorNumber="1"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 
 <script setup lang="ts">
+import Header from "../components/Atoms/Layout/Header.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import { reactive, ref } from "vue";
@@ -96,10 +108,6 @@ import CustomButton from '../components/Atoms/Button/CustomButton.vue';
 import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateForm";
 import { MenuManagementUnityForm } from "../models/form/MenuManagementUnityUpdateFrom";
 import { MenuManagementUnityObj } from "../models/screenObj/MenuManagementUnityObj";
-import  MenuManagementModal from "../components/MenuManagementModal/MenuManagementModal.vue";
-
-
-
 
 const MenuManagementStore = useMenuManagementStore();
 

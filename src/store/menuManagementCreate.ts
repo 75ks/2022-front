@@ -7,15 +7,16 @@ import { MenuManagementCreateObj } from "../models/screenObj/MenuManagementCreat
 export const useMenuManagementCreateStore = defineStore({
   id: "menuManagementCreate",
   state: () => ({
-    MenuManagementCreate: [] as MenuManagementCreate[],
+    menuManagementCreate: [] as MenuManagementCreate[],
   }),
   getters: {
     getMenuManagementCreate(state): MenuManagementCreate[] {
-      return state.MenuManagementCreate;
+      return state.menuManagementCreate;
     },
   },
   actions: {
     async fetchMenuManagement(): Promise<void> {
+      this.menuManagementCreate.splice(0);
       const { data } = await axios.get("/menuRegister/Create", {});
       this.addMenuManagement(data);
     },
@@ -28,8 +29,15 @@ export const useMenuManagementCreateStore = defineStore({
       array.forEach((obj) => {
         const menuManagementCreate: MenuManagementCreate = new MenuManagementCreate();
         _.assign(menuManagementCreate, _.pick(obj, _.keys(menuManagementCreate)));
-        this.MenuManagementCreate.push(menuManagementCreate);
+        this.menuManagementCreate.push(menuManagementCreate);
       });
     },
+    addRow() {
+      const menuManagementData = new MenuManagementCreate();
+      this.menuManagementCreate.push(menuManagementData);
+    },
+    deleteRow(index: number) {
+      this.menuManagementCreate.splice(index, 1);
+    }
   },
 });

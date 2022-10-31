@@ -12,11 +12,16 @@ import StuffList from '../views/StuffList.vue';
 import CustomerList from '../views/CustomerList.vue';
 import  MenuManagement  from "../views/MenuManagement.vue";
 import  MenuRegister  from "../views/MenuRegister.vue";
+import CustomerDetail from "../views/CustomerDetail.vue";
+import SalesTotal from '../views/SalesTotal.vue';
+import StuffCreate from '../views/StuffCreate.vue';
 // 顧客用
 import CustomerLogin from "../views/customer/CustomerLogin.vue";
 import Profile from "../views/customer/Profile.vue";
 import PasswordSetting from "../views/customer/PasswordSetting.vue";
 import ReserveRegister from "../views/customer/ReserveRegister.vue";
+// 上記以外
+import NotFound from '../views/NotFound.vue';
 
 import { useAuthorizationStore } from "../store/authorization";
 import { useCustomerAuthorizationStore } from "../store/customerAuthorization";
@@ -28,7 +33,7 @@ const routes = [
   { path: "/", component: Test },
   { path: "/componentsSample", component: ComponentsSample, meta: { requiredAuth: true } },
   { path: "/reserveList", component: ReserveList, meta: { requiredAuth: true } },
-  { path: "/customerCreate", component: CustomerCreate },
+  { path: "/customerCreate", component: CustomerCreate, meta: { requiredAuth: true } },
   { path: "/reserveListCalendar", component: ReserveListCalender, meta: { requiredAuth: true } },
   { path: "/login", component: Login },
   { path: "/registerSample", component: RegisterSample, meta: { requiredAuth: true } },
@@ -37,12 +42,18 @@ const routes = [
   { path: "/customerList", component: CustomerList },
   { path: "/menuManagement", component: MenuManagement, meta: { requiredAuth: true }},
   { path: "/menuRegister", component: MenuRegister, meta: { requiredAuth: true }},
-  
+
+  { path: "/customerList", component: CustomerList, meta: { requiredAuth: true } },
+  { path: "/customerDetail/:customerId", component: CustomerDetail, meta: { requiredAuth: true } },
+  { path: "/salesTotal", component: SalesTotal, meta: { requiredAuth: true } },
+  { path: "/stuffCreate", component: StuffCreate, meta: { requiredAuth: true } },
   // 顧客用画面
   { path: "/customer/login", component: CustomerLogin },
   { path: "/customer/profile", component: Profile, meta: { requiredAuthCustomer: true } },
   { path: "/customer/passwordSetting", component: PasswordSetting, meta: { requiredAuthCustomer: true } },
   { path: "/customer/reserveRegister", component: ReserveRegister, meta: { requiredAuthCustomer: true } },
+  // 上記以外
+  { path: "/:catchAll(.*)", name: "NotFound", component: NotFound },
 ];
 
 const router = vueRouter.createRouter({
@@ -52,8 +63,10 @@ const router = vueRouter.createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiredAuth)) {
-    useMessageStore().resetMessageList();
-    useMessageStore().resetMessageType();
+    if (useMessageStore().getMessage.messageList && useMessageStore().getMessage.messageType !== MessageStatus.SUCCESS.code) {
+      useMessageStore().resetMessageList();
+      useMessageStore().resetMessageType();
+    }
     if (useAuthorizationStore().getAuthorization.jwt) {
       next();
     } else {
@@ -62,8 +75,10 @@ router.beforeEach((to, from, next) => {
       next("/login");
     }
   } else if (to.matched.some(record => record.meta.requiredAuthCustomer)) {
-    useMessageStore().resetMessageList();
-    useMessageStore().resetMessageType();
+    if (useMessageStore().getMessage.messageList && useMessageStore().getMessage.messageType !== MessageStatus.SUCCESS.code) {
+      useMessageStore().resetMessageList();
+      useMessageStore().resetMessageType();
+    }
     if (useCustomerAuthorizationStore().getAuthorization.jwt) {
       next();
     } else {
