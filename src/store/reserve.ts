@@ -8,6 +8,8 @@ import { RegisterModalScreenObj } from '../models/screenObj/RegisterModalScreenO
 import { EditModalScreenObj } from '../models/screenObj/EditModalScreenObj';
 import { RegisterReserveForm } from '../models/form/RegisterReserveForm';
 import { EditReserveForm } from '../models/form/EditReserveForm';
+import { ReserveRegisterForm } from '../models/form/ReserveRegisterForm';
+import { ReserveRegisterScreenObj } from '../models/screenObj/ReserveRegisterScreenObj';
 
 export const useReserveStore = defineStore({
   id: "reserve",
@@ -43,6 +45,11 @@ export const useReserveStore = defineStore({
       const reqForm: RegisterReserveForm = new RegisterReserveForm();
       _.assign(reqForm, _.pick(screenObj, _.keys(reqForm)));
       await axios.post("/reserves/register", reqForm);
+    },
+    async registerByCustomer(searchCond: ReserveRegisterScreenObj): Promise<void> {
+      const reqForm: ReserveRegisterForm = new ReserveRegisterForm();
+      _.assign(reqForm, _.pick(searchCond, _.keys(reqForm)));
+      await axios.post("/reserveRegister/", reqForm);
     },
     async update(screenObj: EditModalScreenObj): Promise<void> {
       const reqForm: EditReserveForm = new EditReserveForm();

@@ -30,6 +30,11 @@ instance.interceptors.response.use(
       if (response.status === 200) {
         useMessageStore().addMessageType(MessageStatus.SUCCESS.code!);
       }
+      // 5秒後にメッセージをリセット
+      setTimeout(() => {
+        useMessageStore().resetMessageList();
+        useMessageStore().resetMessageType();
+      }, 5000);
     }
     return response;
   },

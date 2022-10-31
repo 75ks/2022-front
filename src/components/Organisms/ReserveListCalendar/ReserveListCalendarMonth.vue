@@ -7,7 +7,7 @@
       {{ dayOfWeek[n-1] }}
     </div>
   </div>
-  <div class="w-full custom-height-3 border-gray-300">
+  <div class="w-full custom-height-2 border-gray-300">
     <div
       v-for="(week, index) in calendars" :key="index"
       class="flex border-l border-gray-300"
@@ -107,8 +107,8 @@ const getCalenderMonth = (): Calender[][] => {
 </script>
 
 <style>
-  .custom-height-3 {
-    /** カレンダー高さ微調整(曜日: 28px) */
-    height: calc(100% - 28px);
+  .custom-height-2 {
+    /** カレンダー硬さ微調整(画面余白:16px - ヘッダー:40px - ヘッダー下余白:8px - 画面余白:16px - カレンダー表示形式プルダウン:38px - 現在日時:48px - 曜日:28px - border:2px) */
+    height: calc(100vh - 16px - 40px - 8px - 16px - 38px - 48px - 28px - 2px);
   }
 </style>

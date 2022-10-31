@@ -4,9 +4,8 @@
     <div class="w-2/3 m-auto p-8 mt-20 bg-white">
       <p class="pb-10 text-center font-bold text-2xl">パスワード変更</p>
       <div
-        v-if="message.messageList.length"
-        class="pb-10 w-2/3 m-auto"
-        :class="message.messageType === MessageStatus.DANGER.code || MessageStatus.WARNING.code ? 'text-red-500' : 'text-green-500'"
+        v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
+        class="pb-10 w-2/3 m-auto text-red-500"
       >
         <ul v-for="(mes, index) in message.messageList" :key="index">
           <li>※{{ mes }}</li>
@@ -48,11 +47,6 @@ const customerAuthorizationStore = useCustomerAuthorizationStore();
 const messageStore = useMessageStore();
 const router = useRouter();
 
-if (messageStore.getMessage.messageType !== MessageStatus.WARNING.code) {
-  messageStore.resetMessageList();
-  messageStore.resetMessageType();
-}
-
 const message = computed(() => {
   return messageStore.getMessage;
 });
@@ -78,8 +72,8 @@ const register = async () => {
       // プロフィール画面に遷移
       router.push("/customer/profile");
     }
-    isLoading.value = !isLoading.value;
   } catch (error) {
+  } finally {
     isLoading.value = !isLoading.value;
   }
 }

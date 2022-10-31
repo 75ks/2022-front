@@ -13,6 +13,7 @@
       <CustomInput
         v-model:inputValue="inputValue"
         :type="type"
+        :placeholder="placeholder"
         :size="size"
         :requiredFlg="requiredFlg"
         :disableFlg="disableFlg"
@@ -34,6 +35,8 @@ interface Props {
   type?: string;
   /** 任意のラベル名 */
   label?: string;
+  /** プレースホルダー */
+  placeholder?: string;
   /** ラベルと入力欄横並びフラグ */
   sideBySideFlg?: boolean;
   /** 入力欄の幅 */
@@ -53,6 +56,7 @@ interface Emits {
 const props = withDefaults(defineProps<Props>(), {
   type: "text",
   label: "",
+  placeholder: "",
   sideBySideFlg: false,
   inputWidth: "w-3/4",
   size: "md",

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :header-name="'顧客登録'" />
+    <Header :header-name="'顧客詳細'" />
     <div class="p-2 mt-2 bg-white">
       <div
         v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
@@ -14,25 +14,21 @@
         <InputWithLabel
           v-model:input-value="state.screenObj.lastName"
           label="姓"
-          placeholder="山田"
           :requiredFlg="true"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.firstName"
           label="名"
-          placeholder="太郎"
           :requiredFlg="true"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.lastNameKana"
           label="セイ"
-          placeholder="ヤマダ"
           :requiredFlg="true"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.firstNameKana"
           label="メイ"
-          placeholder="タロウ"
           :requiredFlg="true"
         />
         <DatePickerWithLabel
@@ -43,7 +39,6 @@
         <InputWithLabel
           v-model:input-value="state.screenObj.age"
           label="年齢"
-          placeholder="25"
           :requiredFlg="false"
         />
         <SelectBoxWithLabel
@@ -55,7 +50,6 @@
         <InputWithLabel
           v-model:input-value="state.screenObj.postalCode"
           label="郵便番号"
-          placeholder="1234567"
           :requiredFlg="false"
         />
         <SelectBoxWithLabel
@@ -67,39 +61,34 @@
         <InputWithLabel
           v-model:input-value="state.screenObj.address1"
           label="市区町村"
-          placeholder="新宿区"
           :requiredFlg="false"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.address2"
           label="市区町村以下"
-          placeholder="新宿1-1-1"
           :requiredFlg="false"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.address3"
           label="建物、部屋番号"
-          placeholder="新宿ビル101"
           :requiredFlg="false"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.phoneNumber"
           label="電話番号"
-          placeholder="09012345678"
           :requiredFlg="false"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.email"
           label="メールアドレス"
-          placeholder="taro@gmail.com"
           type="email"
           :requiredFlg="true"
-        />
+        />      
       </div>
       <div class="w-1/2 m-auto">
         <CustomButton
           class="w-full mt-4"
-          :button-name="'登録'"
+          :button-name="'更新'"
           :button-color-number="1"
           @click="register"
         />
@@ -125,11 +114,12 @@ import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
 import { GenderList } from "../constants/Gender";
 import { PrefectureIdList } from "../constants/PrefectureId";
-import { CustomerCreateScreenObj } from "../models/screenObj/CustomerCreateScreenObj";
-import { CustomerCreateRequest } from "../models/form/CustomerCreateRequest";
+import { CustomerDetailScreenObj } from "../models/screenObj/CustomerDetailScreenObj";
+import { CustomerDetailRequest } from "../models/form/CustomerDetailRequest";
 import { MessageStatus } from '../constants/MessageStatus'
 import { useMessageStore } from '../store/message'
 import DatePickerWithLabel from '../components/Molecules/DatePickerWithLabel.vue';
+import { useRoute } from "vue-router";
 
 const messageStore = useMessageStore();
 
@@ -137,23 +127,40 @@ const message = computed(() => {
   return messageStore.getMessage;
 });
 
+const route = useRoute();
+
 interface State {
-  screenObj: CustomerCreateScreenObj;
+  screenObj: CustomerDetailScreenObj;
 }
-
 const state = reactive<State>({
-  screenObj: new CustomerCreateScreenObj(),
+  screenObj: new CustomerDetailScreenObj(),
 });
+const customerId: number = Number(route.params.customerId);
 
-/** 登録ボタンクリックイベント */
+/** 初期表示 */
+axios
+  .get("/customerDetail/initialize", {
+    params: { customerId: customerId }
+  })
+  .then(({ data }) => {
+    Object.assign(state.screenObj, data);
+  })
+  .catch((error) => {
+    // エラー発生時の処理
+  })
+  .finally(() => {
+    // 正常終了・エラー問わず必ず行う処理
+  });
+
+/** 更新ボタンクリックイベント */
 const register = async () => {
-  const reqForm: CustomerCreateRequest = new CustomerCreateRequest();
+  const reqForm: CustomerDetailRequest = new CustomerDetailRequest();
   Object.assign(reqForm, state.screenObj);
+  reqForm.customerId = customerId;
   await axios
-    .post("/customerCreate", reqForm)
+    .post("/customerDetail/", reqForm)
     .then(() => {
-      // 入力項目を初期化する
-      state.screenObj = new CustomerCreateScreenObj();
+      // 正常終了時の処理
     })
     .catch((error) => {
       // エラー発生時の処理

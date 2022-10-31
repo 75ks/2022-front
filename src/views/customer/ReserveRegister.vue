@@ -1,13 +1,13 @@
 <template>
   <div class="w-full">
     <Loading :is-loading="isLoading"/>
-    <div class="w-2/3 m-auto p-8 mt-20 bg-white">
+    <div class="w-full m-auto py-8 mt-12 md:mt-0 bg-white">
       <p class="pb-10 text-center font-bold text-2xl">予約</p>
-      <p class="pb-10 m-auto text-center text-sm">◆予約情報を入力して「登録」ボタンをクリックしてください。</p>
+      <p class="pb-2 m-auto text-center text-sm">◆予約情報を入力して「登録」ボタンをクリックしてください。</p>
+      <p class="pb-10 m-auto text-center text-sm">※スタッフを選択すると、メニューが選択可能になります。</p>
       <div
-        v-if="message.messageList.length"
-        class="pb-10 w-1/3 m-auto"
-        :class="message.messageType === MessageStatus.DANGER.code ? 'text-red-500' : 'text-green-500'"
+        v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
+        class="pb-10 w-1/3 m-auto text-red-500"
       >
         <ul v-for="(mes, index) in message.messageList" :key="index">
           <li>※{{ mes }}</li>
@@ -25,8 +25,9 @@
         <div class="w-2/3 pb-5">
           <SelectBoxWithLabel
             v-model:select-value="state.screenObj.menuId"
-            targetUrl="/selectOption/menus"
+            :targetUrl="targetUrl"
             :required-flg="true"
+            :disable-flg="selectOptionMenuDisableFlg"
             label="メニュー"
           />
         </div>
@@ -51,10 +52,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import axios from '../../plugins/axios';
+import { computed, reactive, ref, watch, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMessageStore } from '../../store/message';
-import { useCustomerStore } from '../../store/customer';
+import { useReserveStore } from '../../store/reserve';
 import { MessageStatus } from '../../constants/MessageStatus';
 import { ReserveRegisterScreenObj } from '../../models/screenObj/ReserveRegisterScreenObj';
 import CustomButton from '../../components/Atoms/Button/CustomButton.vue';
@@ -63,7 +65,7 @@ import DateTimePickerWithLabel from '../../components/Molecules/DateTimePickerWi
 import Loading from '../../components/Atoms/Layout/Loading.vue';
 
 const messageStore = useMessageStore();
-const customerStore = useCustomerStore();
+const reserveStore = useReserveStore();
 const router = useRouter();
 
 const message = computed(() => {
@@ -78,16 +80,38 @@ const state = reactive<State>({
   screenObj: new ReserveRegisterScreenObj(),
 });
 
+const { stuffId } = toRefs(state.screenObj);
+const targetUrl = ref<string>("");
+
+// メニュープルダウン非活性フラグ(true: 非活性、false: 活性)
+const selectOptionMenuDisableFlg = ref<boolean>(true);
+
 /** ローティングフラグ */
 const isLoading = ref<boolean>(false);
+
+watch(stuffId, async (after, before) => {
+  if (stuffId.value) {
+    // スタッフIDをキーにランクIDを取得
+    const { data } = await axios.get("/reserveRegister/?stuffId=" + stuffId.value);
+    // メニュープルダウンのURLを生成
+    targetUrl.value = "/selectOption/menuPrice?rankId=" + data;
+    selectOptionMenuDisableFlg.value = false;
+  } else {
+    targetUrl.value = "";
+    state.screenObj.menuId = null;
+    selectOptionMenuDisableFlg.value = true;
+  }
+});
 
 /** 登録ボタンクリックイベント */
 const register = async (): Promise<void> => {
   try {
     isLoading.value = !isLoading.value;
-    await customerStore.reserveRegister(state.screenObj);
+    await reserveStore.registerByCustomer(state.screenObj);
+    // プロフィール画面に遷移
     router.push("/customer/profile");
   } catch (error) {
+  } finally {
     isLoading.value = !isLoading.value;
   }
 };

@@ -111,6 +111,17 @@ watch(
   { immediate: true }
 );
 
+watch(
+  () => props.targetUrl,
+  async () => {
+    if (props.targetUrl) {
+      // URLが指定されていた場合
+      state.selectOptions.splice(0);
+      await getSelectOption(props.targetUrl);
+    }
+  }
+);
+
 const getSelectOption = (targetUrl: string) => {
   axios.get<SelectOption[]>(targetUrl).then(({ data }) => {
     // 空選択肢有りフラグがONの場合
