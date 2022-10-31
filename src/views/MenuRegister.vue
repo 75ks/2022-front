@@ -33,6 +33,12 @@
                   type="string"
                 />
               </td>
+              <td class="border border-gray-300 bg-white p-2 w-4/5">
+                <InputWithLabel
+                  v-model:input-value="data.menuId"
+                  type="number"
+                />
+              </td>
             </tr>
           </template>
         </tbody>
@@ -59,7 +65,6 @@ import { MenuManagementUpdateForm } from "../models/form/MenuManagementUpdateFor
 import { MenuManagementUnityForm } from "../models/form/MenuManagementUnityUpdateFrom";
 import { MenuManagementCreateObj } from "../models/screenObj/MenuManagementCreateObj";
 import { MenuManagementCreateForm } from "../models/form/MenuManagementCreateForm";
-
 const MenuManagementCreateStore = useMenuManagementCreateStore();
 
 MenuManagementCreateStore.fetchMenuManagement();
@@ -90,7 +95,7 @@ const register = async () => {
   const reqForm: MenuManagementCreateForm = new MenuManagementCreateForm();
   Object.assign(reqForm, state.screenObj);
   await axios
-    .put("/update", reqForm)
+    .put("menuRegister/update", reqForm)
     .then(() => {
       // 入力項目を初期化する
       state.screenObj = new MenuManagementCreateObj();
