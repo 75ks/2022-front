@@ -32,5 +32,12 @@ export const useMenuManagementCreateStore = defineStore({
         this.menuManagementCreate.push(menuManagementCreate);
       });
     },
+    addRow() {
+      const menuManagementData = new MenuManagementCreate();
+      this.menuManagementCreate.push(menuManagementData);
+    },
+    deleteRow(index: number) {
+      this.menuManagementCreate.splice(index, 1);
+    }
   },
 });

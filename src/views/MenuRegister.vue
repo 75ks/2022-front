@@ -61,8 +61,7 @@
 import Header from "../components/Atoms/Layout/Header.vue";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
-import { reactive, ref } from "vue";
-import { MenuManagementCreate } from "../models/MenuManagementCreate";
+import { reactive } from "vue";
 import { computed } from "vue";
 import { useMenuManagementCreateStore } from "../store/MenuManagementCreate";
 import axios from "../plugins/axios";
@@ -78,15 +77,11 @@ const menuManagementList = computed(() => {
 });
 
 const addRow = (): void => {
-  const menuManagementData = ref<MenuManagementCreate>(new MenuManagementCreate());
-  menuManagementList.value.push(menuManagementData.value);
-  for(let i = 0; i < menuManagementList.value.length; i++){
-    menuManagementList.value[i].menuId = i;
-  }
+  MenuManagementCreateStore.addRow();
 };
 
 const deleteRow = (index: number) => {
-  menuManagementList.value.splice(index, 1);
+  MenuManagementCreateStore.deleteRow(index);
 };
 
 interface State {
