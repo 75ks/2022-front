@@ -1,5 +1,6 @@
 <template>
   <div class="p-2 mt-2 bg-white">
+    <Loading :is-loading="isLoading"/>
     <div class="flex justify-between">
       <div class="flex">
         <font-awesome-icon :icon="['fas', 'search']" class="w-4 h-4 font-black" />
@@ -18,7 +19,7 @@
         />
       </div>
     </div>
-    <div class="my-4 grid grid-cols-6 gap-4">
+    <div class="px-1 py-3 grid grid-cols-6 gap-4">
       <div>
         <InputWithLabel
           v-model:input-value='searchForm.reserveHistoryId'
@@ -63,7 +64,7 @@
         />
       </div>
     </div>
-    <div class="my-4 grid grid-cols-6 gap-4">
+    <div class="px-1 grid grid-cols-6 gap-4">
       <div class="col-span-2 justify-self-start">
         <IntegerFromTo
           v-model:from-input-value="searchForm.priceMin"
@@ -85,8 +86,9 @@
 </template>
 
 <script setup lang="ts">
+import Loading from '../../Atoms/Layout/Loading.vue';
 import CustomButton from '../../Atoms/Button/CustomButton.vue';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useReserveStore } from '../../../store/reserve';
 import IntegerFromTo from '../../Molecules/IntegerFromTo.vue';
 import InputWithLabel from '../../Molecules/InputWithLabel.vue';
@@ -99,11 +101,20 @@ const reserveStore = useReserveStore();
 /** 検索条件入力欄 */
 const searchForm = computed(() => {
   return reserveStore.getSearchCond;
-})
+});
+
+/** ローティングフラグ */
+const isLoading = ref<boolean>(false);
 
 /** 「検索」クリックイベント(検索条件でフィルターをかける) */
 const search = async () => {
-  await reserveStore.search(searchForm.value);
+  try {
+    isLoading.value = !isLoading.value;
+    await reserveStore.search(searchForm.value);
+  } catch(error) {
+  } finally {
+    isLoading.value = !isLoading.value;
+  }
 }
 
 /** 「クリア」クリックイベント(検索条件入力欄を初期状態にし、データを再取得する) */

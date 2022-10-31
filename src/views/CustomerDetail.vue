@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading :is-loading="isLoading"/>
     <Header :header-name="'顧客詳細'" />
     <div class="p-2 mt-2 bg-white">
       <div
@@ -106,9 +107,10 @@
 </template>
 
 <script setup lang="ts">
+import Loading from "../components/Atoms/Layout/Loading.vue";
 import Header from "../components/Atoms/Layout/Header.vue";
 import CustomButton from "../components/Atoms/Button/CustomButton.vue";
-import { reactive, computed } from "vue";
+import { reactive, computed, ref } from "vue";
 import axios from "../plugins/axios";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
@@ -137,6 +139,9 @@ const state = reactive<State>({
 });
 const customerId: number = Number(route.params.customerId);
 
+/** ローティングフラグ */
+const isLoading = ref<boolean>(false);
+
 /** 初期表示 */
 axios
   .get("/customerDetail/initialize", {
@@ -154,6 +159,7 @@ axios
 
 /** 更新ボタンクリックイベント */
 const register = async () => {
+  isLoading.value = !isLoading.value;
   const reqForm: CustomerDetailRequest = new CustomerDetailRequest();
   Object.assign(reqForm, state.screenObj);
   reqForm.customerId = customerId;
@@ -167,6 +173,7 @@ const register = async () => {
     })
     .finally(() => {
       // 正常終了・エラー問わず必ず行う処理
+      isLoading.value = !isLoading.value;
     });
 };
 </script>
