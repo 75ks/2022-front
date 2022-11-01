@@ -1,5 +1,6 @@
 <template>
   <teleport to="body">
+    <Loading :is-loading="isLoading"/>
     <div
       v-show="isVisibleModal"
       @click="closeModal()"
@@ -20,7 +21,7 @@
         </p>
       </div>
       <div 
-        v-if="message.messageList && message.messageType !== MessageStatus.SUCCESS.code"
+        v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
         class="pb-10 w-1/3 m-auto text-red-500"
       >
         <ul v-for="(mes, index) in message.messageList" :key="index">
@@ -66,9 +67,10 @@
 </template>
 
 <script setup lang="ts">
+import Loading from '../../Atoms/Layout/Loading.vue';
 import _ from 'lodash';
 import CustomButton from '../../Atoms/Button/CustomButton.vue';
-import { reactive, computed, toRefs, watchEffect } from 'vue';
+import { reactive, computed, toRefs, watchEffect, ref } from 'vue';
 import { RegisterModalScreenObj } from '../../../models/screenObj/RegisterModalScreenObj';
 import DateTimePickerWithLabel from '../../Molecules/DateTimePickerWithLabel.vue';
 import SelectBoxWithLabel from '../../Molecules/SelectBoxWithLabel.vue';
@@ -115,15 +117,24 @@ watchEffect(() => {
   }
 });
 
+/** ローティングフラグ */
+const isLoading = ref<boolean>(false);
+
 /** 登録ボタンクリックイベント */
 const registerReserve = async (): Promise<void> => {
-  await reserveStore.register(state.screenObj);
-  reserveStore.fetchReserves();
-  if (messageStore.getMessage.messageList && messageStore.getMessage.messageType !== MessageStatus.SUCCESS.code) {
-    messageStore.resetMessageList();
-    messageStore.resetMessageType();
+  try {
+    isLoading.value = !isLoading.value;
+    await reserveStore.register(state.screenObj);
+    reserveStore.fetchReserves();
+    if (messageStore.getMessage.messageList && messageStore.getMessage.messageType !== MessageStatus.SUCCESS.code) {
+      messageStore.resetMessageList();
+      messageStore.resetMessageType();
+    }
+    closeModal();
+  } catch(error) {
+  } finally {
+    isLoading.value = !isLoading.value;
   }
-  closeModal();
 }
 
 /** モーダル✖︎ボタンクリックイベント */

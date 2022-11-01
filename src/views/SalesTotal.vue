@@ -80,7 +80,17 @@
           class="mt-10"
           :="pieChartProps"
         />
-        <table class="mt-10 w-full">
+        <div class="pb-2 w-1/5 ml-1">
+          <SelectBoxWithLabel
+            v-model:select-value="numberOfDisplay"
+            targetUrl="/selectOption/numberOfDisplay"
+            label="表示件数"
+            :sideBySideFlg="true"
+            inputWidth="w-2/3"
+            :emptyOptionFlg="false"
+          />
+        </div>
+        <table class="w-full mt-10 mb-4">
           <thead>
             <tr>
               <th class="border border-gray-300 px-2 py-2 text-gray-600">売上履歴ID</th>
@@ -94,7 +104,7 @@
           </thead>
           <tbody>
             <tr
-              v-for="(salesHistory, index) in salesHistorys" :key="index"
+              v-for="(salesHistory, index) in salesHistoryListSplit[selectedPage - 1]" :key="index"
             >
               <td class="border border-gray-300 px-2 py-2">{{ salesHistory.salesHistoryId }}</td>
               <td class="border border-gray-300 px-2 py-2">{{ salesHistory.customerLastName }} {{salesHistory.customerFirstName}}</td>
@@ -106,6 +116,12 @@
             </tr>
           </tbody>
         </table>
+        <Pagination
+          v-if="salesHistoryListSplit.length"
+          :data-list-split="salesHistoryListSplit"
+          v-model:selected-page="selectedPage"
+          v-model:left-most-page="leftMostPage"
+        />
       </div>
       <LineChart
         v-if="displayType == 2 && salesTotalChartsSalesMonth.length > 0 && salesTotalChartsSalesAmount.length > 0"
@@ -120,6 +136,9 @@
 import Header from '../components/Atoms/Layout/Header.vue';
 import Loading from '../components/Atoms/Layout/Loading.vue';
 import CustomButton from '../components/Atoms/Button/CustomButton.vue';
+import SelectBoxWithLabel from '../components/Molecules/SelectBoxWithLabel.vue';
+import Pagination from '../components/Atoms/Layout/Pagination.vue';
+import { SalesHistory } from '../models/SalesHistory';
 import { ref, computed, watch } from 'vue';
 import { useSalesStore } from '../store/sales';
 import { datetimeFormat } from '../utils/Format';
@@ -294,6 +313,34 @@ const lineData = computed<ChartData<"line">>(() => ({
 
 const { lineChartProps } = useLineChart({
   chartData: lineData
+});
+
+/** 選択ページ(初期値: 1ページ) */
+const selectedPage = ref<number>(1);
+
+/** ページネーション左端ページ(初期値: 1ページ) */
+const leftMostPage = ref<number>(1);
+
+/** 表示件数(初期値: 10件) */
+const numberOfDisplayContainer = ref<number>(10);
+const numberOfDisplay = computed<number>({
+  get: () => numberOfDisplayContainer.value,
+  set: (value) => numberOfDisplayContainer.value = value
+});
+
+/** 10件ずつデータを分割 */
+const salesHistoryListSplit = computed<SalesHistory[][]>(() => {
+  const salesHistoryList = Object.assign([], salesHistorys.value);
+  const salesHistoryListSplit: SalesHistory[][] = [];
+  const loopCount = Math.ceil(salesHistoryList.length / numberOfDisplay.value);
+  for (let i = 0; i < loopCount; i++) {
+    salesHistoryListSplit.push(salesHistoryList.splice(0, numberOfDisplay.value));
+  }
+  // 1ページ目を設定
+  selectedPage.value = 1;
+  // 一番左に表示しているページを1ページに設定
+  leftMostPage.value = 1;
+  return salesHistoryListSplit;
 });
 </script>
 

@@ -1,10 +1,10 @@
 <template>
-  <div class="w-full">
+  <div class="w-full mt-12 md:mt-0">
     <Loading :is-loading="isLoading"/>
-    <div class="w-2/3 m-auto p-8 mt-20 bg-white">
+    <div class="w-full m-auto py-8 bg-white">
       <p class="pb-10 text-center font-bold text-2xl">パスワード変更</p>
       <div
-        v-if="message.messageList && message.messageType !== MessageStatus.SUCCESS.code"
+        v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
         class="pb-10 w-2/3 m-auto text-red-500"
       >
         <ul v-for="(mes, index) in message.messageList" :key="index">
@@ -13,19 +13,21 @@
       </div>
       <p class="m-auto text-center text-sm">◆初めてのご利用のお客様には、セキュリティ強化のため、パスワードの変更をお願いしております。</p>
       <p class="m-auto pb-10 text-center text-sm">新しいパスワードを入力後、「パスワード変更」ボタンをクリックしてください。</p>
-      <div class="w-2/3 m-auto pb-5">
-        <CustomInputWithLabel
-          v-model:input-value="state.screenObj.password"
-          label="パスワード"
-        />
-      </div>
-      <div class="w-2/3 m-auto text-center">
-        <CustomButton
-          class="w-full"
-          :button-name="'パスワード変更'"
-          :button-color-number='1'
-          @click="register"
-        />
+      <div class="mx-6 flex flex-col justify-center items-center">
+        <div class="w-full pb-5">
+          <CustomInputWithLabel
+            v-model:input-value="state.screenObj.password"
+            label="パスワード"
+          />
+        </div>
+        <div class="w-full text-center">
+          <CustomButton
+            class="w-full"
+            :button-name="'パスワード変更'"
+            :button-color-number='1'
+            @click="register"
+          />
+        </div>
       </div>
     </div>
   </div>

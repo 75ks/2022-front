@@ -1,16 +1,17 @@
 <template>
-  <div class="w-full h-full">
-    <p class="pb-10 text-center font-bold text-2xl">顧客詳細</p>
-    <div
-      v-if="message.messageList.length"
-      class="pb-10 w-1/3 m-auto"
-      :class="message.messageType === MessageStatus.DANGER.code ? 'text-red-500' : 'text-green-500'"
-    >
-      <ul v-for="(mes, index) in message.messageList" :key="index">
-        <li>※{{ mes }}</li>
-      </ul>
-    </div>
-    <div class="grid gap-6 mb-6 grid-cols-2">
+  <div>
+    <Loading :is-loading="isLoading"/>
+    <Header :header-name="'顧客詳細'" />
+    <div class="p-2 mt-2 bg-white">
+      <div
+        v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
+        class="pb-10 w-1/3 m-auto text-red-500"
+      >
+        <ul v-for="(mes, index) in message.messageList" :key="index">
+          <li>※{{ mes }}</li>
+        </ul>
+      </div>
+      <div class="grid gap-6 mb-6 grid-cols-2">
         <InputWithLabel
           v-model:input-value="state.screenObj.lastName"
           label="姓"
@@ -31,15 +32,11 @@
           label="メイ"
           :requiredFlg="true"
         />
-
-      <!-- DatePickerWithLabel -->
         <DatePickerWithLabel
             v-model:inputValue="state.screenObj.birthday"
             label="生年月日"
             :requiredFlg="false"
         />
-
-      <!-- InputWithLabel -->
         <InputWithLabel
           v-model:input-value="state.screenObj.age"
           label="年齢"
@@ -88,29 +85,32 @@
           type="email"
           :requiredFlg="true"
         />      
+      </div>
+      <div class="w-1/2 m-auto">
+        <CustomButton
+          class="w-full mt-4"
+          :button-name="'更新'"
+          :button-color-number="1"
+          @click="register"
+        />
+      </div>
+      <div class="w-1/2 m-auto">
+        <CustomButton
+          class="w-full mt-4"
+          :button-name="'戻る'"
+          :button-color-number="0"
+          @click='$router.push("/customerList")'
+        />
+      </div>
     </div>
-
-    <div class="">
-      <CustomButton
-        class="w-24 mt-16 mr-2"
-        :button-name="'戻る'"
-        :button-color-number="0"
-        @click='$router.push("/customerList")'
-      />
-      <CustomButton
-        class="w-24 mt-16 ml-2"
-        :button-name="'更新'"
-        :button-color-number="1"
-        @click="register"
-      />
-    </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
+import Loading from "../components/Atoms/Layout/Loading.vue";
+import Header from "../components/Atoms/Layout/Header.vue";
 import CustomButton from "../components/Atoms/Button/CustomButton.vue";
-import { reactive, computed, watchEffect, toRefs, ref } from "vue";
+import { reactive, computed, ref } from "vue";
 import axios from "../plugins/axios";
 import InputWithLabel from "../components/Molecules/InputWithLabel.vue";
 import SelectBoxWithLabel from "../components/Molecules/SelectBoxWithLabel.vue";
@@ -139,6 +139,9 @@ const state = reactive<State>({
 });
 const customerId: number = Number(route.params.customerId);
 
+/** ローティングフラグ */
+const isLoading = ref<boolean>(false);
+
 /** 初期表示 */
 axios
   .get("/customerDetail/initialize", {
@@ -156,6 +159,7 @@ axios
 
 /** 更新ボタンクリックイベント */
 const register = async () => {
+  isLoading.value = !isLoading.value;
   const reqForm: CustomerDetailRequest = new CustomerDetailRequest();
   Object.assign(reqForm, state.screenObj);
   reqForm.customerId = customerId;
@@ -169,6 +173,7 @@ const register = async () => {
     })
     .finally(() => {
       // 正常終了・エラー問わず必ず行う処理
+      isLoading.value = !isLoading.value;
     });
 };
 </script>

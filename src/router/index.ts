@@ -10,6 +10,8 @@ import RegisterSample from "../views/RegisterSample.vue";
 import RegisterSampleRev from "../views/RegisterSampleRev.vue";
 import StuffList from '../views/StuffList.vue';
 import CustomerList from '../views/CustomerList.vue';
+import  MenuManagement  from "../views/MenuManagement.vue";
+import  MenuRegister  from "../views/MenuRegister.vue";
 import CustomerDetail from "../views/CustomerDetail.vue";
 import SalesTotal from '../views/SalesTotal.vue';
 import StuffCreate from '../views/StuffCreate.vue';
@@ -38,6 +40,10 @@ const routes = [
   { path: "/registerSample", component: RegisterSample, meta: { requiredAuth: true } },
   { path: "/registerSampleRev", component: RegisterSampleRev, meta: { requiredAuth: true } },
   { path: "/stuffList", component: StuffList, meta: { requiredAuth: true } },
+  { path: "/customerList", component: CustomerList },
+  { path: "/menuManagement", component: MenuManagement, meta: { requiredAuth: true }},
+  { path: "/menuRegister", component: MenuRegister, meta: { requiredAuth: true }},
+
   { path: "/customerList", component: CustomerList, meta: { requiredAuth: true } },
   { path: "/customerDetail/:customerId", component: CustomerDetail, meta: { requiredAuth: true } },
   { path: "/salesTotal", component: SalesTotal, meta: { requiredAuth: true } },

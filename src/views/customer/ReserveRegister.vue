@@ -1,20 +1,20 @@
 <template>
-  <div class="w-full">
+  <div class="w-full mt-12 md:mt-0">
     <Loading :is-loading="isLoading"/>
-    <div class="w-full m-auto py-8 mt-12 md:mt-0 bg-white">
+    <div class="w-full m-auto py-8 bg-white">
       <p class="pb-10 text-center font-bold text-2xl">予約</p>
       <p class="pb-2 m-auto text-center text-sm">◆予約情報を入力して「登録」ボタンをクリックしてください。</p>
       <p class="pb-10 m-auto text-center text-sm">※スタッフを選択すると、メニューが選択可能になります。</p>
       <div
-        v-if="message.messageList && message.messageType !== MessageStatus.SUCCESS.code"
-        class="pb-10 w-1/3 m-auto text-red-500"
+        v-if="message.messageList.length && message.messageType !== MessageStatus.SUCCESS.code"
+        class="pb-10 w-2/3 m-auto text-red-500"
       >
         <ul v-for="(mes, index) in message.messageList" :key="index">
           <li>※{{ mes }}</li>
         </ul>
       </div>
-      <div class="flex flex-col justify-center items-center">
-        <div class="w-2/3 pb-5">
+      <div class="mx-6 flex flex-col justify-center items-center">
+        <div class="w-full pb-5">
           <SelectBoxWithLabel
             v-model:select-value="state.screenObj.stuffId"
             targetUrl="/selectOption/stuffs"
@@ -22,7 +22,7 @@
             label="スタッフ"
           />
         </div>
-        <div class="w-2/3 pb-5">
+        <div class="w-full pb-5">
           <SelectBoxWithLabel
             v-model:select-value="state.screenObj.menuId"
             :targetUrl="targetUrl"
@@ -31,14 +31,14 @@
             label="メニュー"
           />
         </div>
-        <div class="w-2/3 pb-10">
+        <div class="w-full pb-10">
           <DateTimePickerWithLabel
             v-model:inputValue='state.screenObj.reserveDateTime'
             :required-flg="true"
             label="予約日時"
           />
         </div>
-        <div class="w-2/3">
+        <div class="w-full">
           <CustomButton
             class="w-full"
             button-name="登録"

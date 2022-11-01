@@ -1,7 +1,7 @@
 <template>
   <p
     v-if="isVisibleMessage"
-    class="p-2 bg-green-500 text-white"
+    class="w-full p-2 fixed z-40 bg-green-500 text-white"
     :class="messageAnimationType == 1 ? 'animate-scale-in-ver-top' : messageAnimationType == 2 ? 'animate-scale-out-ver-top' : ''"
   >
     <span
