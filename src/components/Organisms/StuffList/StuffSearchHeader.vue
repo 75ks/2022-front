@@ -22,12 +22,14 @@
     <div>
       <InputWithLabel
         v-model:input-value='searchForm.stuffId'
+        placeholder="1"
         label="スタッフID"
       />
     </div>
     <div>
       <InputWithLabel
         v-model:input-value='searchForm.stuffName'
+        placeholder="山田"
         label="スタッフ名"
       />
     </div>
@@ -41,12 +43,14 @@
     <div>
       <InputWithLabel
         v-model:input-value='searchForm.age'
+        placeholder="25"
         label="年齢"
       />
     </div>
     <div>
-      <InputWithLabel
-        v-model:input-value='searchForm.gender'
+      <SelectBoxWithLabel
+        v-model:select-value="searchForm.gender"
+        :options="GenderList"
         label="性別"
       />
     </div>
@@ -60,6 +64,8 @@ import { computed, ref } from 'vue';
 import { useStuffStore } from '../../../store/stuff';
 import InputWithLabel from '../../Molecules/InputWithLabel.vue';
 import SuggestInputWithLabel from '../../Molecules/SuggestInputWithLabel.vue';
+import SelectBoxWithLabel from '../../Molecules/SelectBoxWithLabel.vue';
+import { GenderList } from '../../../constants/Gender';
 
 const stuffStore = useStuffStore();
 
