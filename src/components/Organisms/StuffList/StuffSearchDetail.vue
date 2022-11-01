@@ -14,7 +14,6 @@
       <thead>
         <tr>
           <th class="border border-gray-300 p-2 text-gray-600">スタッフID</th>
-          <th class="border border-gray-300 p-2 text-gray-600">店舗コードID</th>
           <th class="border border-gray-300 p-2 text-gray-600">スタッフ名</th>
           <th class="border border-gray-300 p-2 text-gray-600">スタッフ仮名</th>
           <th class="border border-gray-300 p-2 text-gray-600">ランク</th>
@@ -25,16 +24,15 @@
       <tbody class="hover:cursor-pointer">
         <tr
           v-for="(stuff, index) in stuffListSplit[selectedPage - 1]" :key="index"
-          @click="showModal(stuff)"
+          @click="onRowClicked(stuff)"
           class="hover:bg-slate-100"
         >
           <td class="border border-gray-300 p-2">{{ stuff.stuffId }}</td>
-          <td class="border border-gray-300 p-2">{{ stuff.storeId }}</td>
           <td class="border border-gray-300 p-2">{{ stuff.lastName }}{{ stuff.firstName }}</td>
           <td class="border border-gray-300 p-2">{{ stuff.lastNameKana }}{{ stuff.firstNameKana }}</td>
           <td class="border border-gray-300 p-2">{{ stuff.rank }}</td>
           <td class="border border-gray-300 p-2">{{ stuff.age }}</td>
-          <td class="border border-gray-300 p-2">{{ stuff.gender }}</td>
+          <td class="border border-gray-300 p-2">{{ Gender.getNameByCode(stuff.gender) }}</td>
         </tr>
       </tbody>
     </table>
@@ -44,24 +42,22 @@
       v-model:selected-page="selectedPage"
       v-model:left-most-page="leftMostPage"
     />
-    <Modal
-      :is-visible-modal="isVisibleModal"
-      :modal-stuff-data="modalStuffData"
-      @close="closeModal"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
-import Modal from './Modal.vue';
 import SelectBoxWithLabel from '../../Molecules/SelectBoxWithLabel.vue';
 import Pagination from '../../Atoms/Layout/Pagination.vue';
 import { Stuff } from '../../../models/Stuff';
+import { Gender } from '../../../constants/Gender';
+import { useRouter } from 'vue-router';
 import { ref, computed } from 'vue';
 
 const props = defineProps<{
   stuffList: Stuff[]
 }>();
+
+const router = useRouter();
 
 /** 選択ページ(初期値: 1ページ) */
 const selectedPage = ref<number>(1);
@@ -91,19 +87,10 @@ const stuffListSplit = computed<Stuff[][]>(() => {
   return stuffListSplit;
 });
 
-/** モーダルに渡すデータ */
-const modalStuffData = ref<Stuff>(new Stuff());
-/** モーダル表示フラグ */
-const isVisibleModal = ref<boolean>(false);
-/** レコードクリックイベント(モーダルを表示する) */
-const showModal = (stuffData: Stuff) => {
-  modalStuffData.value = stuffData;
-  isVisibleModal.value = true;
-}
-/** モーダル表示時、モーダル外クリックイベント(モーダルを非表示する) */
-const closeModal = () => {
-  isVisibleModal.value = false;
-}
+/** スタッフレコードクリックイベント(スタッフ詳細画面へ遷移) */
+const onRowClicked = (selectedStuffScreenObj: Stuff) => {
+  router.push({ path: `/stuffDetail/${selectedStuffScreenObj.stuffId}` });
+};
 </script>
 
 <style>

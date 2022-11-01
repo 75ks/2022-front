@@ -33,9 +33,9 @@
           :requiredFlg="true"
         />
         <DatePickerWithLabel
-            v-model:inputValue="state.screenObj.birthday"
-            label="生年月日"
-            :requiredFlg="false"
+          v-model:inputValue="state.screenObj.birthday"
+          label="生年月日"
+          :requiredFlg="false"
         />
         <InputWithLabel
           v-model:input-value="state.screenObj.age"

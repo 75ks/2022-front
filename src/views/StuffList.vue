@@ -1,6 +1,9 @@
 <template>
   <div>
-    <Header :header-name="'スタッフ管理'" />
+    <Header
+      header-name="スタッフ管理"
+      createButtonTo="/stuffCreate"
+    />
     <StuffSearchHeader />
     <StuffSearchDetail :stuff-list="stuffList" />
   </div>
