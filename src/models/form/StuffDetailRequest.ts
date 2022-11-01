@@ -9,7 +9,7 @@ export class StuffDetailRequest {
   lastNameKana: string = "";
   /** メイ */
   firstNameKana: string = "";
-  /** 生年月日 ※後でDate型に修正※ */
+  /** 生年月日 */
   birthday: string = "";
   /** 年齢 */
   age: number | null = null;
@@ -31,6 +31,4 @@ export class StuffDetailRequest {
   phoneNumber: string = "";
   /** メールアドレス */
   email: string = "";
-  /** パスワード */
-  password: string = "";
 }
