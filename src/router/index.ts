@@ -20,6 +20,7 @@ import CustomerLogin from "../views/customer/CustomerLogin.vue";
 import Profile from "../views/customer/Profile.vue";
 import PasswordSetting from "../views/customer/PasswordSetting.vue";
 import ReserveRegister from "../views/customer/ReserveRegister.vue";
+import CustomerHome from "../views/customer/CustomerHome.vue";
 // 上記以外
 import NotFound from '../views/NotFound.vue';
 
@@ -52,6 +53,7 @@ const routes = [
   { path: "/customer/profile", component: Profile, meta: { requiredAuthCustomer: true } },
   { path: "/customer/passwordSetting", component: PasswordSetting, meta: { requiredAuthCustomer: true } },
   { path: "/customer/reserveRegister", component: ReserveRegister, meta: { requiredAuthCustomer: true } },
+  { path: "/customer/home", component: CustomerHome, meta: { requiredAuthCustomer: true } },
   // 上記以外
   { path: "/:catchAll(.*)", name: "NotFound", component: NotFound },
 ];
