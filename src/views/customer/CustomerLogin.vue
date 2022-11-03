@@ -92,8 +92,8 @@ const login = async () => {
         // 初回ログインの場合、パスワード設定画面に遷移
         router.push("/customer/passwordSetting");
       } else {
-        // 初回ログインではない場合、プロフィール画面に遷移
-        router.push("/customer/profile");
+        // 初回ログインではない場合、ホーム画面に遷移
+        router.push("/customer/home");
       }
     } else {
       alert("メールアドレスまたはパスワードが違います");

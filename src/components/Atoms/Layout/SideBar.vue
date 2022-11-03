@@ -69,6 +69,17 @@
     :class="menuAnimationType == 1 ? 'animate-scale-in-ver-top' : menuAnimationType == 2 ? 'animate-scale-out-ver-top' : ''"
   >
     <router-link
+      to="/customer/home"
+      class="flex justify-between items-center px-2 py-4 hover:bg-blue-500"
+      @click="switchingMenu()"
+    >
+      <div class="flex items-center">
+        <font-awesome-icon :icon="['fas', 'house']" class="w-4 h-4 pr-2 font-black" />
+        <p>ホーム</p>
+      </div>
+      <font-awesome-icon :icon="['fas', 'angle-right']" class="w-4 h-4 pr-2 font-black" />
+    </router-link>
+    <router-link
       to="/customer/profile"
       class="flex justify-between items-center px-2 py-4 hover:bg-blue-500"
       @click="switchingMenu()"
