@@ -5,8 +5,9 @@
       <div class="w-full">
         <p class="mb-4 text-center font-bold">◆予約情報</p>
         <table
-          v-if="salesHistoryListSplit.length"
-          class="w-11/12 m-auto">
+          v-if="state.customerHome.customerHomeReserve"
+          class="w-11/12 m-auto"
+        >
           <tr>
             <th class="w-2/5 border border-gray-300 px-2 py-2 text-gray-600">予約日時</th>
             <td class="w-3/5 border border-gray-300 px-2 py-2">{{ datetimeFormat2(state.customerHome.customerHomeReserve.reserveDatetime) }}</td>
@@ -25,7 +26,7 @@
           </tr>
         </table>
         <p
-          v-if="!salesHistoryListSplit.length"
+          v-if="!state.customerHome.customerHomeReserve"
           class="text-center"
         >
           ※予約はありません
