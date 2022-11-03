@@ -6,7 +6,7 @@ export class CustomerHomeSales {
   /** 来店日時 */
   salesDatetime: string = "";
   /** スタッフ(姓) */
-  lastName: string = "";
+  stuffLastName: string = "";
   /** スタッフ(名) */
-  firstName: string = "";
+  stuffFirstName: string = "";
 }

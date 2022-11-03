@@ -6,7 +6,7 @@ export class CustomerHomeReserve {
   /** 予約日時 */
   reserveDatetime: string = "";
   /** スタッフ(姓) */
-  lastName: string = "";
+  stuffLastName: string = "";
   /** スタッフ(名) */
-  firstName: string = "";
+  stuffFirstName: string = "";
 }
