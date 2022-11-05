@@ -5,7 +5,7 @@
       <div class="w-full">
         <p class="mb-4 text-center font-bold">◆予約情報</p>
         <table
-          v-if="state.customerHome.customerHomeReserve"
+          v-if="state.customerHome.customerHomeReserve.reserveDatetime"
           class="w-11/12 m-auto"
         >
           <tr>
@@ -26,7 +26,7 @@
           </tr>
         </table>
         <p
-          v-if="!state.customerHome.customerHomeReserve"
+          v-if="!state.customerHome.customerHomeReserve.reserveDatetime"
           class="text-center"
         >
           ※予約はありません
