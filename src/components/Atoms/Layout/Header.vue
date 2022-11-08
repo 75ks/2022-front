@@ -3,7 +3,7 @@
     <div class="test-center flex font-bold">{{ headerName }}</div>
     <CustomButton
       v-if="createButtonTo"
-      button-name="新規作成"
+      button-name="新規登録"
       @click="$router.push(createButtonTo)"
     />
   </div>
